@@ -61,7 +61,7 @@ public sealed class BatchService : IBatchService
             ) ?? throw new System::NullReferenceException();
     }
 
-    public async Tasks::Task<Batches::MessageBatch> List(Batches::BatchListParams @params)
+    public async Tasks::Task<Batches::BatchListPageResponse> List(Batches::BatchListParams @params)
     {
         Http::HttpRequestMessage webRequest = new(Http::HttpMethod.Get, @params.Url(this._client));
         @params.AddHeadersToRequest(webRequest, this._client);
@@ -77,7 +77,7 @@ public sealed class BatchService : IBatchService
                 await response.Content.ReadAsStringAsync()
             );
         }
-        return Json::JsonSerializer.Deserialize<Batches::MessageBatch>(
+        return Json::JsonSerializer.Deserialize<Batches::BatchListPageResponse>(
                 await response.Content.ReadAsStringAsync()
             ) ?? throw new System::NullReferenceException();
     }

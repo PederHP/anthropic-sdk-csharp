@@ -31,7 +31,7 @@ public interface IBatchService
     ///
     /// Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
     /// </summary>
-    Tasks::Task<Batches::BetaMessageBatch> List(Batches::BatchListParams @params);
+    Tasks::Task<Batches::BatchListPageResponse> List(Batches::BatchListParams @params);
 
     /// <summary>
     /// Delete a Message Batch.

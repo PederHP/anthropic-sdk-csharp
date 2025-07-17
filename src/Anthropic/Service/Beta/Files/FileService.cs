@@ -16,7 +16,7 @@ public sealed class FileService : IFileService
         _client = client;
     }
 
-    public async Tasks::Task<Files::FileMetadata> List(Files::FileListParams @params)
+    public async Tasks::Task<Files::FileListPageResponse> List(Files::FileListParams @params)
     {
         Http::HttpRequestMessage webRequest = new(Http::HttpMethod.Get, @params.Url(this._client));
         @params.AddHeadersToRequest(webRequest, this._client);
@@ -32,7 +32,7 @@ public sealed class FileService : IFileService
                 await response.Content.ReadAsStringAsync()
             );
         }
-        return Json::JsonSerializer.Deserialize<Files::FileMetadata>(
+        return Json::JsonSerializer.Deserialize<Files::FileListPageResponse>(
                 await response.Content.ReadAsStringAsync()
             ) ?? throw new System::NullReferenceException();
     }

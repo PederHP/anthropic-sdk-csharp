@@ -19,5 +19,5 @@ public interface IModelService
     /// The Models API response can be used to determine which models are available
     /// for use in the API. More recently released models are listed first.
     /// </summary>
-    Tasks::Task<Models::BetaModelInfo> List(Models::ModelListParams @params);
+    Tasks::Task<Models::ModelListPageResponse> List(Models::ModelListParams @params);
 }

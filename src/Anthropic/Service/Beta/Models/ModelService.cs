@@ -37,7 +37,7 @@ public sealed class ModelService : IModelService
             ) ?? throw new System::NullReferenceException();
     }
 
-    public async Tasks::Task<Models::BetaModelInfo> List(Models::ModelListParams @params)
+    public async Tasks::Task<Models::ModelListPageResponse> List(Models::ModelListParams @params)
     {
         Http::HttpRequestMessage webRequest = new(Http::HttpMethod.Get, @params.Url(this._client));
         @params.AddHeadersToRequest(webRequest, this._client);
@@ -53,7 +53,7 @@ public sealed class ModelService : IModelService
                 await response.Content.ReadAsStringAsync()
             );
         }
-        return Json::JsonSerializer.Deserialize<Models::BetaModelInfo>(
+        return Json::JsonSerializer.Deserialize<Models::ModelListPageResponse>(
                 await response.Content.ReadAsStringAsync()
             ) ?? throw new System::NullReferenceException();
     }

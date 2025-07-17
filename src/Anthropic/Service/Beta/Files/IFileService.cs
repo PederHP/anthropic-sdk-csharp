@@ -9,7 +9,7 @@ public interface IFileService
     /// <summary>
     /// List Files
     /// </summary>
-    Tasks::Task<Files::FileMetadata> List(Files::FileListParams @params);
+    Tasks::Task<Files::FileListPageResponse> List(Files::FileListParams @params);
 
     /// <summary>
     /// Delete File
