@@ -11,6 +11,27 @@ namespace Anthropic.Models.Messages;
 public sealed record class Usage : Anthropic::ModelBase, Anthropic::IFromRaw<Usage>
 {
     /// <summary>
+    /// Breakdown of cached tokens by TTL
+    /// </summary>
+    public required CacheCreation? CacheCreation
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("cache_creation", out JsonElement element))
+                throw new global::System.ArgumentOutOfRangeException(
+                    "cache_creation",
+                    "Missing required argument"
+                );
+
+            return JsonSerializer.Deserialize<CacheCreation?>(
+                element,
+                Anthropic::ModelBase.SerializerOptions
+            );
+        }
+        set { this.Properties["cache_creation"] = JsonSerializer.SerializeToElement(value); }
+    }
+
+    /// <summary>
     /// The number of input tokens used to create the cache entry.
     /// </summary>
     public required long? CacheCreationInputTokens
@@ -148,6 +169,7 @@ public sealed record class Usage : Anthropic::ModelBase, Anthropic::IFromRaw<Usa
 
     public override void Validate()
     {
+        this.CacheCreation?.Validate();
         _ = this.CacheCreationInputTokens;
         _ = this.CacheReadInputTokens;
         _ = this.InputTokens;

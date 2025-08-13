@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Anthropic.Models.Messages;
 using Anthropic.Models.Messages.Batches.BatchCreateParamsProperties.RequestProperties.ParamsProperties;
+using Anthropic.Models.Messages.CacheControlEphemeralProperties;
 using Anthropic.Models.Messages.MessageParamProperties;
 using Anthropic.Models.Messages.ToolProperties;
 
@@ -35,7 +36,7 @@ public class BatchServiceTest : TestBase
                                 new()
                                 {
                                     Text = "Today's date is 2024-06-01.",
-                                    CacheControl = new(),
+                                    CacheControl = new() { TTL = TTL.TTL5m },
                                     Citations =
                                     [
                                         new CitationCharLocationParam()
@@ -64,7 +65,7 @@ public class BatchServiceTest : TestBase
                                         Required = ["location"],
                                     },
                                     Name = "name",
-                                    CacheControl = new(),
+                                    CacheControl = new() { TTL = TTL.TTL5m },
                                     Description = "Get the current weather in a given location",
                                     Type = Type.Custom,
                                 },

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Anthropic = Anthropic;
+using CacheControlEphemeralProperties = Anthropic.Models.Messages.CacheControlEphemeralProperties;
 
 namespace Anthropic.Models.Messages;
 
@@ -29,7 +30,32 @@ public sealed record class CacheControlEphemeral
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public override void Validate() { }
+    /// <summary>
+    /// The time-to-live for the cache control breakpoint.
+    ///
+    /// This may be one the following values: - `5m`: 5 minutes - `1h`: 1 hour
+    ///
+    /// Defaults to `5m`.
+    /// </summary>
+    public CacheControlEphemeralProperties::TTL? TTL
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("ttl", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<CacheControlEphemeralProperties::TTL?>(
+                element,
+                Anthropic::ModelBase.SerializerOptions
+            );
+        }
+        set { this.Properties["ttl"] = JsonSerializer.SerializeToElement(value); }
+    }
+
+    public override void Validate()
+    {
+        this.TTL?.Validate();
+    }
 
     public CacheControlEphemeral()
     {
