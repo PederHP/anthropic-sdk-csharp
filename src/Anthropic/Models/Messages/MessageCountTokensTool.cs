@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MessageCountTokensToolVariants = Anthropic.Models.Messages.MessageCountTokensToolVariants;
+using Anthropic.Models.Messages.MessageCountTokensToolVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -10,23 +11,22 @@ public abstract record class MessageCountTokensTool
 {
     internal MessageCountTokensTool() { }
 
-    public static implicit operator MessageCountTokensTool(Tool value) =>
-        new MessageCountTokensToolVariants::ToolVariant(value);
+    public static implicit operator MessageCountTokensTool(Tool value) => new ToolVariant(value);
 
     public static implicit operator MessageCountTokensTool(ToolBash20250124 value) =>
-        new MessageCountTokensToolVariants::ToolBash20250124Variant(value);
+        new ToolBash20250124Variant(value);
 
     public static implicit operator MessageCountTokensTool(ToolTextEditor20250124 value) =>
-        new MessageCountTokensToolVariants::ToolTextEditor20250124Variant(value);
+        new ToolTextEditor20250124Variant(value);
 
     public static implicit operator MessageCountTokensTool(ToolTextEditor20250429 value) =>
-        new MessageCountTokensToolVariants::ToolTextEditor20250429Variant(value);
+        new ToolTextEditor20250429Variant(value);
 
     public static implicit operator MessageCountTokensTool(ToolTextEditor20250728 value) =>
-        new MessageCountTokensToolVariants::ToolTextEditor20250728Variant(value);
+        new ToolTextEditor20250728Variant(value);
 
     public static implicit operator MessageCountTokensTool(WebSearchTool20250305 value) =>
-        new MessageCountTokensToolVariants::WebSearchTool20250305Variant(value);
+        new WebSearchTool20250305Variant(value);
 
     public abstract void Validate();
 }
@@ -35,7 +35,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
 {
     public override MessageCountTokensTool? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -46,7 +46,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             var deserialized = JsonSerializer.Deserialize<Tool>(ref reader, options);
             if (deserialized != null)
             {
-                return new MessageCountTokensToolVariants::ToolVariant(deserialized);
+                return new ToolVariant(deserialized);
             }
         }
         catch (JsonException e)
@@ -59,7 +59,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             var deserialized = JsonSerializer.Deserialize<ToolBash20250124>(ref reader, options);
             if (deserialized != null)
             {
-                return new MessageCountTokensToolVariants::ToolBash20250124Variant(deserialized);
+                return new ToolBash20250124Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -75,9 +75,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             );
             if (deserialized != null)
             {
-                return new MessageCountTokensToolVariants::ToolTextEditor20250124Variant(
-                    deserialized
-                );
+                return new ToolTextEditor20250124Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -93,9 +91,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             );
             if (deserialized != null)
             {
-                return new MessageCountTokensToolVariants::ToolTextEditor20250429Variant(
-                    deserialized
-                );
+                return new ToolTextEditor20250429Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -111,9 +107,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             );
             if (deserialized != null)
             {
-                return new MessageCountTokensToolVariants::ToolTextEditor20250728Variant(
-                    deserialized
-                );
+                return new ToolTextEditor20250728Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -129,9 +123,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             );
             if (deserialized != null)
             {
-                return new MessageCountTokensToolVariants::WebSearchTool20250305Variant(
-                    deserialized
-                );
+                return new WebSearchTool20250305Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -139,7 +131,7 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
             exceptions.Add(e);
         }
 
-        throw new global::System.AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(
@@ -150,22 +142,13 @@ sealed class MessageCountTokensToolConverter : JsonConverter<MessageCountTokensT
     {
         object variant = value switch
         {
-            MessageCountTokensToolVariants::ToolVariant(var tool) => tool,
-            MessageCountTokensToolVariants::ToolBash20250124Variant(var toolBash20250124) =>
-                toolBash20250124,
-            MessageCountTokensToolVariants::ToolTextEditor20250124Variant(
-                var toolTextEditor20250124
-            ) => toolTextEditor20250124,
-            MessageCountTokensToolVariants::ToolTextEditor20250429Variant(
-                var toolTextEditor20250429
-            ) => toolTextEditor20250429,
-            MessageCountTokensToolVariants::ToolTextEditor20250728Variant(
-                var toolTextEditor20250728
-            ) => toolTextEditor20250728,
-            MessageCountTokensToolVariants::WebSearchTool20250305Variant(
-                var webSearchTool20250305
-            ) => webSearchTool20250305,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            ToolVariant(var tool) => tool,
+            ToolBash20250124Variant(var toolBash20250124) => toolBash20250124,
+            ToolTextEditor20250124Variant(var toolTextEditor20250124) => toolTextEditor20250124,
+            ToolTextEditor20250429Variant(var toolTextEditor20250429) => toolTextEditor20250429,
+            ToolTextEditor20250728Variant(var toolTextEditor20250728) => toolTextEditor20250728,
+            WebSearchTool20250305Variant(var webSearchTool20250305) => webSearchTool20250305,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

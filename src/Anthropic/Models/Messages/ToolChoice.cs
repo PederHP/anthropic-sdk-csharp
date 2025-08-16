@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ToolChoiceVariants = Anthropic.Models.Messages.ToolChoiceVariants;
+using Anthropic.Models.Messages.ToolChoiceVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -15,16 +16,16 @@ public abstract record class ToolChoice
     internal ToolChoice() { }
 
     public static implicit operator ToolChoice(ToolChoiceAuto value) =>
-        new ToolChoiceVariants::ToolChoiceAutoVariant(value);
+        new ToolChoiceAutoVariant(value);
 
     public static implicit operator ToolChoice(ToolChoiceAny value) =>
-        new ToolChoiceVariants::ToolChoiceAnyVariant(value);
+        new ToolChoiceAnyVariant(value);
 
     public static implicit operator ToolChoice(ToolChoiceTool value) =>
-        new ToolChoiceVariants::ToolChoiceToolVariant(value);
+        new ToolChoiceToolVariant(value);
 
     public static implicit operator ToolChoice(ToolChoiceNone value) =>
-        new ToolChoiceVariants::ToolChoiceNoneVariant(value);
+        new ToolChoiceNoneVariant(value);
 
     public abstract void Validate();
 }
@@ -33,7 +34,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
 {
     public override ToolChoice? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -59,7 +60,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     var deserialized = JsonSerializer.Deserialize<ToolChoiceAuto>(json, options);
                     if (deserialized != null)
                     {
-                        return new ToolChoiceVariants::ToolChoiceAutoVariant(deserialized);
+                        return new ToolChoiceAutoVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -67,7 +68,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "any":
             {
@@ -78,7 +79,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     var deserialized = JsonSerializer.Deserialize<ToolChoiceAny>(json, options);
                     if (deserialized != null)
                     {
-                        return new ToolChoiceVariants::ToolChoiceAnyVariant(deserialized);
+                        return new ToolChoiceAnyVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -86,7 +87,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "tool":
             {
@@ -97,7 +98,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     var deserialized = JsonSerializer.Deserialize<ToolChoiceTool>(json, options);
                     if (deserialized != null)
                     {
-                        return new ToolChoiceVariants::ToolChoiceToolVariant(deserialized);
+                        return new ToolChoiceToolVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -105,7 +106,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "none":
             {
@@ -116,7 +117,7 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     var deserialized = JsonSerializer.Deserialize<ToolChoiceNone>(json, options);
                     if (deserialized != null)
                     {
-                        return new ToolChoiceVariants::ToolChoiceNoneVariant(deserialized);
+                        return new ToolChoiceNoneVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -124,11 +125,11 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -141,11 +142,11 @@ sealed class ToolChoiceConverter : JsonConverter<ToolChoice>
     {
         object variant = value switch
         {
-            ToolChoiceVariants::ToolChoiceAutoVariant(var toolChoiceAuto) => toolChoiceAuto,
-            ToolChoiceVariants::ToolChoiceAnyVariant(var toolChoiceAny) => toolChoiceAny,
-            ToolChoiceVariants::ToolChoiceToolVariant(var toolChoiceTool) => toolChoiceTool,
-            ToolChoiceVariants::ToolChoiceNoneVariant(var toolChoiceNone) => toolChoiceNone,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            ToolChoiceAutoVariant(var toolChoiceAuto) => toolChoiceAuto,
+            ToolChoiceAnyVariant(var toolChoiceAny) => toolChoiceAny,
+            ToolChoiceToolVariant(var toolChoiceTool) => toolChoiceTool,
+            ToolChoiceNoneVariant(var toolChoiceNone) => toolChoiceNone,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

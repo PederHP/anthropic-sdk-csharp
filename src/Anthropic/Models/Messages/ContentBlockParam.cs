@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ContentBlockParamVariants = Anthropic.Models.Messages.ContentBlockParamVariants;
+using Anthropic.Models.Messages.ContentBlockParamVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -14,34 +15,34 @@ public abstract record class ContentBlockParam
     internal ContentBlockParam() { }
 
     public static implicit operator ContentBlockParam(TextBlockParam value) =>
-        new ContentBlockParamVariants::TextBlockParamVariant(value);
+        new TextBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(ImageBlockParam value) =>
-        new ContentBlockParamVariants::ImageBlockParamVariant(value);
+        new ImageBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(DocumentBlockParam value) =>
-        new ContentBlockParamVariants::DocumentBlockParamVariant(value);
+        new DocumentBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(SearchResultBlockParam value) =>
-        new ContentBlockParamVariants::SearchResultBlockParamVariant(value);
+        new SearchResultBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(ThinkingBlockParam value) =>
-        new ContentBlockParamVariants::ThinkingBlockParamVariant(value);
+        new ThinkingBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(RedactedThinkingBlockParam value) =>
-        new ContentBlockParamVariants::RedactedThinkingBlockParamVariant(value);
+        new RedactedThinkingBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(ToolUseBlockParam value) =>
-        new ContentBlockParamVariants::ToolUseBlockParamVariant(value);
+        new ToolUseBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(ToolResultBlockParam value) =>
-        new ContentBlockParamVariants::ToolResultBlockParamVariant(value);
+        new ToolResultBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(ServerToolUseBlockParam value) =>
-        new ContentBlockParamVariants::ServerToolUseBlockParamVariant(value);
+        new ServerToolUseBlockParamVariant(value);
 
     public static implicit operator ContentBlockParam(WebSearchToolResultBlockParam value) =>
-        new ContentBlockParamVariants::WebSearchToolResultBlockParamVariant(value);
+        new WebSearchToolResultBlockParamVariant(value);
 
     public abstract void Validate();
 }
@@ -50,7 +51,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
 {
     public override ContentBlockParam? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -76,7 +77,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     var deserialized = JsonSerializer.Deserialize<TextBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::TextBlockParamVariant(deserialized);
+                        return new TextBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -84,7 +85,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "image":
             {
@@ -95,7 +96,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     var deserialized = JsonSerializer.Deserialize<ImageBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::ImageBlockParamVariant(deserialized);
+                        return new ImageBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -103,7 +104,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "document":
             {
@@ -117,9 +118,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::DocumentBlockParamVariant(
-                            deserialized
-                        );
+                        return new DocumentBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -127,7 +126,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "search_result":
             {
@@ -141,9 +140,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::SearchResultBlockParamVariant(
-                            deserialized
-                        );
+                        return new SearchResultBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -151,7 +148,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "thinking":
             {
@@ -165,9 +162,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::ThinkingBlockParamVariant(
-                            deserialized
-                        );
+                        return new ThinkingBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -175,7 +170,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "redacted_thinking":
             {
@@ -189,9 +184,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::RedactedThinkingBlockParamVariant(
-                            deserialized
-                        );
+                        return new RedactedThinkingBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -199,7 +192,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "tool_use":
             {
@@ -210,9 +203,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     var deserialized = JsonSerializer.Deserialize<ToolUseBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::ToolUseBlockParamVariant(
-                            deserialized
-                        );
+                        return new ToolUseBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -220,7 +211,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "tool_result":
             {
@@ -234,9 +225,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::ToolResultBlockParamVariant(
-                            deserialized
-                        );
+                        return new ToolResultBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -244,7 +233,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "server_tool_use":
             {
@@ -258,9 +247,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::ServerToolUseBlockParamVariant(
-                            deserialized
-                        );
+                        return new ServerToolUseBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -268,7 +255,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "web_search_tool_result":
             {
@@ -282,9 +269,7 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockParamVariants::WebSearchToolResultBlockParamVariant(
-                            deserialized
-                        );
+                        return new WebSearchToolResultBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -292,11 +277,11 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -309,29 +294,19 @@ sealed class ContentBlockParamConverter : JsonConverter<ContentBlockParam>
     {
         object variant = value switch
         {
-            ContentBlockParamVariants::TextBlockParamVariant(var textBlockParam) => textBlockParam,
-            ContentBlockParamVariants::ImageBlockParamVariant(var imageBlockParam) =>
-                imageBlockParam,
-            ContentBlockParamVariants::DocumentBlockParamVariant(var documentBlockParam) =>
-                documentBlockParam,
-            ContentBlockParamVariants::SearchResultBlockParamVariant(var searchResultBlockParam) =>
-                searchResultBlockParam,
-            ContentBlockParamVariants::ThinkingBlockParamVariant(var thinkingBlockParam) =>
-                thinkingBlockParam,
-            ContentBlockParamVariants::RedactedThinkingBlockParamVariant(
-                var redactedThinkingBlockParam
-            ) => redactedThinkingBlockParam,
-            ContentBlockParamVariants::ToolUseBlockParamVariant(var toolUseBlockParam) =>
-                toolUseBlockParam,
-            ContentBlockParamVariants::ToolResultBlockParamVariant(var toolResultBlockParam) =>
-                toolResultBlockParam,
-            ContentBlockParamVariants::ServerToolUseBlockParamVariant(
-                var serverToolUseBlockParam
-            ) => serverToolUseBlockParam,
-            ContentBlockParamVariants::WebSearchToolResultBlockParamVariant(
-                var webSearchToolResultBlockParam
-            ) => webSearchToolResultBlockParam,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            TextBlockParamVariant(var textBlockParam) => textBlockParam,
+            ImageBlockParamVariant(var imageBlockParam) => imageBlockParam,
+            DocumentBlockParamVariant(var documentBlockParam) => documentBlockParam,
+            SearchResultBlockParamVariant(var searchResultBlockParam) => searchResultBlockParam,
+            ThinkingBlockParamVariant(var thinkingBlockParam) => thinkingBlockParam,
+            RedactedThinkingBlockParamVariant(var redactedThinkingBlockParam) =>
+                redactedThinkingBlockParam,
+            ToolUseBlockParamVariant(var toolUseBlockParam) => toolUseBlockParam,
+            ToolResultBlockParamVariant(var toolResultBlockParam) => toolResultBlockParam,
+            ServerToolUseBlockParamVariant(var serverToolUseBlockParam) => serverToolUseBlockParam,
+            WebSearchToolResultBlockParamVariant(var webSearchToolResultBlockParam) =>
+                webSearchToolResultBlockParam,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

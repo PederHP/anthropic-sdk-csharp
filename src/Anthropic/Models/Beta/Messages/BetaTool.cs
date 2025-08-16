@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 using BetaToolProperties = Anthropic.Models.Beta.Messages.BetaToolProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaTool>))]
-public sealed record class BetaTool : Anthropic::ModelBase, Anthropic::IFromRaw<BetaTool>
+[JsonConverter(typeof(ModelConverter<BetaTool>))]
+public sealed record class BetaTool : ModelBase, IFromRaw<BetaTool>
 {
     /// <summary>
     /// [JSON schema](https://json-schema.org/draft/2020-12) for this tool's input.
@@ -21,15 +21,12 @@ public sealed record class BetaTool : Anthropic::ModelBase, Anthropic::IFromRaw<
         get
         {
             if (!this.Properties.TryGetValue("input_schema", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "input_schema",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("input_schema", "Missing required argument");
 
             return JsonSerializer.Deserialize<BetaToolProperties::InputSchema>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("input_schema");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("input_schema");
         }
         set { this.Properties["input_schema"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -44,15 +41,10 @@ public sealed record class BetaTool : Anthropic::ModelBase, Anthropic::IFromRaw<
         get
         {
             if (!this.Properties.TryGetValue("name", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "name",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("name", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("name");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("name");
         }
         set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -69,7 +61,7 @@ public sealed record class BetaTool : Anthropic::ModelBase, Anthropic::IFromRaw<
 
             return JsonSerializer.Deserialize<BetaCacheControlEphemeral?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
@@ -90,10 +82,7 @@ public sealed record class BetaTool : Anthropic::ModelBase, Anthropic::IFromRaw<
             if (!this.Properties.TryGetValue("description", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["description"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -107,7 +96,7 @@ public sealed record class BetaTool : Anthropic::ModelBase, Anthropic::IFromRaw<
 
             return JsonSerializer.Deserialize<BetaToolProperties::Type?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }

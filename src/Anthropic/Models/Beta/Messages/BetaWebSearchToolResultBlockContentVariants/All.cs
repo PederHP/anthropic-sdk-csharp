@@ -1,17 +1,12 @@
 using System.Collections.Generic;
-using Messages = Anthropic.Models.Beta.Messages;
 
 namespace Anthropic.Models.Beta.Messages.BetaWebSearchToolResultBlockContentVariants;
 
-public sealed record class BetaWebSearchToolResultErrorVariant(
-    Messages::BetaWebSearchToolResultError Value
-)
-    : Messages::BetaWebSearchToolResultBlockContent,
-        IVariant<BetaWebSearchToolResultErrorVariant, Messages::BetaWebSearchToolResultError>
+public sealed record class BetaWebSearchToolResultErrorVariant(BetaWebSearchToolResultError Value)
+    : BetaWebSearchToolResultBlockContent,
+        IVariant<BetaWebSearchToolResultErrorVariant, BetaWebSearchToolResultError>
 {
-    public static BetaWebSearchToolResultErrorVariant From(
-        Messages::BetaWebSearchToolResultError value
-    )
+    public static BetaWebSearchToolResultErrorVariant From(BetaWebSearchToolResultError value)
     {
         return new(value);
     }
@@ -22,11 +17,11 @@ public sealed record class BetaWebSearchToolResultErrorVariant(
     }
 }
 
-public sealed record class BetaWebSearchResultBlocks(List<Messages::BetaWebSearchResultBlock> Value)
-    : Messages::BetaWebSearchToolResultBlockContent,
-        IVariant<BetaWebSearchResultBlocks, List<Messages::BetaWebSearchResultBlock>>
+public sealed record class BetaWebSearchResultBlocks(List<BetaWebSearchResultBlock> Value)
+    : BetaWebSearchToolResultBlockContent,
+        IVariant<BetaWebSearchResultBlocks, List<BetaWebSearchResultBlock>>
 {
-    public static BetaWebSearchResultBlocks From(List<Messages::BetaWebSearchResultBlock> value)
+    public static BetaWebSearchResultBlocks From(List<BetaWebSearchResultBlock> value)
     {
         return new(value);
     }

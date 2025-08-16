@@ -1,16 +1,12 @@
-using Batches = Anthropic.Models.Beta.Messages.Batches;
-
 namespace Anthropic.Models.Beta.Messages.Batches.BetaMessageBatchResultVariants;
 
 public sealed record class BetaMessageBatchSucceededResultVariant(
-    Batches::BetaMessageBatchSucceededResult Value
+    BetaMessageBatchSucceededResult Value
 )
-    : Batches::BetaMessageBatchResult,
-        IVariant<BetaMessageBatchSucceededResultVariant, Batches::BetaMessageBatchSucceededResult>
+    : BetaMessageBatchResult,
+        IVariant<BetaMessageBatchSucceededResultVariant, BetaMessageBatchSucceededResult>
 {
-    public static BetaMessageBatchSucceededResultVariant From(
-        Batches::BetaMessageBatchSucceededResult value
-    )
+    public static BetaMessageBatchSucceededResultVariant From(BetaMessageBatchSucceededResult value)
     {
         return new(value);
     }
@@ -21,15 +17,11 @@ public sealed record class BetaMessageBatchSucceededResultVariant(
     }
 }
 
-public sealed record class BetaMessageBatchErroredResultVariant(
-    Batches::BetaMessageBatchErroredResult Value
-)
-    : Batches::BetaMessageBatchResult,
-        IVariant<BetaMessageBatchErroredResultVariant, Batches::BetaMessageBatchErroredResult>
+public sealed record class BetaMessageBatchErroredResultVariant(BetaMessageBatchErroredResult Value)
+    : BetaMessageBatchResult,
+        IVariant<BetaMessageBatchErroredResultVariant, BetaMessageBatchErroredResult>
 {
-    public static BetaMessageBatchErroredResultVariant From(
-        Batches::BetaMessageBatchErroredResult value
-    )
+    public static BetaMessageBatchErroredResultVariant From(BetaMessageBatchErroredResult value)
     {
         return new(value);
     }
@@ -41,14 +33,12 @@ public sealed record class BetaMessageBatchErroredResultVariant(
 }
 
 public sealed record class BetaMessageBatchCanceledResultVariant(
-    Batches::BetaMessageBatchCanceledResult Value
+    BetaMessageBatchCanceledResult Value
 )
-    : Batches::BetaMessageBatchResult,
-        IVariant<BetaMessageBatchCanceledResultVariant, Batches::BetaMessageBatchCanceledResult>
+    : BetaMessageBatchResult,
+        IVariant<BetaMessageBatchCanceledResultVariant, BetaMessageBatchCanceledResult>
 {
-    public static BetaMessageBatchCanceledResultVariant From(
-        Batches::BetaMessageBatchCanceledResult value
-    )
+    public static BetaMessageBatchCanceledResultVariant From(BetaMessageBatchCanceledResult value)
     {
         return new(value);
     }
@@ -59,15 +49,11 @@ public sealed record class BetaMessageBatchCanceledResultVariant(
     }
 }
 
-public sealed record class BetaMessageBatchExpiredResultVariant(
-    Batches::BetaMessageBatchExpiredResult Value
-)
-    : Batches::BetaMessageBatchResult,
-        IVariant<BetaMessageBatchExpiredResultVariant, Batches::BetaMessageBatchExpiredResult>
+public sealed record class BetaMessageBatchExpiredResultVariant(BetaMessageBatchExpiredResult Value)
+    : BetaMessageBatchResult,
+        IVariant<BetaMessageBatchExpiredResultVariant, BetaMessageBatchExpiredResult>
 {
-    public static BetaMessageBatchExpiredResultVariant From(
-        Batches::BetaMessageBatchExpiredResult value
-    )
+    public static BetaMessageBatchExpiredResultVariant From(BetaMessageBatchExpiredResult value)
     {
         return new(value);
     }

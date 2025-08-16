@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Messages = Anthropic.Models.Beta.Messages;
-using SourceVariants = Anthropic.Models.Beta.Messages.BetaImageBlockParamProperties.SourceVariants;
+using Anthropic.Models.Beta.Messages.BetaImageBlockParamProperties.SourceVariants;
 
 namespace Anthropic.Models.Beta.Messages.BetaImageBlockParamProperties;
 
@@ -12,14 +11,14 @@ public abstract record class Source
 {
     internal Source() { }
 
-    public static implicit operator Source(Messages::BetaBase64ImageSource value) =>
-        new SourceVariants::BetaBase64ImageSourceVariant(value);
+    public static implicit operator Source(BetaBase64ImageSource value) =>
+        new BetaBase64ImageSourceVariant(value);
 
-    public static implicit operator Source(Messages::BetaURLImageSource value) =>
-        new SourceVariants::BetaURLImageSourceVariant(value);
+    public static implicit operator Source(BetaURLImageSource value) =>
+        new BetaURLImageSourceVariant(value);
 
-    public static implicit operator Source(Messages::BetaFileImageSource value) =>
-        new SourceVariants::BetaFileImageSourceVariant(value);
+    public static implicit operator Source(BetaFileImageSource value) =>
+        new BetaFileImageSourceVariant(value);
 
     public abstract void Validate();
 }
@@ -51,13 +50,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaBase64ImageSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaBase64ImageSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaBase64ImageSourceVariant(deserialized);
+                        return new BetaBase64ImageSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -73,13 +72,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaURLImageSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaURLImageSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaURLImageSourceVariant(deserialized);
+                        return new BetaURLImageSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -95,13 +94,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaFileImageSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaFileImageSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaFileImageSourceVariant(deserialized);
+                        return new BetaFileImageSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -122,11 +121,9 @@ sealed class SourceConverter : JsonConverter<Source>
     {
         object variant = value switch
         {
-            SourceVariants::BetaBase64ImageSourceVariant(var betaBase64ImageSource) =>
-                betaBase64ImageSource,
-            SourceVariants::BetaURLImageSourceVariant(var betaURLImageSource) => betaURLImageSource,
-            SourceVariants::BetaFileImageSourceVariant(var betaFileImageSource) =>
-                betaFileImageSource,
+            BetaBase64ImageSourceVariant(var betaBase64ImageSource) => betaBase64ImageSource,
+            BetaURLImageSourceVariant(var betaURLImageSource) => betaURLImageSource,
+            BetaFileImageSourceVariant(var betaFileImageSource) => betaFileImageSource,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

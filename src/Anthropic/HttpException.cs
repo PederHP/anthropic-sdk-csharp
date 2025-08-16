@@ -1,9 +1,10 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 namespace Anthropic;
 
-public sealed class HttpException : global::System.Exception
+public sealed class HttpException : Exception
 {
     public required HttpStatusCode? StatusCode { get; set; }
     public required string ResponseBody { get; set; }

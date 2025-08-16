@@ -1,30 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<RawContentBlockStopEvent>))]
-public sealed record class RawContentBlockStopEvent
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<RawContentBlockStopEvent>
+[JsonConverter(typeof(ModelConverter<RawContentBlockStopEvent>))]
+public sealed record class RawContentBlockStopEvent : ModelBase, IFromRaw<RawContentBlockStopEvent>
 {
     public required long Index
     {
         get
         {
             if (!this.Properties.TryGetValue("index", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "index",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("index", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["index"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -34,15 +26,9 @@ public sealed record class RawContentBlockStopEvent
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

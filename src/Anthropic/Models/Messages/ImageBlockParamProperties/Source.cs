@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Messages = Anthropic.Models.Messages;
-using SourceVariants = Anthropic.Models.Messages.ImageBlockParamProperties.SourceVariants;
+using Anthropic.Models.Messages.ImageBlockParamProperties.SourceVariants;
 
 namespace Anthropic.Models.Messages.ImageBlockParamProperties;
 
@@ -12,11 +11,11 @@ public abstract record class Source
 {
     internal Source() { }
 
-    public static implicit operator Source(Messages::Base64ImageSource value) =>
-        new SourceVariants::Base64ImageSourceVariant(value);
+    public static implicit operator Source(Base64ImageSource value) =>
+        new Base64ImageSourceVariant(value);
 
-    public static implicit operator Source(Messages::URLImageSource value) =>
-        new SourceVariants::URLImageSourceVariant(value);
+    public static implicit operator Source(URLImageSource value) =>
+        new URLImageSourceVariant(value);
 
     public abstract void Validate();
 }
@@ -48,13 +47,10 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::Base64ImageSource>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<Base64ImageSource>(json, options);
                     if (deserialized != null)
                     {
-                        return new SourceVariants::Base64ImageSourceVariant(deserialized);
+                        return new Base64ImageSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -70,13 +66,10 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::URLImageSource>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<URLImageSource>(json, options);
                     if (deserialized != null)
                     {
-                        return new SourceVariants::URLImageSourceVariant(deserialized);
+                        return new URLImageSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -97,8 +90,8 @@ sealed class SourceConverter : JsonConverter<Source>
     {
         object variant = value switch
         {
-            SourceVariants::Base64ImageSourceVariant(var base64ImageSource) => base64ImageSource,
-            SourceVariants::URLImageSourceVariant(var urlImageSource) => urlImageSource,
+            Base64ImageSourceVariant(var base64ImageSource) => base64ImageSource,
+            URLImageSourceVariant(var urlImageSource) => urlImageSource,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

@@ -1,12 +1,10 @@
-using Messages = Anthropic.Models.Messages;
-
 namespace Anthropic.Models.Messages.ContentBlockSourceContentVariants;
 
-public sealed record class TextBlockParamVariant(Messages::TextBlockParam Value)
-    : Messages::ContentBlockSourceContent,
-        IVariant<TextBlockParamVariant, Messages::TextBlockParam>
+public sealed record class TextBlockParamVariant(TextBlockParam Value)
+    : ContentBlockSourceContent,
+        IVariant<TextBlockParamVariant, TextBlockParam>
 {
-    public static TextBlockParamVariant From(Messages::TextBlockParam value)
+    public static TextBlockParamVariant From(TextBlockParam value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class TextBlockParamVariant(Messages::TextBlockParam Value)
     }
 }
 
-public sealed record class ImageBlockParamVariant(Messages::ImageBlockParam Value)
-    : Messages::ContentBlockSourceContent,
-        IVariant<ImageBlockParamVariant, Messages::ImageBlockParam>
+public sealed record class ImageBlockParamVariant(ImageBlockParam Value)
+    : ContentBlockSourceContent,
+        IVariant<ImageBlockParamVariant, ImageBlockParam>
 {
-    public static ImageBlockParamVariant From(Messages::ImageBlockParam value)
+    public static ImageBlockParamVariant From(ImageBlockParam value)
     {
         return new(value);
     }

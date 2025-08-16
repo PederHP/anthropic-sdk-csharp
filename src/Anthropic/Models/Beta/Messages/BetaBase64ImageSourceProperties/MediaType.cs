@@ -1,11 +1,10 @@
 using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages.BetaBase64ImageSourceProperties;
 
-[JsonConverter(typeof(Anthropic::EnumConverter<MediaType, string>))]
-public sealed record class MediaType(string value) : Anthropic::IEnum<MediaType, string>
+[JsonConverter(typeof(EnumConverter<MediaType, string>))]
+public sealed record class MediaType(string value) : IEnum<MediaType, string>
 {
     public static readonly MediaType ImageJPEG = new("image/jpeg");
 

@@ -3,42 +3,37 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using Messages = Anthropic.Models.Beta.Messages;
 
 namespace Anthropic.Models.Beta.Messages.BetaRawMessageDeltaEventProperties;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<Delta>))]
-public sealed record class Delta : Anthropic::ModelBase, Anthropic::IFromRaw<Delta>
+[JsonConverter(typeof(ModelConverter<Delta>))]
+public sealed record class Delta : ModelBase, IFromRaw<Delta>
 {
     /// <summary>
     /// Information about the container used in the request (for the code execution tool)
     /// </summary>
-    public required Messages::BetaContainer? Container
+    public required BetaContainer? Container
     {
         get
         {
             if (!this.Properties.TryGetValue("container", out JsonElement element))
                 throw new ArgumentOutOfRangeException("container", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::BetaContainer?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<BetaContainer?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["container"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public required Messages::BetaStopReason? StopReason
+    public required BetaStopReason? StopReason
     {
         get
         {
             if (!this.Properties.TryGetValue("stop_reason", out JsonElement element))
                 throw new ArgumentOutOfRangeException("stop_reason", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::BetaStopReason?>(
+            return JsonSerializer.Deserialize<BetaStopReason?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(value); }
@@ -51,10 +46,7 @@ public sealed record class Delta : Anthropic::ModelBase, Anthropic::IFromRaw<Del
             if (!this.Properties.TryGetValue("stop_sequence", out JsonElement element))
                 throw new ArgumentOutOfRangeException("stop_sequence", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(value); }
     }

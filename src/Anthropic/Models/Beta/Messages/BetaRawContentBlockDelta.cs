@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaRawContentBlockDeltaVariants = Anthropic.Models.Beta.Messages.BetaRawContentBlockDeltaVariants;
+using Anthropic.Models.Beta.Messages.BetaRawContentBlockDeltaVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -11,19 +12,19 @@ public abstract record class BetaRawContentBlockDelta
     internal BetaRawContentBlockDelta() { }
 
     public static implicit operator BetaRawContentBlockDelta(BetaTextDelta value) =>
-        new BetaRawContentBlockDeltaVariants::BetaTextDeltaVariant(value);
+        new BetaTextDeltaVariant(value);
 
     public static implicit operator BetaRawContentBlockDelta(BetaInputJSONDelta value) =>
-        new BetaRawContentBlockDeltaVariants::BetaInputJSONDeltaVariant(value);
+        new BetaInputJSONDeltaVariant(value);
 
     public static implicit operator BetaRawContentBlockDelta(BetaCitationsDelta value) =>
-        new BetaRawContentBlockDeltaVariants::BetaCitationsDeltaVariant(value);
+        new BetaCitationsDeltaVariant(value);
 
     public static implicit operator BetaRawContentBlockDelta(BetaThinkingDelta value) =>
-        new BetaRawContentBlockDeltaVariants::BetaThinkingDeltaVariant(value);
+        new BetaThinkingDeltaVariant(value);
 
     public static implicit operator BetaRawContentBlockDelta(BetaSignatureDelta value) =>
-        new BetaRawContentBlockDeltaVariants::BetaSignatureDeltaVariant(value);
+        new BetaSignatureDeltaVariant(value);
 
     public abstract void Validate();
 }
@@ -32,7 +33,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
 {
     public override BetaRawContentBlockDelta? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -58,9 +59,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     var deserialized = JsonSerializer.Deserialize<BetaTextDelta>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaRawContentBlockDeltaVariants::BetaTextDeltaVariant(
-                            deserialized
-                        );
+                        return new BetaTextDeltaVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -68,7 +67,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "input_json_delta":
             {
@@ -82,9 +81,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawContentBlockDeltaVariants::BetaInputJSONDeltaVariant(
-                            deserialized
-                        );
+                        return new BetaInputJSONDeltaVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -92,7 +89,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "citations_delta":
             {
@@ -106,9 +103,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawContentBlockDeltaVariants::BetaCitationsDeltaVariant(
-                            deserialized
-                        );
+                        return new BetaCitationsDeltaVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -116,7 +111,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "thinking_delta":
             {
@@ -127,9 +122,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     var deserialized = JsonSerializer.Deserialize<BetaThinkingDelta>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaRawContentBlockDeltaVariants::BetaThinkingDeltaVariant(
-                            deserialized
-                        );
+                        return new BetaThinkingDeltaVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -137,7 +130,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "signature_delta":
             {
@@ -151,9 +144,7 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawContentBlockDeltaVariants::BetaSignatureDeltaVariant(
-                            deserialized
-                        );
+                        return new BetaSignatureDeltaVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -161,11 +152,11 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -178,17 +169,12 @@ sealed class BetaRawContentBlockDeltaConverter : JsonConverter<BetaRawContentBlo
     {
         object variant = value switch
         {
-            BetaRawContentBlockDeltaVariants::BetaTextDeltaVariant(var betaTextDelta) =>
-                betaTextDelta,
-            BetaRawContentBlockDeltaVariants::BetaInputJSONDeltaVariant(var betaInputJSONDelta) =>
-                betaInputJSONDelta,
-            BetaRawContentBlockDeltaVariants::BetaCitationsDeltaVariant(var betaCitationsDelta) =>
-                betaCitationsDelta,
-            BetaRawContentBlockDeltaVariants::BetaThinkingDeltaVariant(var betaThinkingDelta) =>
-                betaThinkingDelta,
-            BetaRawContentBlockDeltaVariants::BetaSignatureDeltaVariant(var betaSignatureDelta) =>
-                betaSignatureDelta,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaTextDeltaVariant(var betaTextDelta) => betaTextDelta,
+            BetaInputJSONDeltaVariant(var betaInputJSONDelta) => betaInputJSONDelta,
+            BetaCitationsDeltaVariant(var betaCitationsDelta) => betaCitationsDelta,
+            BetaThinkingDeltaVariant(var betaThinkingDelta) => betaThinkingDelta,
+            BetaSignatureDeltaVariant(var betaSignatureDelta) => betaSignatureDelta,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

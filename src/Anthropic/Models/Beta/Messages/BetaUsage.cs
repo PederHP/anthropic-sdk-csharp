@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaUsageProperties = Anthropic.Models.Beta.Messages.BetaUsageProperties;
+using Anthropic.Models.Beta.Messages.BetaUsageProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaUsage>))]
-public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw<BetaUsage>
+[JsonConverter(typeof(ModelConverter<BetaUsage>))]
+public sealed record class BetaUsage : ModelBase, IFromRaw<BetaUsage>
 {
     /// <summary>
     /// Breakdown of cached tokens by TTL
@@ -18,14 +18,14 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
         get
         {
             if (!this.Properties.TryGetValue("cache_creation", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "cache_creation",
                     "Missing required argument"
                 );
 
             return JsonSerializer.Deserialize<BetaCacheCreation?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_creation"] = JsonSerializer.SerializeToElement(value); }
@@ -41,15 +41,12 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
             if (
                 !this.Properties.TryGetValue("cache_creation_input_tokens", out JsonElement element)
             )
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "cache_creation_input_tokens",
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<long?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -67,15 +64,12 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
         get
         {
             if (!this.Properties.TryGetValue("cache_read_input_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "cache_read_input_tokens",
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<long?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -91,15 +85,9 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
         get
         {
             if (!this.Properties.TryGetValue("input_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "input_tokens",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("input_tokens", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -112,15 +100,9 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
         get
         {
             if (!this.Properties.TryGetValue("output_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "output_tokens",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("output_tokens", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["output_tokens"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -133,14 +115,14 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
         get
         {
             if (!this.Properties.TryGetValue("server_tool_use", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "server_tool_use",
                     "Missing required argument"
                 );
 
             return JsonSerializer.Deserialize<BetaServerToolUsage?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["server_tool_use"] = JsonSerializer.SerializeToElement(value); }
@@ -149,20 +131,14 @@ public sealed record class BetaUsage : Anthropic::ModelBase, Anthropic::IFromRaw
     /// <summary>
     /// If the request used the priority, standard, or batch tier.
     /// </summary>
-    public required BetaUsageProperties::ServiceTier? ServiceTier
+    public required ServiceTier? ServiceTier
     {
         get
         {
             if (!this.Properties.TryGetValue("service_tier", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "service_tier",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("service_tier", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaUsageProperties::ServiceTier?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<ServiceTier?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["service_tier"] = JsonSerializer.SerializeToElement(value); }
     }

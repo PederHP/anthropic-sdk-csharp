@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ContentBlockSourceContentVariants = Anthropic.Models.Messages.ContentBlockSourceContentVariants;
+using Anthropic.Models.Messages.ContentBlockSourceContentVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -11,10 +12,10 @@ public abstract record class ContentBlockSourceContent
     internal ContentBlockSourceContent() { }
 
     public static implicit operator ContentBlockSourceContent(TextBlockParam value) =>
-        new ContentBlockSourceContentVariants::TextBlockParamVariant(value);
+        new TextBlockParamVariant(value);
 
     public static implicit operator ContentBlockSourceContent(ImageBlockParam value) =>
-        new ContentBlockSourceContentVariants::ImageBlockParamVariant(value);
+        new ImageBlockParamVariant(value);
 
     public abstract void Validate();
 }
@@ -23,7 +24,7 @@ sealed class ContentBlockSourceContentConverter : JsonConverter<ContentBlockSour
 {
     public override ContentBlockSourceContent? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -49,9 +50,7 @@ sealed class ContentBlockSourceContentConverter : JsonConverter<ContentBlockSour
                     var deserialized = JsonSerializer.Deserialize<TextBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockSourceContentVariants::TextBlockParamVariant(
-                            deserialized
-                        );
+                        return new TextBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -59,7 +58,7 @@ sealed class ContentBlockSourceContentConverter : JsonConverter<ContentBlockSour
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "image":
             {
@@ -70,9 +69,7 @@ sealed class ContentBlockSourceContentConverter : JsonConverter<ContentBlockSour
                     var deserialized = JsonSerializer.Deserialize<ImageBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockSourceContentVariants::ImageBlockParamVariant(
-                            deserialized
-                        );
+                        return new ImageBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -80,11 +77,11 @@ sealed class ContentBlockSourceContentConverter : JsonConverter<ContentBlockSour
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -97,11 +94,9 @@ sealed class ContentBlockSourceContentConverter : JsonConverter<ContentBlockSour
     {
         object variant = value switch
         {
-            ContentBlockSourceContentVariants::TextBlockParamVariant(var textBlockParam) =>
-                textBlockParam,
-            ContentBlockSourceContentVariants::ImageBlockParamVariant(var imageBlockParam) =>
-                imageBlockParam,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            TextBlockParamVariant(var textBlockParam) => textBlockParam,
+            ImageBlockParamVariant(var imageBlockParam) => imageBlockParam,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

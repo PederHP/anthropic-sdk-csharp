@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using Messages = Anthropic.Models.Messages;
 
 namespace Anthropic.Models.Messages.WebSearchToolResultBlockContentVariants;
 
-public sealed record class WebSearchToolResultErrorVariant(Messages::WebSearchToolResultError Value)
-    : Messages::WebSearchToolResultBlockContent,
-        IVariant<WebSearchToolResultErrorVariant, Messages::WebSearchToolResultError>
+public sealed record class WebSearchToolResultErrorVariant(WebSearchToolResultError Value)
+    : WebSearchToolResultBlockContent,
+        IVariant<WebSearchToolResultErrorVariant, WebSearchToolResultError>
 {
-    public static WebSearchToolResultErrorVariant From(Messages::WebSearchToolResultError value)
+    public static WebSearchToolResultErrorVariant From(WebSearchToolResultError value)
     {
         return new(value);
     }
@@ -18,11 +17,11 @@ public sealed record class WebSearchToolResultErrorVariant(Messages::WebSearchTo
     }
 }
 
-public sealed record class WebSearchResultBlocks(List<Messages::WebSearchResultBlock> Value)
-    : Messages::WebSearchToolResultBlockContent,
-        IVariant<WebSearchResultBlocks, List<Messages::WebSearchResultBlock>>
+public sealed record class WebSearchResultBlocks(List<WebSearchResultBlock> Value)
+    : WebSearchToolResultBlockContent,
+        IVariant<WebSearchResultBlocks, List<WebSearchResultBlock>>
 {
-    public static WebSearchResultBlocks From(List<Messages::WebSearchResultBlock> value)
+    public static WebSearchResultBlocks From(List<WebSearchResultBlock> value)
     {
         return new(value);
     }

@@ -1,11 +1,10 @@
 using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages.WebSearchToolRequestErrorProperties;
 
-[JsonConverter(typeof(Anthropic::EnumConverter<ErrorCode, string>))]
-public sealed record class ErrorCode(string value) : Anthropic::IEnum<ErrorCode, string>
+[JsonConverter(typeof(EnumConverter<ErrorCode, string>))]
+public sealed record class ErrorCode(string value) : IEnum<ErrorCode, string>
 {
     public static readonly ErrorCode InvalidToolInput = new("invalid_tool_input");
 

@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaCodeExecutionToolResultBlockParamContentVariants = Anthropic.Models.Beta.Messages.BetaCodeExecutionToolResultBlockParamContentVariants;
+using Anthropic.Models.Beta.Messages.BetaCodeExecutionToolResultBlockParamContentVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -12,17 +13,11 @@ public abstract record class BetaCodeExecutionToolResultBlockParamContent
 
     public static implicit operator BetaCodeExecutionToolResultBlockParamContent(
         BetaCodeExecutionToolResultErrorParam value
-    ) =>
-        new BetaCodeExecutionToolResultBlockParamContentVariants::BetaCodeExecutionToolResultErrorParamVariant(
-            value
-        );
+    ) => new BetaCodeExecutionToolResultErrorParamVariant(value);
 
     public static implicit operator BetaCodeExecutionToolResultBlockParamContent(
         BetaCodeExecutionResultBlockParam value
-    ) =>
-        new BetaCodeExecutionToolResultBlockParamContentVariants::BetaCodeExecutionResultBlockParamVariant(
-            value
-        );
+    ) => new BetaCodeExecutionResultBlockParamVariant(value);
 
     public abstract void Validate();
 }
@@ -32,7 +27,7 @@ sealed class BetaCodeExecutionToolResultBlockParamContentConverter
 {
     public override BetaCodeExecutionToolResultBlockParamContent? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -46,9 +41,7 @@ sealed class BetaCodeExecutionToolResultBlockParamContentConverter
             );
             if (deserialized != null)
             {
-                return new BetaCodeExecutionToolResultBlockParamContentVariants::BetaCodeExecutionToolResultErrorParamVariant(
-                    deserialized
-                );
+                return new BetaCodeExecutionToolResultErrorParamVariant(deserialized);
             }
         }
         catch (JsonException e)
@@ -64,9 +57,7 @@ sealed class BetaCodeExecutionToolResultBlockParamContentConverter
             );
             if (deserialized != null)
             {
-                return new BetaCodeExecutionToolResultBlockParamContentVariants::BetaCodeExecutionResultBlockParamVariant(
-                    deserialized
-                );
+                return new BetaCodeExecutionResultBlockParamVariant(deserialized);
             }
         }
         catch (JsonException e)
@@ -74,7 +65,7 @@ sealed class BetaCodeExecutionToolResultBlockParamContentConverter
             exceptions.Add(e);
         }
 
-        throw new global::System.AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(
@@ -85,13 +76,12 @@ sealed class BetaCodeExecutionToolResultBlockParamContentConverter
     {
         object variant = value switch
         {
-            BetaCodeExecutionToolResultBlockParamContentVariants::BetaCodeExecutionToolResultErrorParamVariant(
+            BetaCodeExecutionToolResultErrorParamVariant(
                 var betaCodeExecutionToolResultErrorParam
             ) => betaCodeExecutionToolResultErrorParam,
-            BetaCodeExecutionToolResultBlockParamContentVariants::BetaCodeExecutionResultBlockParamVariant(
-                var betaCodeExecutionResultBlockParam
-            ) => betaCodeExecutionResultBlockParam,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaCodeExecutionResultBlockParamVariant(var betaCodeExecutionResultBlockParam) =>
+                betaCodeExecutionResultBlockParam,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

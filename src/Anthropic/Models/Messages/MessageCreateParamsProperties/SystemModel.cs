@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Messages = Anthropic.Models.Messages;
-using SystemVariants = Anthropic.Models.Messages.MessageCountTokensParamsProperties.SystemVariants;
+using SystemVariants = Anthropic.Models.Messages.MessageCreateParamsProperties.SystemVariants;
 
-namespace Anthropic.Models.Messages.MessageCountTokensParamsProperties;
+namespace Anthropic.Models.Messages.MessageCreateParamsProperties;
 
 /// <summary>
 /// System prompt.
@@ -12,24 +12,24 @@ namespace Anthropic.Models.Messages.MessageCountTokensParamsProperties;
 /// A system prompt is a way of providing context and instructions to Claude, such
 /// as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
 /// </summary>
-[JsonConverter(typeof(SystemConverter))]
-public abstract record class System
+[JsonConverter(typeof(SystemModelConverter))]
+public abstract record class SystemModel
 {
-    internal System() { }
+    internal SystemModel() { }
 
-    public static implicit operator System(string value) => new SystemVariants::String(value);
+    public static implicit operator SystemModel(string value) => new SystemVariants::String(value);
 
-    public static implicit operator System(List<Messages::TextBlockParam> value) =>
+    public static implicit operator SystemModel(List<TextBlockParam> value) =>
         new SystemVariants::TextBlockParams(value);
 
     public abstract void Validate();
 }
 
-sealed class SystemConverter : JsonConverter<System>
+sealed class SystemModelConverter : JsonConverter<SystemModel>
 {
-    public override System? Read(
+    public override SystemModel? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -50,7 +50,7 @@ sealed class SystemConverter : JsonConverter<System>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<Messages::TextBlockParam>>(
+            var deserialized = JsonSerializer.Deserialize<List<TextBlockParam>>(
                 ref reader,
                 options
             );
@@ -64,16 +64,20 @@ sealed class SystemConverter : JsonConverter<System>
             exceptions.Add(e);
         }
 
-        throw new global::System.AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
-    public override void Write(Utf8JsonWriter writer, System value, JsonSerializerOptions options)
+    public override void Write(
+        Utf8JsonWriter writer,
+        SystemModel value,
+        JsonSerializerOptions options
+    )
     {
         object variant = value switch
         {
             SystemVariants::String(var string1) => string1,
             SystemVariants::TextBlockParams(var textBlockParams) => textBlockParams,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

@@ -1,34 +1,29 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaRawContentBlockStartEventProperties = Anthropic.Models.Beta.Messages.BetaRawContentBlockStartEventProperties;
+using Anthropic.Models.Beta.Messages.BetaRawContentBlockStartEventProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaRawContentBlockStartEvent>))]
+[JsonConverter(typeof(ModelConverter<BetaRawContentBlockStartEvent>))]
 public sealed record class BetaRawContentBlockStartEvent
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaRawContentBlockStartEvent>
+    : ModelBase,
+        IFromRaw<BetaRawContentBlockStartEvent>
 {
     /// <summary>
     /// Response model for a file uploaded to the container.
     /// </summary>
-    public required BetaRawContentBlockStartEventProperties::ContentBlock ContentBlock
+    public required ContentBlock ContentBlock
     {
         get
         {
             if (!this.Properties.TryGetValue("content_block", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "content_block",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("content_block", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaRawContentBlockStartEventProperties::ContentBlock>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("content_block");
+            return JsonSerializer.Deserialize<ContentBlock>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("content_block");
         }
         set { this.Properties["content_block"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -38,15 +33,9 @@ public sealed record class BetaRawContentBlockStartEvent
         get
         {
             if (!this.Properties.TryGetValue("index", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "index",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("index", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["index"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -56,15 +45,9 @@ public sealed record class BetaRawContentBlockStartEvent
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

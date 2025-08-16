@@ -1,31 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using Messages = Anthropic.Models.Messages;
 
 namespace Anthropic.Models.Messages.Batches;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<MessageBatchSucceededResult>))]
+[JsonConverter(typeof(ModelConverter<MessageBatchSucceededResult>))]
 public sealed record class MessageBatchSucceededResult
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<MessageBatchSucceededResult>
+    : ModelBase,
+        IFromRaw<MessageBatchSucceededResult>
 {
-    public required Messages::Message Message
+    public required Message Message
     {
         get
         {
             if (!this.Properties.TryGetValue("message", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "message",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("message", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::Message>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("message");
+            return JsonSerializer.Deserialize<Message>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("message");
         }
         set { this.Properties["message"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -35,15 +29,9 @@ public sealed record class MessageBatchSucceededResult
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -74,7 +62,7 @@ public sealed record class MessageBatchSucceededResult
     }
 
     [SetsRequiredMembers]
-    public MessageBatchSucceededResult(Messages::Message message)
+    public MessageBatchSucceededResult(Message message)
         : this()
     {
         this.Message = message;

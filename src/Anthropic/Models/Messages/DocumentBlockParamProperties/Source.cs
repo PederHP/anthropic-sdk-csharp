@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Messages = Anthropic.Models.Messages;
-using SourceVariants = Anthropic.Models.Messages.DocumentBlockParamProperties.SourceVariants;
+using Anthropic.Models.Messages.DocumentBlockParamProperties.SourceVariants;
 
 namespace Anthropic.Models.Messages.DocumentBlockParamProperties;
 
@@ -12,17 +11,16 @@ public abstract record class Source
 {
     internal Source() { }
 
-    public static implicit operator Source(Messages::Base64PDFSource value) =>
-        new SourceVariants::Base64PDFSourceVariant(value);
+    public static implicit operator Source(Base64PDFSource value) =>
+        new Base64PDFSourceVariant(value);
 
-    public static implicit operator Source(Messages::PlainTextSource value) =>
-        new SourceVariants::PlainTextSourceVariant(value);
+    public static implicit operator Source(PlainTextSource value) =>
+        new PlainTextSourceVariant(value);
 
-    public static implicit operator Source(Messages::ContentBlockSource value) =>
-        new SourceVariants::ContentBlockSourceVariant(value);
+    public static implicit operator Source(ContentBlockSource value) =>
+        new ContentBlockSourceVariant(value);
 
-    public static implicit operator Source(Messages::URLPDFSource value) =>
-        new SourceVariants::URLPDFSourceVariant(value);
+    public static implicit operator Source(URLPDFSource value) => new URLPDFSourceVariant(value);
 
     public abstract void Validate();
 }
@@ -54,13 +52,10 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::Base64PDFSource>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<Base64PDFSource>(json, options);
                     if (deserialized != null)
                     {
-                        return new SourceVariants::Base64PDFSourceVariant(deserialized);
+                        return new Base64PDFSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -76,13 +71,10 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::PlainTextSource>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<PlainTextSource>(json, options);
                     if (deserialized != null)
                     {
-                        return new SourceVariants::PlainTextSourceVariant(deserialized);
+                        return new PlainTextSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -98,13 +90,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::ContentBlockSource>(
+                    var deserialized = JsonSerializer.Deserialize<ContentBlockSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::ContentBlockSourceVariant(deserialized);
+                        return new ContentBlockSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -120,13 +112,10 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::URLPDFSource>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<URLPDFSource>(json, options);
                     if (deserialized != null)
                     {
-                        return new SourceVariants::URLPDFSourceVariant(deserialized);
+                        return new URLPDFSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -147,10 +136,10 @@ sealed class SourceConverter : JsonConverter<Source>
     {
         object variant = value switch
         {
-            SourceVariants::Base64PDFSourceVariant(var base64PDFSource) => base64PDFSource,
-            SourceVariants::PlainTextSourceVariant(var plainTextSource) => plainTextSource,
-            SourceVariants::ContentBlockSourceVariant(var contentBlockSource) => contentBlockSource,
-            SourceVariants::URLPDFSourceVariant(var urlpdfSource) => urlpdfSource,
+            Base64PDFSourceVariant(var base64PDFSource) => base64PDFSource,
+            PlainTextSourceVariant(var plainTextSource) => plainTextSource,
+            ContentBlockSourceVariant(var contentBlockSource) => contentBlockSource,
+            URLPDFSourceVariant(var urlpdfSource) => urlpdfSource,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

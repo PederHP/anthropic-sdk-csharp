@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using TextCitationVariants = Anthropic.Models.Messages.TextCitationVariants;
+using Anthropic.Models.Messages.TextCitationVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -11,19 +12,19 @@ public abstract record class TextCitation
     internal TextCitation() { }
 
     public static implicit operator TextCitation(CitationCharLocation value) =>
-        new TextCitationVariants::CitationCharLocationVariant(value);
+        new CitationCharLocationVariant(value);
 
     public static implicit operator TextCitation(CitationPageLocation value) =>
-        new TextCitationVariants::CitationPageLocationVariant(value);
+        new CitationPageLocationVariant(value);
 
     public static implicit operator TextCitation(CitationContentBlockLocation value) =>
-        new TextCitationVariants::CitationContentBlockLocationVariant(value);
+        new CitationContentBlockLocationVariant(value);
 
     public static implicit operator TextCitation(CitationsWebSearchResultLocation value) =>
-        new TextCitationVariants::CitationsWebSearchResultLocationVariant(value);
+        new CitationsWebSearchResultLocationVariant(value);
 
     public static implicit operator TextCitation(CitationsSearchResultLocation value) =>
-        new TextCitationVariants::CitationsSearchResultLocationVariant(value);
+        new CitationsSearchResultLocationVariant(value);
 
     public abstract void Validate();
 }
@@ -32,7 +33,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
 {
     public override TextCitation? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -61,7 +62,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new TextCitationVariants::CitationCharLocationVariant(deserialized);
+                        return new CitationCharLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -69,7 +70,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "page_location":
             {
@@ -83,7 +84,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new TextCitationVariants::CitationPageLocationVariant(deserialized);
+                        return new CitationPageLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -91,7 +92,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_location":
             {
@@ -105,9 +106,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new TextCitationVariants::CitationContentBlockLocationVariant(
-                            deserialized
-                        );
+                        return new CitationContentBlockLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -115,7 +114,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "web_search_result_location":
             {
@@ -129,9 +128,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new TextCitationVariants::CitationsWebSearchResultLocationVariant(
-                            deserialized
-                        );
+                        return new CitationsWebSearchResultLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -139,7 +136,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "search_result_location":
             {
@@ -153,9 +150,7 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new TextCitationVariants::CitationsSearchResultLocationVariant(
-                            deserialized
-                        );
+                        return new CitationsSearchResultLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -163,11 +158,11 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -180,20 +175,15 @@ sealed class TextCitationConverter : JsonConverter<TextCitation>
     {
         object variant = value switch
         {
-            TextCitationVariants::CitationCharLocationVariant(var citationCharLocation) =>
-                citationCharLocation,
-            TextCitationVariants::CitationPageLocationVariant(var citationPageLocation) =>
-                citationPageLocation,
-            TextCitationVariants::CitationContentBlockLocationVariant(
-                var citationContentBlockLocation
-            ) => citationContentBlockLocation,
-            TextCitationVariants::CitationsWebSearchResultLocationVariant(
-                var citationsWebSearchResultLocation
-            ) => citationsWebSearchResultLocation,
-            TextCitationVariants::CitationsSearchResultLocationVariant(
-                var citationsSearchResultLocation
-            ) => citationsSearchResultLocation,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            CitationCharLocationVariant(var citationCharLocation) => citationCharLocation,
+            CitationPageLocationVariant(var citationPageLocation) => citationPageLocation,
+            CitationContentBlockLocationVariant(var citationContentBlockLocation) =>
+                citationContentBlockLocation,
+            CitationsWebSearchResultLocationVariant(var citationsWebSearchResultLocation) =>
+                citationsWebSearchResultLocation,
+            CitationsSearchResultLocationVariant(var citationsSearchResultLocation) =>
+                citationsSearchResultLocation,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

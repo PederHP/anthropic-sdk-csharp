@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaErrorVariants = Anthropic.Models.Beta.BetaErrorVariants;
+using Anthropic.Models.Beta.BetaErrorVariants;
 
 namespace Anthropic.Models.Beta;
 
@@ -11,31 +12,30 @@ public abstract record class BetaError
     internal BetaError() { }
 
     public static implicit operator BetaError(BetaInvalidRequestError value) =>
-        new BetaErrorVariants::BetaInvalidRequestErrorVariant(value);
+        new BetaInvalidRequestErrorVariant(value);
 
     public static implicit operator BetaError(BetaAuthenticationError value) =>
-        new BetaErrorVariants::BetaAuthenticationErrorVariant(value);
+        new BetaAuthenticationErrorVariant(value);
 
     public static implicit operator BetaError(BetaBillingError value) =>
-        new BetaErrorVariants::BetaBillingErrorVariant(value);
+        new BetaBillingErrorVariant(value);
 
     public static implicit operator BetaError(BetaPermissionError value) =>
-        new BetaErrorVariants::BetaPermissionErrorVariant(value);
+        new BetaPermissionErrorVariant(value);
 
     public static implicit operator BetaError(BetaNotFoundError value) =>
-        new BetaErrorVariants::BetaNotFoundErrorVariant(value);
+        new BetaNotFoundErrorVariant(value);
 
     public static implicit operator BetaError(BetaRateLimitError value) =>
-        new BetaErrorVariants::BetaRateLimitErrorVariant(value);
+        new BetaRateLimitErrorVariant(value);
 
     public static implicit operator BetaError(BetaGatewayTimeoutError value) =>
-        new BetaErrorVariants::BetaGatewayTimeoutErrorVariant(value);
+        new BetaGatewayTimeoutErrorVariant(value);
 
-    public static implicit operator BetaError(BetaAPIError value) =>
-        new BetaErrorVariants::BetaAPIErrorVariant(value);
+    public static implicit operator BetaError(BetaAPIError value) => new BetaAPIErrorVariant(value);
 
     public static implicit operator BetaError(BetaOverloadedError value) =>
-        new BetaErrorVariants::BetaOverloadedErrorVariant(value);
+        new BetaOverloadedErrorVariant(value);
 
     public abstract void Validate();
 }
@@ -44,7 +44,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
 {
     public override BetaError? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -73,7 +73,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaInvalidRequestErrorVariant(deserialized);
+                        return new BetaInvalidRequestErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -81,7 +81,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "authentication_error":
             {
@@ -95,7 +95,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaAuthenticationErrorVariant(deserialized);
+                        return new BetaAuthenticationErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -103,7 +103,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "billing_error":
             {
@@ -114,7 +114,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     var deserialized = JsonSerializer.Deserialize<BetaBillingError>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaBillingErrorVariant(deserialized);
+                        return new BetaBillingErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -122,7 +122,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "permission_error":
             {
@@ -136,7 +136,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaPermissionErrorVariant(deserialized);
+                        return new BetaPermissionErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -144,7 +144,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "not_found_error":
             {
@@ -155,7 +155,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     var deserialized = JsonSerializer.Deserialize<BetaNotFoundError>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaNotFoundErrorVariant(deserialized);
+                        return new BetaNotFoundErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -163,7 +163,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "rate_limit_error":
             {
@@ -177,7 +177,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaRateLimitErrorVariant(deserialized);
+                        return new BetaRateLimitErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -185,7 +185,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "timeout_error":
             {
@@ -199,7 +199,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaGatewayTimeoutErrorVariant(deserialized);
+                        return new BetaGatewayTimeoutErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -207,7 +207,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "api_error":
             {
@@ -218,7 +218,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     var deserialized = JsonSerializer.Deserialize<BetaAPIError>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaAPIErrorVariant(deserialized);
+                        return new BetaAPIErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -226,7 +226,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "overloaded_error":
             {
@@ -240,7 +240,7 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaErrorVariants::BetaOverloadedErrorVariant(deserialized);
+                        return new BetaOverloadedErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -248,11 +248,11 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -265,22 +265,16 @@ sealed class BetaErrorConverter : JsonConverter<BetaError>
     {
         object variant = value switch
         {
-            BetaErrorVariants::BetaInvalidRequestErrorVariant(var betaInvalidRequestError) =>
-                betaInvalidRequestError,
-            BetaErrorVariants::BetaAuthenticationErrorVariant(var betaAuthenticationError) =>
-                betaAuthenticationError,
-            BetaErrorVariants::BetaBillingErrorVariant(var betaBillingError) => betaBillingError,
-            BetaErrorVariants::BetaPermissionErrorVariant(var betaPermissionError) =>
-                betaPermissionError,
-            BetaErrorVariants::BetaNotFoundErrorVariant(var betaNotFoundError) => betaNotFoundError,
-            BetaErrorVariants::BetaRateLimitErrorVariant(var betaRateLimitError) =>
-                betaRateLimitError,
-            BetaErrorVariants::BetaGatewayTimeoutErrorVariant(var betaGatewayTimeoutError) =>
-                betaGatewayTimeoutError,
-            BetaErrorVariants::BetaAPIErrorVariant(var betaAPIError) => betaAPIError,
-            BetaErrorVariants::BetaOverloadedErrorVariant(var betaOverloadedError) =>
-                betaOverloadedError,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaInvalidRequestErrorVariant(var betaInvalidRequestError) => betaInvalidRequestError,
+            BetaAuthenticationErrorVariant(var betaAuthenticationError) => betaAuthenticationError,
+            BetaBillingErrorVariant(var betaBillingError) => betaBillingError,
+            BetaPermissionErrorVariant(var betaPermissionError) => betaPermissionError,
+            BetaNotFoundErrorVariant(var betaNotFoundError) => betaNotFoundError,
+            BetaRateLimitErrorVariant(var betaRateLimitError) => betaRateLimitError,
+            BetaGatewayTimeoutErrorVariant(var betaGatewayTimeoutError) => betaGatewayTimeoutError,
+            BetaAPIErrorVariant(var betaAPIError) => betaAPIError,
+            BetaOverloadedErrorVariant(var betaOverloadedError) => betaOverloadedError,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

@@ -1,8 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
-using Anthropic = Anthropic;
-using Beta = Anthropic.Models.Beta;
 
 namespace Anthropic.Models.Beta.Messages.Batches;
 
@@ -12,7 +11,7 @@ namespace Anthropic.Models.Beta.Messages.Batches;
 ///
 /// Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
 /// </summary>
-public sealed record class BatchListParams : Anthropic::ParamsBase
+public sealed record class BatchListParams : ParamsBase
 {
     /// <summary>
     /// ID of the object to use as a cursor for pagination. When provided, returns
@@ -25,10 +24,7 @@ public sealed record class BatchListParams : Anthropic::ParamsBase
             if (!this.QueryProperties.TryGetValue("after_id", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.QueryProperties["after_id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -44,10 +40,7 @@ public sealed record class BatchListParams : Anthropic::ParamsBase
             if (!this.QueryProperties.TryGetValue("before_id", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.QueryProperties["before_id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -64,10 +57,7 @@ public sealed record class BatchListParams : Anthropic::ParamsBase
             if (!this.QueryProperties.TryGetValue("limit", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<long?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
         set { this.QueryProperties["limit"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -75,24 +65,24 @@ public sealed record class BatchListParams : Anthropic::ParamsBase
     /// <summary>
     /// Optional header to specify the beta version(s) you want to use.
     /// </summary>
-    public List<Beta::AnthropicBeta>? Betas
+    public List<AnthropicBeta>? Betas
     {
         get
         {
             if (!this.HeaderProperties.TryGetValue("betas", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<Beta::AnthropicBeta>?>(
+            return JsonSerializer.Deserialize<List<AnthropicBeta>?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public override global::System.Uri Url(Anthropic::IAnthropicClient client)
+    public override Uri Url(IAnthropicClient client)
     {
-        return new global::System.UriBuilder(
+        return new UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/') + "/v1/messages/batches?beta=true"
         )
         {
@@ -100,12 +90,12 @@ public sealed record class BatchListParams : Anthropic::ParamsBase
         }.Uri;
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, Anthropic::IAnthropicClient client)
+    public void AddHeadersToRequest(HttpRequestMessage request, IAnthropicClient client)
     {
-        Anthropic::ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
         {
-            Anthropic::ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }

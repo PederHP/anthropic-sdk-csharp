@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaTextCitationVariants = Anthropic.Models.Beta.Messages.BetaTextCitationVariants;
+using Anthropic.Models.Beta.Messages.BetaTextCitationVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -11,19 +12,19 @@ public abstract record class BetaTextCitation
     internal BetaTextCitation() { }
 
     public static implicit operator BetaTextCitation(BetaCitationCharLocation value) =>
-        new BetaTextCitationVariants::BetaCitationCharLocationVariant(value);
+        new BetaCitationCharLocationVariant(value);
 
     public static implicit operator BetaTextCitation(BetaCitationPageLocation value) =>
-        new BetaTextCitationVariants::BetaCitationPageLocationVariant(value);
+        new BetaCitationPageLocationVariant(value);
 
     public static implicit operator BetaTextCitation(BetaCitationContentBlockLocation value) =>
-        new BetaTextCitationVariants::BetaCitationContentBlockLocationVariant(value);
+        new BetaCitationContentBlockLocationVariant(value);
 
     public static implicit operator BetaTextCitation(BetaCitationsWebSearchResultLocation value) =>
-        new BetaTextCitationVariants::BetaCitationsWebSearchResultLocationVariant(value);
+        new BetaCitationsWebSearchResultLocationVariant(value);
 
     public static implicit operator BetaTextCitation(BetaCitationSearchResultLocation value) =>
-        new BetaTextCitationVariants::BetaCitationSearchResultLocationVariant(value);
+        new BetaCitationSearchResultLocationVariant(value);
 
     public abstract void Validate();
 }
@@ -32,7 +33,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
 {
     public override BetaTextCitation? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -61,9 +62,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaTextCitationVariants::BetaCitationCharLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationCharLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -71,7 +70,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "page_location":
             {
@@ -85,9 +84,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaTextCitationVariants::BetaCitationPageLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationPageLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -95,7 +92,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_location":
             {
@@ -109,9 +106,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaTextCitationVariants::BetaCitationContentBlockLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationContentBlockLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -119,7 +114,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "web_search_result_location":
             {
@@ -134,9 +129,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                         );
                     if (deserialized != null)
                     {
-                        return new BetaTextCitationVariants::BetaCitationsWebSearchResultLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationsWebSearchResultLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -144,7 +137,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "search_result_location":
             {
@@ -158,9 +151,7 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaTextCitationVariants::BetaCitationSearchResultLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationSearchResultLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -168,11 +159,11 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -185,22 +176,17 @@ sealed class BetaTextCitationConverter : JsonConverter<BetaTextCitation>
     {
         object variant = value switch
         {
-            BetaTextCitationVariants::BetaCitationCharLocationVariant(
-                var betaCitationCharLocation
-            ) => betaCitationCharLocation,
-            BetaTextCitationVariants::BetaCitationPageLocationVariant(
-                var betaCitationPageLocation
-            ) => betaCitationPageLocation,
-            BetaTextCitationVariants::BetaCitationContentBlockLocationVariant(
-                var betaCitationContentBlockLocation
-            ) => betaCitationContentBlockLocation,
-            BetaTextCitationVariants::BetaCitationsWebSearchResultLocationVariant(
-                var betaCitationsWebSearchResultLocation
-            ) => betaCitationsWebSearchResultLocation,
-            BetaTextCitationVariants::BetaCitationSearchResultLocationVariant(
-                var betaCitationSearchResultLocation
-            ) => betaCitationSearchResultLocation,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaCitationCharLocationVariant(var betaCitationCharLocation) =>
+                betaCitationCharLocation,
+            BetaCitationPageLocationVariant(var betaCitationPageLocation) =>
+                betaCitationPageLocation,
+            BetaCitationContentBlockLocationVariant(var betaCitationContentBlockLocation) =>
+                betaCitationContentBlockLocation,
+            BetaCitationsWebSearchResultLocationVariant(var betaCitationsWebSearchResultLocation) =>
+                betaCitationsWebSearchResultLocation,
+            BetaCitationSearchResultLocationVariant(var betaCitationSearchResultLocation) =>
+                betaCitationSearchResultLocation,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

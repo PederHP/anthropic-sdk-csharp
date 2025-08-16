@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ToolUnionVariants = Anthropic.Models.Messages.ToolUnionVariants;
+using Anthropic.Models.Messages.ToolUnionVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -10,23 +11,22 @@ public abstract record class ToolUnion
 {
     internal ToolUnion() { }
 
-    public static implicit operator ToolUnion(Tool value) =>
-        new ToolUnionVariants::ToolVariant(value);
+    public static implicit operator ToolUnion(Tool value) => new ToolVariant(value);
 
     public static implicit operator ToolUnion(ToolBash20250124 value) =>
-        new ToolUnionVariants::ToolBash20250124Variant(value);
+        new ToolBash20250124Variant(value);
 
     public static implicit operator ToolUnion(ToolTextEditor20250124 value) =>
-        new ToolUnionVariants::ToolTextEditor20250124Variant(value);
+        new ToolTextEditor20250124Variant(value);
 
     public static implicit operator ToolUnion(ToolTextEditor20250429 value) =>
-        new ToolUnionVariants::ToolTextEditor20250429Variant(value);
+        new ToolTextEditor20250429Variant(value);
 
     public static implicit operator ToolUnion(ToolTextEditor20250728 value) =>
-        new ToolUnionVariants::ToolTextEditor20250728Variant(value);
+        new ToolTextEditor20250728Variant(value);
 
     public static implicit operator ToolUnion(WebSearchTool20250305 value) =>
-        new ToolUnionVariants::WebSearchTool20250305Variant(value);
+        new WebSearchTool20250305Variant(value);
 
     public abstract void Validate();
 }
@@ -35,7 +35,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
 {
     public override ToolUnion? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -46,7 +46,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             var deserialized = JsonSerializer.Deserialize<Tool>(ref reader, options);
             if (deserialized != null)
             {
-                return new ToolUnionVariants::ToolVariant(deserialized);
+                return new ToolVariant(deserialized);
             }
         }
         catch (JsonException e)
@@ -59,7 +59,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             var deserialized = JsonSerializer.Deserialize<ToolBash20250124>(ref reader, options);
             if (deserialized != null)
             {
-                return new ToolUnionVariants::ToolBash20250124Variant(deserialized);
+                return new ToolBash20250124Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -75,7 +75,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             );
             if (deserialized != null)
             {
-                return new ToolUnionVariants::ToolTextEditor20250124Variant(deserialized);
+                return new ToolTextEditor20250124Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -91,7 +91,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             );
             if (deserialized != null)
             {
-                return new ToolUnionVariants::ToolTextEditor20250429Variant(deserialized);
+                return new ToolTextEditor20250429Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -107,7 +107,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             );
             if (deserialized != null)
             {
-                return new ToolUnionVariants::ToolTextEditor20250728Variant(deserialized);
+                return new ToolTextEditor20250728Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -123,7 +123,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             );
             if (deserialized != null)
             {
-                return new ToolUnionVariants::WebSearchTool20250305Variant(deserialized);
+                return new WebSearchTool20250305Variant(deserialized);
             }
         }
         catch (JsonException e)
@@ -131,7 +131,7 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
             exceptions.Add(e);
         }
 
-        throw new global::System.AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(
@@ -142,17 +142,13 @@ sealed class ToolUnionConverter : JsonConverter<ToolUnion>
     {
         object variant = value switch
         {
-            ToolUnionVariants::ToolVariant(var tool) => tool,
-            ToolUnionVariants::ToolBash20250124Variant(var toolBash20250124) => toolBash20250124,
-            ToolUnionVariants::ToolTextEditor20250124Variant(var toolTextEditor20250124) =>
-                toolTextEditor20250124,
-            ToolUnionVariants::ToolTextEditor20250429Variant(var toolTextEditor20250429) =>
-                toolTextEditor20250429,
-            ToolUnionVariants::ToolTextEditor20250728Variant(var toolTextEditor20250728) =>
-                toolTextEditor20250728,
-            ToolUnionVariants::WebSearchTool20250305Variant(var webSearchTool20250305) =>
-                webSearchTool20250305,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            ToolVariant(var tool) => tool,
+            ToolBash20250124Variant(var toolBash20250124) => toolBash20250124,
+            ToolTextEditor20250124Variant(var toolTextEditor20250124) => toolTextEditor20250124,
+            ToolTextEditor20250429Variant(var toolTextEditor20250429) => toolTextEditor20250429,
+            ToolTextEditor20250728Variant(var toolTextEditor20250728) => toolTextEditor20250728,
+            WebSearchTool20250305Variant(var webSearchTool20250305) => webSearchTool20250305,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

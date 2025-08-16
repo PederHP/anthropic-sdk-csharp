@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ErrorObjectVariants = Anthropic.Models.ErrorObjectVariants;
+using Anthropic.Models.ErrorObjectVariants;
 
 namespace Anthropic.Models;
 
@@ -11,31 +12,31 @@ public abstract record class ErrorObject
     internal ErrorObject() { }
 
     public static implicit operator ErrorObject(InvalidRequestError value) =>
-        new ErrorObjectVariants::InvalidRequestErrorVariant(value);
+        new InvalidRequestErrorVariant(value);
 
     public static implicit operator ErrorObject(AuthenticationError value) =>
-        new ErrorObjectVariants::AuthenticationErrorVariant(value);
+        new AuthenticationErrorVariant(value);
 
     public static implicit operator ErrorObject(BillingError value) =>
-        new ErrorObjectVariants::BillingErrorVariant(value);
+        new BillingErrorVariant(value);
 
     public static implicit operator ErrorObject(PermissionError value) =>
-        new ErrorObjectVariants::PermissionErrorVariant(value);
+        new PermissionErrorVariant(value);
 
     public static implicit operator ErrorObject(NotFoundError value) =>
-        new ErrorObjectVariants::NotFoundErrorVariant(value);
+        new NotFoundErrorVariant(value);
 
     public static implicit operator ErrorObject(RateLimitError value) =>
-        new ErrorObjectVariants::RateLimitErrorVariant(value);
+        new RateLimitErrorVariant(value);
 
     public static implicit operator ErrorObject(GatewayTimeoutError value) =>
-        new ErrorObjectVariants::GatewayTimeoutErrorVariant(value);
+        new GatewayTimeoutErrorVariant(value);
 
     public static implicit operator ErrorObject(APIErrorObject value) =>
-        new ErrorObjectVariants::APIErrorObjectVariant(value);
+        new APIErrorObjectVariant(value);
 
     public static implicit operator ErrorObject(OverloadedError value) =>
-        new ErrorObjectVariants::OverloadedErrorVariant(value);
+        new OverloadedErrorVariant(value);
 
     public abstract void Validate();
 }
@@ -44,7 +45,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
 {
     public override ErrorObject? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -73,7 +74,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     );
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::InvalidRequestErrorVariant(deserialized);
+                        return new InvalidRequestErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -81,7 +82,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "authentication_error":
             {
@@ -95,7 +96,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     );
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::AuthenticationErrorVariant(deserialized);
+                        return new AuthenticationErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -103,7 +104,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "billing_error":
             {
@@ -114,7 +115,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     var deserialized = JsonSerializer.Deserialize<BillingError>(json, options);
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::BillingErrorVariant(deserialized);
+                        return new BillingErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -122,7 +123,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "permission_error":
             {
@@ -133,7 +134,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     var deserialized = JsonSerializer.Deserialize<PermissionError>(json, options);
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::PermissionErrorVariant(deserialized);
+                        return new PermissionErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -141,7 +142,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "not_found_error":
             {
@@ -152,7 +153,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     var deserialized = JsonSerializer.Deserialize<NotFoundError>(json, options);
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::NotFoundErrorVariant(deserialized);
+                        return new NotFoundErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -160,7 +161,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "rate_limit_error":
             {
@@ -171,7 +172,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     var deserialized = JsonSerializer.Deserialize<RateLimitError>(json, options);
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::RateLimitErrorVariant(deserialized);
+                        return new RateLimitErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -179,7 +180,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "timeout_error":
             {
@@ -193,7 +194,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     );
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::GatewayTimeoutErrorVariant(deserialized);
+                        return new GatewayTimeoutErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -201,7 +202,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "api_error":
             {
@@ -212,7 +213,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     var deserialized = JsonSerializer.Deserialize<APIErrorObject>(json, options);
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::APIErrorObjectVariant(deserialized);
+                        return new APIErrorObjectVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -220,7 +221,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "overloaded_error":
             {
@@ -231,7 +232,7 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     var deserialized = JsonSerializer.Deserialize<OverloadedError>(json, options);
                     if (deserialized != null)
                     {
-                        return new ErrorObjectVariants::OverloadedErrorVariant(deserialized);
+                        return new OverloadedErrorVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -239,11 +240,11 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -256,19 +257,16 @@ sealed class ErrorObjectConverter : JsonConverter<ErrorObject>
     {
         object variant = value switch
         {
-            ErrorObjectVariants::InvalidRequestErrorVariant(var invalidRequestError) =>
-                invalidRequestError,
-            ErrorObjectVariants::AuthenticationErrorVariant(var authenticationError) =>
-                authenticationError,
-            ErrorObjectVariants::BillingErrorVariant(var billingError) => billingError,
-            ErrorObjectVariants::PermissionErrorVariant(var permissionError) => permissionError,
-            ErrorObjectVariants::NotFoundErrorVariant(var notFoundError) => notFoundError,
-            ErrorObjectVariants::RateLimitErrorVariant(var rateLimitError) => rateLimitError,
-            ErrorObjectVariants::GatewayTimeoutErrorVariant(var gatewayTimeoutError) =>
-                gatewayTimeoutError,
-            ErrorObjectVariants::APIErrorObjectVariant(var apiErrorObject) => apiErrorObject,
-            ErrorObjectVariants::OverloadedErrorVariant(var overloadedError) => overloadedError,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            InvalidRequestErrorVariant(var invalidRequestError) => invalidRequestError,
+            AuthenticationErrorVariant(var authenticationError) => authenticationError,
+            BillingErrorVariant(var billingError) => billingError,
+            PermissionErrorVariant(var permissionError) => permissionError,
+            NotFoundErrorVariant(var notFoundError) => notFoundError,
+            RateLimitErrorVariant(var rateLimitError) => rateLimitError,
+            GatewayTimeoutErrorVariant(var gatewayTimeoutError) => gatewayTimeoutError,
+            APIErrorObjectVariant(var apiErrorObject) => apiErrorObject,
+            OverloadedErrorVariant(var overloadedError) => overloadedError,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

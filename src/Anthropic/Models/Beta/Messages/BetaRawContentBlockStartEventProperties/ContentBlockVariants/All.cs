@@ -1,12 +1,10 @@
-using Messages = Anthropic.Models.Beta.Messages;
-
 namespace Anthropic.Models.Beta.Messages.BetaRawContentBlockStartEventProperties.ContentBlockVariants;
 
-public sealed record class BetaTextBlockVariant(Messages::BetaTextBlock Value)
+public sealed record class BetaTextBlockVariant(BetaTextBlock Value)
     : ContentBlock,
-        IVariant<BetaTextBlockVariant, Messages::BetaTextBlock>
+        IVariant<BetaTextBlockVariant, BetaTextBlock>
 {
-    public static BetaTextBlockVariant From(Messages::BetaTextBlock value)
+    public static BetaTextBlockVariant From(BetaTextBlock value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class BetaTextBlockVariant(Messages::BetaTextBlock Value)
     }
 }
 
-public sealed record class BetaThinkingBlockVariant(Messages::BetaThinkingBlock Value)
+public sealed record class BetaThinkingBlockVariant(BetaThinkingBlock Value)
     : ContentBlock,
-        IVariant<BetaThinkingBlockVariant, Messages::BetaThinkingBlock>
+        IVariant<BetaThinkingBlockVariant, BetaThinkingBlock>
 {
-    public static BetaThinkingBlockVariant From(Messages::BetaThinkingBlock value)
+    public static BetaThinkingBlockVariant From(BetaThinkingBlock value)
     {
         return new(value);
     }
@@ -32,11 +30,11 @@ public sealed record class BetaThinkingBlockVariant(Messages::BetaThinkingBlock 
     }
 }
 
-public sealed record class BetaRedactedThinkingBlockVariant(
-    Messages::BetaRedactedThinkingBlock Value
-) : ContentBlock, IVariant<BetaRedactedThinkingBlockVariant, Messages::BetaRedactedThinkingBlock>
+public sealed record class BetaRedactedThinkingBlockVariant(BetaRedactedThinkingBlock Value)
+    : ContentBlock,
+        IVariant<BetaRedactedThinkingBlockVariant, BetaRedactedThinkingBlock>
 {
-    public static BetaRedactedThinkingBlockVariant From(Messages::BetaRedactedThinkingBlock value)
+    public static BetaRedactedThinkingBlockVariant From(BetaRedactedThinkingBlock value)
     {
         return new(value);
     }
@@ -47,11 +45,11 @@ public sealed record class BetaRedactedThinkingBlockVariant(
     }
 }
 
-public sealed record class BetaToolUseBlockVariant(Messages::BetaToolUseBlock Value)
+public sealed record class BetaToolUseBlockVariant(BetaToolUseBlock Value)
     : ContentBlock,
-        IVariant<BetaToolUseBlockVariant, Messages::BetaToolUseBlock>
+        IVariant<BetaToolUseBlockVariant, BetaToolUseBlock>
 {
-    public static BetaToolUseBlockVariant From(Messages::BetaToolUseBlock value)
+    public static BetaToolUseBlockVariant From(BetaToolUseBlock value)
     {
         return new(value);
     }
@@ -62,11 +60,11 @@ public sealed record class BetaToolUseBlockVariant(Messages::BetaToolUseBlock Va
     }
 }
 
-public sealed record class BetaServerToolUseBlockVariant(Messages::BetaServerToolUseBlock Value)
+public sealed record class BetaServerToolUseBlockVariant(BetaServerToolUseBlock Value)
     : ContentBlock,
-        IVariant<BetaServerToolUseBlockVariant, Messages::BetaServerToolUseBlock>
+        IVariant<BetaServerToolUseBlockVariant, BetaServerToolUseBlock>
 {
-    public static BetaServerToolUseBlockVariant From(Messages::BetaServerToolUseBlock value)
+    public static BetaServerToolUseBlockVariant From(BetaServerToolUseBlock value)
     {
         return new(value);
     }
@@ -77,15 +75,11 @@ public sealed record class BetaServerToolUseBlockVariant(Messages::BetaServerToo
     }
 }
 
-public sealed record class BetaWebSearchToolResultBlockVariant(
-    Messages::BetaWebSearchToolResultBlock Value
-)
+public sealed record class BetaWebSearchToolResultBlockVariant(BetaWebSearchToolResultBlock Value)
     : ContentBlock,
-        IVariant<BetaWebSearchToolResultBlockVariant, Messages::BetaWebSearchToolResultBlock>
+        IVariant<BetaWebSearchToolResultBlockVariant, BetaWebSearchToolResultBlock>
 {
-    public static BetaWebSearchToolResultBlockVariant From(
-        Messages::BetaWebSearchToolResultBlock value
-    )
+    public static BetaWebSearchToolResultBlockVariant From(BetaWebSearchToolResultBlock value)
     {
         return new(value);
     }
@@ -97,16 +91,13 @@ public sealed record class BetaWebSearchToolResultBlockVariant(
 }
 
 public sealed record class BetaCodeExecutionToolResultBlockVariant(
-    Messages::BetaCodeExecutionToolResultBlock Value
+    BetaCodeExecutionToolResultBlock Value
 )
     : ContentBlock,
-        IVariant<
-            BetaCodeExecutionToolResultBlockVariant,
-            Messages::BetaCodeExecutionToolResultBlock
-        >
+        IVariant<BetaCodeExecutionToolResultBlockVariant, BetaCodeExecutionToolResultBlock>
 {
     public static BetaCodeExecutionToolResultBlockVariant From(
-        Messages::BetaCodeExecutionToolResultBlock value
+        BetaCodeExecutionToolResultBlock value
     )
     {
         return new(value);
@@ -118,11 +109,11 @@ public sealed record class BetaCodeExecutionToolResultBlockVariant(
     }
 }
 
-public sealed record class BetaMCPToolUseBlockVariant(Messages::BetaMCPToolUseBlock Value)
+public sealed record class BetaMCPToolUseBlockVariant(BetaMCPToolUseBlock Value)
     : ContentBlock,
-        IVariant<BetaMCPToolUseBlockVariant, Messages::BetaMCPToolUseBlock>
+        IVariant<BetaMCPToolUseBlockVariant, BetaMCPToolUseBlock>
 {
-    public static BetaMCPToolUseBlockVariant From(Messages::BetaMCPToolUseBlock value)
+    public static BetaMCPToolUseBlockVariant From(BetaMCPToolUseBlock value)
     {
         return new(value);
     }
@@ -133,11 +124,11 @@ public sealed record class BetaMCPToolUseBlockVariant(Messages::BetaMCPToolUseBl
     }
 }
 
-public sealed record class BetaMCPToolResultBlockVariant(Messages::BetaMCPToolResultBlock Value)
+public sealed record class BetaMCPToolResultBlockVariant(BetaMCPToolResultBlock Value)
     : ContentBlock,
-        IVariant<BetaMCPToolResultBlockVariant, Messages::BetaMCPToolResultBlock>
+        IVariant<BetaMCPToolResultBlockVariant, BetaMCPToolResultBlock>
 {
-    public static BetaMCPToolResultBlockVariant From(Messages::BetaMCPToolResultBlock value)
+    public static BetaMCPToolResultBlockVariant From(BetaMCPToolResultBlock value)
     {
         return new(value);
     }
@@ -151,11 +142,11 @@ public sealed record class BetaMCPToolResultBlockVariant(Messages::BetaMCPToolRe
 /// <summary>
 /// Response model for a file uploaded to the container.
 /// </summary>
-public sealed record class BetaContainerUploadBlockVariant(Messages::BetaContainerUploadBlock Value)
+public sealed record class BetaContainerUploadBlockVariant(BetaContainerUploadBlock Value)
     : ContentBlock,
-        IVariant<BetaContainerUploadBlockVariant, Messages::BetaContainerUploadBlock>
+        IVariant<BetaContainerUploadBlockVariant, BetaContainerUploadBlock>
 {
-    public static BetaContainerUploadBlockVariant From(Messages::BetaContainerUploadBlock value)
+    public static BetaContainerUploadBlockVariant From(BetaContainerUploadBlock value)
     {
         return new(value);
     }

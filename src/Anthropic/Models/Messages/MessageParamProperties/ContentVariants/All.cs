@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Messages = Anthropic.Models.Messages;
 
 namespace Anthropic.Models.Messages.MessageParamProperties.ContentVariants;
 
@@ -13,11 +12,11 @@ public sealed record class String(string Value) : Content, IVariant<String, stri
     public override void Validate() { }
 }
 
-public sealed record class ContentBlockParams(List<Messages::ContentBlockParam> Value)
+public sealed record class ContentBlockParams(List<ContentBlockParam> Value)
     : Content,
-        IVariant<ContentBlockParams, List<Messages::ContentBlockParam>>
+        IVariant<ContentBlockParams, List<ContentBlockParam>>
 {
-    public static ContentBlockParams From(List<Messages::ContentBlockParam> value)
+    public static ContentBlockParams From(List<ContentBlockParam> value)
     {
         return new(value);
     }

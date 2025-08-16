@@ -1,11 +1,11 @@
+using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::EnumConverter<BetaWebSearchToolResultErrorCode, string>))]
+[JsonConverter(typeof(EnumConverter<BetaWebSearchToolResultErrorCode, string>))]
 public sealed record class BetaWebSearchToolResultErrorCode(string value)
-    : Anthropic::IEnum<BetaWebSearchToolResultErrorCode, string>
+    : IEnum<BetaWebSearchToolResultErrorCode, string>
 {
     public static readonly BetaWebSearchToolResultErrorCode InvalidToolInput = new(
         "invalid_tool_input"
@@ -42,7 +42,7 @@ public sealed record class BetaWebSearchToolResultErrorCode(string value)
             "max_uses_exceeded" => Value.MaxUsesExceeded,
             "too_many_requests" => Value.TooManyRequests,
             "query_too_long" => Value.QueryTooLong,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(_value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
         };
 
     public string Raw()

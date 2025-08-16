@@ -1,10 +1,10 @@
+using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta;
 
-[JsonConverter(typeof(Anthropic::EnumConverter<AnthropicBeta, string>))]
-public sealed record class AnthropicBeta(string value) : Anthropic::IEnum<AnthropicBeta, string>
+[JsonConverter(typeof(EnumConverter<AnthropicBeta, string>))]
+public sealed record class AnthropicBeta(string value) : IEnum<AnthropicBeta, string>
 {
     public static readonly AnthropicBeta MessageBatches2024_09_24 = new(
         "message-batches-2024-09-24"
@@ -85,7 +85,7 @@ public sealed record class AnthropicBeta(string value) : Anthropic::IEnum<Anthro
             "code-execution-2025-05-22" => Value.CodeExecution2025_05_22,
             "extended-cache-ttl-2025-04-11" => Value.ExtendedCacheTTL2025_04_11,
             "context-1m-2025-08-07" => Value.Context1m2025_08_07,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(_value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
         };
 
     public string Raw()

@@ -1,12 +1,10 @@
-using Messages = Anthropic.Models.Beta.Messages;
-
 namespace Anthropic.Models.Beta.Messages.MessageCountTokensParamsProperties.ToolVariants;
 
-public sealed record class BetaToolVariant(Messages::BetaTool Value)
+public sealed record class BetaToolVariant(BetaTool Value)
     : Tool,
-        IVariant<BetaToolVariant, Messages::BetaTool>
+        IVariant<BetaToolVariant, BetaTool>
 {
-    public static BetaToolVariant From(Messages::BetaTool value)
+    public static BetaToolVariant From(BetaTool value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class BetaToolVariant(Messages::BetaTool Value)
     }
 }
 
-public sealed record class BetaToolBash20241022Variant(Messages::BetaToolBash20241022 Value)
+public sealed record class BetaToolBash20241022Variant(BetaToolBash20241022 Value)
     : Tool,
-        IVariant<BetaToolBash20241022Variant, Messages::BetaToolBash20241022>
+        IVariant<BetaToolBash20241022Variant, BetaToolBash20241022>
 {
-    public static BetaToolBash20241022Variant From(Messages::BetaToolBash20241022 value)
+    public static BetaToolBash20241022Variant From(BetaToolBash20241022 value)
     {
         return new(value);
     }
@@ -32,11 +30,11 @@ public sealed record class BetaToolBash20241022Variant(Messages::BetaToolBash202
     }
 }
 
-public sealed record class BetaToolBash20250124Variant(Messages::BetaToolBash20250124 Value)
+public sealed record class BetaToolBash20250124Variant(BetaToolBash20250124 Value)
     : Tool,
-        IVariant<BetaToolBash20250124Variant, Messages::BetaToolBash20250124>
+        IVariant<BetaToolBash20250124Variant, BetaToolBash20250124>
 {
-    public static BetaToolBash20250124Variant From(Messages::BetaToolBash20250124 value)
+    public static BetaToolBash20250124Variant From(BetaToolBash20250124 value)
     {
         return new(value);
     }
@@ -47,13 +45,11 @@ public sealed record class BetaToolBash20250124Variant(Messages::BetaToolBash202
     }
 }
 
-public sealed record class BetaCodeExecutionTool20250522Variant(
-    Messages::BetaCodeExecutionTool20250522 Value
-) : Tool, IVariant<BetaCodeExecutionTool20250522Variant, Messages::BetaCodeExecutionTool20250522>
+public sealed record class BetaCodeExecutionTool20250522Variant(BetaCodeExecutionTool20250522 Value)
+    : Tool,
+        IVariant<BetaCodeExecutionTool20250522Variant, BetaCodeExecutionTool20250522>
 {
-    public static BetaCodeExecutionTool20250522Variant From(
-        Messages::BetaCodeExecutionTool20250522 value
-    )
+    public static BetaCodeExecutionTool20250522Variant From(BetaCodeExecutionTool20250522 value)
     {
         return new(value);
     }
@@ -64,13 +60,11 @@ public sealed record class BetaCodeExecutionTool20250522Variant(
     }
 }
 
-public sealed record class BetaToolComputerUse20241022Variant(
-    Messages::BetaToolComputerUse20241022 Value
-) : Tool, IVariant<BetaToolComputerUse20241022Variant, Messages::BetaToolComputerUse20241022>
+public sealed record class BetaToolComputerUse20241022Variant(BetaToolComputerUse20241022 Value)
+    : Tool,
+        IVariant<BetaToolComputerUse20241022Variant, BetaToolComputerUse20241022>
 {
-    public static BetaToolComputerUse20241022Variant From(
-        Messages::BetaToolComputerUse20241022 value
-    )
+    public static BetaToolComputerUse20241022Variant From(BetaToolComputerUse20241022 value)
     {
         return new(value);
     }
@@ -81,13 +75,11 @@ public sealed record class BetaToolComputerUse20241022Variant(
     }
 }
 
-public sealed record class BetaToolComputerUse20250124Variant(
-    Messages::BetaToolComputerUse20250124 Value
-) : Tool, IVariant<BetaToolComputerUse20250124Variant, Messages::BetaToolComputerUse20250124>
+public sealed record class BetaToolComputerUse20250124Variant(BetaToolComputerUse20250124 Value)
+    : Tool,
+        IVariant<BetaToolComputerUse20250124Variant, BetaToolComputerUse20250124>
 {
-    public static BetaToolComputerUse20250124Variant From(
-        Messages::BetaToolComputerUse20250124 value
-    )
+    public static BetaToolComputerUse20250124Variant From(BetaToolComputerUse20250124 value)
     {
         return new(value);
     }
@@ -98,11 +90,11 @@ public sealed record class BetaToolComputerUse20250124Variant(
     }
 }
 
-public sealed record class BetaToolTextEditor20241022Variant(
-    Messages::BetaToolTextEditor20241022 Value
-) : Tool, IVariant<BetaToolTextEditor20241022Variant, Messages::BetaToolTextEditor20241022>
+public sealed record class BetaToolTextEditor20241022Variant(BetaToolTextEditor20241022 Value)
+    : Tool,
+        IVariant<BetaToolTextEditor20241022Variant, BetaToolTextEditor20241022>
 {
-    public static BetaToolTextEditor20241022Variant From(Messages::BetaToolTextEditor20241022 value)
+    public static BetaToolTextEditor20241022Variant From(BetaToolTextEditor20241022 value)
     {
         return new(value);
     }
@@ -113,11 +105,11 @@ public sealed record class BetaToolTextEditor20241022Variant(
     }
 }
 
-public sealed record class BetaToolTextEditor20250124Variant(
-    Messages::BetaToolTextEditor20250124 Value
-) : Tool, IVariant<BetaToolTextEditor20250124Variant, Messages::BetaToolTextEditor20250124>
+public sealed record class BetaToolTextEditor20250124Variant(BetaToolTextEditor20250124 Value)
+    : Tool,
+        IVariant<BetaToolTextEditor20250124Variant, BetaToolTextEditor20250124>
 {
-    public static BetaToolTextEditor20250124Variant From(Messages::BetaToolTextEditor20250124 value)
+    public static BetaToolTextEditor20250124Variant From(BetaToolTextEditor20250124 value)
     {
         return new(value);
     }
@@ -128,11 +120,11 @@ public sealed record class BetaToolTextEditor20250124Variant(
     }
 }
 
-public sealed record class BetaToolTextEditor20250429Variant(
-    Messages::BetaToolTextEditor20250429 Value
-) : Tool, IVariant<BetaToolTextEditor20250429Variant, Messages::BetaToolTextEditor20250429>
+public sealed record class BetaToolTextEditor20250429Variant(BetaToolTextEditor20250429 Value)
+    : Tool,
+        IVariant<BetaToolTextEditor20250429Variant, BetaToolTextEditor20250429>
 {
-    public static BetaToolTextEditor20250429Variant From(Messages::BetaToolTextEditor20250429 value)
+    public static BetaToolTextEditor20250429Variant From(BetaToolTextEditor20250429 value)
     {
         return new(value);
     }
@@ -143,11 +135,11 @@ public sealed record class BetaToolTextEditor20250429Variant(
     }
 }
 
-public sealed record class BetaToolTextEditor20250728Variant(
-    Messages::BetaToolTextEditor20250728 Value
-) : Tool, IVariant<BetaToolTextEditor20250728Variant, Messages::BetaToolTextEditor20250728>
+public sealed record class BetaToolTextEditor20250728Variant(BetaToolTextEditor20250728 Value)
+    : Tool,
+        IVariant<BetaToolTextEditor20250728Variant, BetaToolTextEditor20250728>
 {
-    public static BetaToolTextEditor20250728Variant From(Messages::BetaToolTextEditor20250728 value)
+    public static BetaToolTextEditor20250728Variant From(BetaToolTextEditor20250728 value)
     {
         return new(value);
     }
@@ -158,11 +150,11 @@ public sealed record class BetaToolTextEditor20250728Variant(
     }
 }
 
-public sealed record class BetaWebSearchTool20250305Variant(
-    Messages::BetaWebSearchTool20250305 Value
-) : Tool, IVariant<BetaWebSearchTool20250305Variant, Messages::BetaWebSearchTool20250305>
+public sealed record class BetaWebSearchTool20250305Variant(BetaWebSearchTool20250305 Value)
+    : Tool,
+        IVariant<BetaWebSearchTool20250305Variant, BetaWebSearchTool20250305>
 {
-    public static BetaWebSearchTool20250305Variant From(Messages::BetaWebSearchTool20250305 value)
+    public static BetaWebSearchTool20250305Variant From(BetaWebSearchTool20250305 value)
     {
         return new(value);
     }

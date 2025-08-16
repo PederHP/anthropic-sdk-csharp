@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Messages = Anthropic.Models.Messages;
 
 namespace Anthropic.Models.Messages.MessageCountTokensParamsProperties.SystemVariants;
 
-public sealed record class String(string Value) : System, IVariant<String, string>
+public sealed record class String(string Value) : SystemModel, IVariant<String, string>
 {
     public static String From(string value)
     {
@@ -13,11 +12,11 @@ public sealed record class String(string Value) : System, IVariant<String, strin
     public override void Validate() { }
 }
 
-public sealed record class TextBlockParams(List<Messages::TextBlockParam> Value)
-    : System,
-        IVariant<TextBlockParams, List<Messages::TextBlockParam>>
+public sealed record class TextBlockParams(List<TextBlockParam> Value)
+    : SystemModel,
+        IVariant<TextBlockParams, List<TextBlockParam>>
 {
-    public static TextBlockParams From(List<Messages::TextBlockParam> value)
+    public static TextBlockParams From(List<TextBlockParam> value)
     {
         return new(value);
     }

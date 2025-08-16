@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Messages = Anthropic.Models.Beta.Messages;
-using SourceVariants = Anthropic.Models.Beta.Messages.BetaRequestDocumentBlockProperties.SourceVariants;
+using Anthropic.Models.Beta.Messages.BetaRequestDocumentBlockProperties.SourceVariants;
 
 namespace Anthropic.Models.Beta.Messages.BetaRequestDocumentBlockProperties;
 
@@ -12,20 +11,20 @@ public abstract record class Source
 {
     internal Source() { }
 
-    public static implicit operator Source(Messages::BetaBase64PDFSource value) =>
-        new SourceVariants::BetaBase64PDFSourceVariant(value);
+    public static implicit operator Source(BetaBase64PDFSource value) =>
+        new BetaBase64PDFSourceVariant(value);
 
-    public static implicit operator Source(Messages::BetaPlainTextSource value) =>
-        new SourceVariants::BetaPlainTextSourceVariant(value);
+    public static implicit operator Source(BetaPlainTextSource value) =>
+        new BetaPlainTextSourceVariant(value);
 
-    public static implicit operator Source(Messages::BetaContentBlockSource value) =>
-        new SourceVariants::BetaContentBlockSourceVariant(value);
+    public static implicit operator Source(BetaContentBlockSource value) =>
+        new BetaContentBlockSourceVariant(value);
 
-    public static implicit operator Source(Messages::BetaURLPDFSource value) =>
-        new SourceVariants::BetaURLPDFSourceVariant(value);
+    public static implicit operator Source(BetaURLPDFSource value) =>
+        new BetaURLPDFSourceVariant(value);
 
-    public static implicit operator Source(Messages::BetaFileDocumentSource value) =>
-        new SourceVariants::BetaFileDocumentSourceVariant(value);
+    public static implicit operator Source(BetaFileDocumentSource value) =>
+        new BetaFileDocumentSourceVariant(value);
 
     public abstract void Validate();
 }
@@ -57,13 +56,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaBase64PDFSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaBase64PDFSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaBase64PDFSourceVariant(deserialized);
+                        return new BetaBase64PDFSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -79,13 +78,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaPlainTextSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaPlainTextSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaPlainTextSourceVariant(deserialized);
+                        return new BetaPlainTextSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -101,13 +100,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaContentBlockSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaContentBlockSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaContentBlockSourceVariant(deserialized);
+                        return new BetaContentBlockSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -123,13 +122,10 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaURLPDFSource>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<BetaURLPDFSource>(json, options);
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaURLPDFSourceVariant(deserialized);
+                        return new BetaURLPDFSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -145,13 +141,13 @@ sealed class SourceConverter : JsonConverter<Source>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaFileDocumentSource>(
+                    var deserialized = JsonSerializer.Deserialize<BetaFileDocumentSource>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new SourceVariants::BetaFileDocumentSourceVariant(deserialized);
+                        return new BetaFileDocumentSourceVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -172,15 +168,11 @@ sealed class SourceConverter : JsonConverter<Source>
     {
         object variant = value switch
         {
-            SourceVariants::BetaBase64PDFSourceVariant(var betaBase64PDFSource) =>
-                betaBase64PDFSource,
-            SourceVariants::BetaPlainTextSourceVariant(var betaPlainTextSource) =>
-                betaPlainTextSource,
-            SourceVariants::BetaContentBlockSourceVariant(var betaContentBlockSource) =>
-                betaContentBlockSource,
-            SourceVariants::BetaURLPDFSourceVariant(var betaUrlpdfSource) => betaUrlpdfSource,
-            SourceVariants::BetaFileDocumentSourceVariant(var betaFileDocumentSource) =>
-                betaFileDocumentSource,
+            BetaBase64PDFSourceVariant(var betaBase64PDFSource) => betaBase64PDFSource,
+            BetaPlainTextSourceVariant(var betaPlainTextSource) => betaPlainTextSource,
+            BetaContentBlockSourceVariant(var betaContentBlockSource) => betaContentBlockSource,
+            BetaURLPDFSourceVariant(var betaUrlpdfSource) => betaUrlpdfSource,
+            BetaFileDocumentSourceVariant(var betaFileDocumentSource) => betaFileDocumentSource,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

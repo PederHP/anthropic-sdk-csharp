@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaThinkingConfigParamVariants = Anthropic.Models.Beta.Messages.BetaThinkingConfigParamVariants;
+using Anthropic.Models.Beta.Messages.BetaThinkingConfigParamVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -21,10 +22,10 @@ public abstract record class BetaThinkingConfigParam
     internal BetaThinkingConfigParam() { }
 
     public static implicit operator BetaThinkingConfigParam(BetaThinkingConfigEnabled value) =>
-        new BetaThinkingConfigParamVariants::BetaThinkingConfigEnabledVariant(value);
+        new BetaThinkingConfigEnabledVariant(value);
 
     public static implicit operator BetaThinkingConfigParam(BetaThinkingConfigDisabled value) =>
-        new BetaThinkingConfigParamVariants::BetaThinkingConfigDisabledVariant(value);
+        new BetaThinkingConfigDisabledVariant(value);
 
     public abstract void Validate();
 }
@@ -33,7 +34,7 @@ sealed class BetaThinkingConfigParamConverter : JsonConverter<BetaThinkingConfig
 {
     public override BetaThinkingConfigParam? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -62,9 +63,7 @@ sealed class BetaThinkingConfigParamConverter : JsonConverter<BetaThinkingConfig
                     );
                     if (deserialized != null)
                     {
-                        return new BetaThinkingConfigParamVariants::BetaThinkingConfigEnabledVariant(
-                            deserialized
-                        );
+                        return new BetaThinkingConfigEnabledVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -72,7 +71,7 @@ sealed class BetaThinkingConfigParamConverter : JsonConverter<BetaThinkingConfig
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "disabled":
             {
@@ -86,9 +85,7 @@ sealed class BetaThinkingConfigParamConverter : JsonConverter<BetaThinkingConfig
                     );
                     if (deserialized != null)
                     {
-                        return new BetaThinkingConfigParamVariants::BetaThinkingConfigDisabledVariant(
-                            deserialized
-                        );
+                        return new BetaThinkingConfigDisabledVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -96,11 +93,11 @@ sealed class BetaThinkingConfigParamConverter : JsonConverter<BetaThinkingConfig
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -113,13 +110,11 @@ sealed class BetaThinkingConfigParamConverter : JsonConverter<BetaThinkingConfig
     {
         object variant = value switch
         {
-            BetaThinkingConfigParamVariants::BetaThinkingConfigEnabledVariant(
-                var betaThinkingConfigEnabled
-            ) => betaThinkingConfigEnabled,
-            BetaThinkingConfigParamVariants::BetaThinkingConfigDisabledVariant(
-                var betaThinkingConfigDisabled
-            ) => betaThinkingConfigDisabled,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaThinkingConfigEnabledVariant(var betaThinkingConfigEnabled) =>
+                betaThinkingConfigEnabled,
+            BetaThinkingConfigDisabledVariant(var betaThinkingConfigDisabled) =>
+                betaThinkingConfigDisabled,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

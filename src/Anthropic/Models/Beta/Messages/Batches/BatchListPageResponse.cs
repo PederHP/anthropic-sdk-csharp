@@ -1,30 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages.Batches;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BatchListPageResponse>))]
-public sealed record class BatchListPageResponse
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BatchListPageResponse>
+[JsonConverter(typeof(ModelConverter<BatchListPageResponse>))]
+public sealed record class BatchListPageResponse : ModelBase, IFromRaw<BatchListPageResponse>
 {
     public required List<BetaMessageBatch> Data
     {
         get
         {
             if (!this.Properties.TryGetValue("data", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "data",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("data", "Missing required argument");
 
             return JsonSerializer.Deserialize<List<BetaMessageBatch>>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("data");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("data");
         }
         set { this.Properties["data"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -37,15 +32,9 @@ public sealed record class BatchListPageResponse
         get
         {
             if (!this.Properties.TryGetValue("first_id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "first_id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("first_id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["first_id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -58,15 +47,9 @@ public sealed record class BatchListPageResponse
         get
         {
             if (!this.Properties.TryGetValue("has_more", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "has_more",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("has_more", "Missing required argument");
 
-            return JsonSerializer.Deserialize<bool>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["has_more"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -79,15 +62,9 @@ public sealed record class BatchListPageResponse
         get
         {
             if (!this.Properties.TryGetValue("last_id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "last_id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("last_id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["last_id"] = JsonSerializer.SerializeToElement(value); }
     }

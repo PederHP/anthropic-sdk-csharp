@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ContentBlockVariants = Anthropic.Models.Beta.Messages.BetaRawContentBlockStartEventProperties.ContentBlockVariants;
-using Messages = Anthropic.Models.Beta.Messages;
+using Anthropic.Models.Beta.Messages.BetaRawContentBlockStartEventProperties.ContentBlockVariants;
 
 namespace Anthropic.Models.Beta.Messages.BetaRawContentBlockStartEventProperties;
 
@@ -15,36 +14,35 @@ public abstract record class ContentBlock
 {
     internal ContentBlock() { }
 
-    public static implicit operator ContentBlock(Messages::BetaTextBlock value) =>
-        new ContentBlockVariants::BetaTextBlockVariant(value);
+    public static implicit operator ContentBlock(BetaTextBlock value) =>
+        new BetaTextBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaThinkingBlock value) =>
-        new ContentBlockVariants::BetaThinkingBlockVariant(value);
+    public static implicit operator ContentBlock(BetaThinkingBlock value) =>
+        new BetaThinkingBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaRedactedThinkingBlock value) =>
-        new ContentBlockVariants::BetaRedactedThinkingBlockVariant(value);
+    public static implicit operator ContentBlock(BetaRedactedThinkingBlock value) =>
+        new BetaRedactedThinkingBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaToolUseBlock value) =>
-        new ContentBlockVariants::BetaToolUseBlockVariant(value);
+    public static implicit operator ContentBlock(BetaToolUseBlock value) =>
+        new BetaToolUseBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaServerToolUseBlock value) =>
-        new ContentBlockVariants::BetaServerToolUseBlockVariant(value);
+    public static implicit operator ContentBlock(BetaServerToolUseBlock value) =>
+        new BetaServerToolUseBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaWebSearchToolResultBlock value) =>
-        new ContentBlockVariants::BetaWebSearchToolResultBlockVariant(value);
+    public static implicit operator ContentBlock(BetaWebSearchToolResultBlock value) =>
+        new BetaWebSearchToolResultBlockVariant(value);
 
-    public static implicit operator ContentBlock(
-        Messages::BetaCodeExecutionToolResultBlock value
-    ) => new ContentBlockVariants::BetaCodeExecutionToolResultBlockVariant(value);
+    public static implicit operator ContentBlock(BetaCodeExecutionToolResultBlock value) =>
+        new BetaCodeExecutionToolResultBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaMCPToolUseBlock value) =>
-        new ContentBlockVariants::BetaMCPToolUseBlockVariant(value);
+    public static implicit operator ContentBlock(BetaMCPToolUseBlock value) =>
+        new BetaMCPToolUseBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaMCPToolResultBlock value) =>
-        new ContentBlockVariants::BetaMCPToolResultBlockVariant(value);
+    public static implicit operator ContentBlock(BetaMCPToolResultBlock value) =>
+        new BetaMCPToolResultBlockVariant(value);
 
-    public static implicit operator ContentBlock(Messages::BetaContainerUploadBlock value) =>
-        new ContentBlockVariants::BetaContainerUploadBlockVariant(value);
+    public static implicit operator ContentBlock(BetaContainerUploadBlock value) =>
+        new BetaContainerUploadBlockVariant(value);
 
     public abstract void Validate();
 }
@@ -76,13 +74,10 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaTextBlock>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<BetaTextBlock>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaTextBlockVariant(deserialized);
+                        return new BetaTextBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -98,13 +93,10 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaThinkingBlock>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<BetaThinkingBlock>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaThinkingBlockVariant(deserialized);
+                        return new BetaThinkingBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -120,16 +112,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaRedactedThinkingBlock>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaRedactedThinkingBlock>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaRedactedThinkingBlockVariant(
-                            deserialized
-                        );
+                        return new BetaRedactedThinkingBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -145,13 +134,10 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaToolUseBlock>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<BetaToolUseBlock>(json, options);
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaToolUseBlockVariant(deserialized);
+                        return new BetaToolUseBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -167,15 +153,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaServerToolUseBlock>(
+                    var deserialized = JsonSerializer.Deserialize<BetaServerToolUseBlock>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaServerToolUseBlockVariant(
-                            deserialized
-                        );
+                        return new BetaServerToolUseBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -191,16 +175,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaWebSearchToolResultBlock>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaWebSearchToolResultBlock>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaWebSearchToolResultBlockVariant(
-                            deserialized
-                        );
+                        return new BetaWebSearchToolResultBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -216,16 +197,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaCodeExecutionToolResultBlock>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaCodeExecutionToolResultBlock>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaCodeExecutionToolResultBlockVariant(
-                            deserialized
-                        );
+                        return new BetaCodeExecutionToolResultBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -241,13 +219,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaMCPToolUseBlock>(
+                    var deserialized = JsonSerializer.Deserialize<BetaMCPToolUseBlock>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaMCPToolUseBlockVariant(deserialized);
+                        return new BetaMCPToolUseBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -263,15 +241,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaMCPToolResultBlock>(
+                    var deserialized = JsonSerializer.Deserialize<BetaMCPToolResultBlock>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaMCPToolResultBlockVariant(
-                            deserialized
-                        );
+                        return new BetaMCPToolResultBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -287,16 +263,13 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaContainerUploadBlock>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaContainerUploadBlock>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new ContentBlockVariants::BetaContainerUploadBlockVariant(
-                            deserialized
-                        );
+                        return new BetaContainerUploadBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -321,25 +294,19 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
     {
         object variant = value switch
         {
-            ContentBlockVariants::BetaTextBlockVariant(var betaTextBlock) => betaTextBlock,
-            ContentBlockVariants::BetaThinkingBlockVariant(var betaThinkingBlock) =>
-                betaThinkingBlock,
-            ContentBlockVariants::BetaRedactedThinkingBlockVariant(var betaRedactedThinkingBlock) =>
+            BetaTextBlockVariant(var betaTextBlock) => betaTextBlock,
+            BetaThinkingBlockVariant(var betaThinkingBlock) => betaThinkingBlock,
+            BetaRedactedThinkingBlockVariant(var betaRedactedThinkingBlock) =>
                 betaRedactedThinkingBlock,
-            ContentBlockVariants::BetaToolUseBlockVariant(var betaToolUseBlock) => betaToolUseBlock,
-            ContentBlockVariants::BetaServerToolUseBlockVariant(var betaServerToolUseBlock) =>
-                betaServerToolUseBlock,
-            ContentBlockVariants::BetaWebSearchToolResultBlockVariant(
-                var betaWebSearchToolResultBlock
-            ) => betaWebSearchToolResultBlock,
-            ContentBlockVariants::BetaCodeExecutionToolResultBlockVariant(
-                var betaCodeExecutionToolResultBlock
-            ) => betaCodeExecutionToolResultBlock,
-            ContentBlockVariants::BetaMCPToolUseBlockVariant(var betaMCPToolUseBlock) =>
-                betaMCPToolUseBlock,
-            ContentBlockVariants::BetaMCPToolResultBlockVariant(var betaMCPToolResultBlock) =>
-                betaMCPToolResultBlock,
-            ContentBlockVariants::BetaContainerUploadBlockVariant(var betaContainerUploadBlock) =>
+            BetaToolUseBlockVariant(var betaToolUseBlock) => betaToolUseBlock,
+            BetaServerToolUseBlockVariant(var betaServerToolUseBlock) => betaServerToolUseBlock,
+            BetaWebSearchToolResultBlockVariant(var betaWebSearchToolResultBlock) =>
+                betaWebSearchToolResultBlock,
+            BetaCodeExecutionToolResultBlockVariant(var betaCodeExecutionToolResultBlock) =>
+                betaCodeExecutionToolResultBlock,
+            BetaMCPToolUseBlockVariant(var betaMCPToolUseBlock) => betaMCPToolUseBlock,
+            BetaMCPToolResultBlockVariant(var betaMCPToolResultBlock) => betaMCPToolResultBlock,
+            BetaContainerUploadBlockVariant(var betaContainerUploadBlock) =>
                 betaContainerUploadBlock,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };

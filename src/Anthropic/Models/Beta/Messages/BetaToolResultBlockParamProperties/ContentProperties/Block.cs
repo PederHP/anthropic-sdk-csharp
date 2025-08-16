@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BlockVariants = Anthropic.Models.Beta.Messages.BetaToolResultBlockParamProperties.ContentProperties.BlockVariants;
-using Messages = Anthropic.Models.Beta.Messages;
+using Anthropic.Models.Beta.Messages.BetaToolResultBlockParamProperties.ContentProperties.BlockVariants;
 
 namespace Anthropic.Models.Beta.Messages.BetaToolResultBlockParamProperties.ContentProperties;
 
@@ -12,14 +11,14 @@ public abstract record class Block
 {
     internal Block() { }
 
-    public static implicit operator Block(Messages::BetaTextBlockParam value) =>
-        new BlockVariants::BetaTextBlockParamVariant(value);
+    public static implicit operator Block(BetaTextBlockParam value) =>
+        new BetaTextBlockParamVariant(value);
 
-    public static implicit operator Block(Messages::BetaImageBlockParam value) =>
-        new BlockVariants::BetaImageBlockParamVariant(value);
+    public static implicit operator Block(BetaImageBlockParam value) =>
+        new BetaImageBlockParamVariant(value);
 
-    public static implicit operator Block(Messages::BetaSearchResultBlockParam value) =>
-        new BlockVariants::BetaSearchResultBlockParamVariant(value);
+    public static implicit operator Block(BetaSearchResultBlockParam value) =>
+        new BetaSearchResultBlockParamVariant(value);
 
     public abstract void Validate();
 }
@@ -51,13 +50,13 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaTextBlockParam>(
+                    var deserialized = JsonSerializer.Deserialize<BetaTextBlockParam>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new BlockVariants::BetaTextBlockParamVariant(deserialized);
+                        return new BetaTextBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -73,13 +72,13 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::BetaImageBlockParam>(
+                    var deserialized = JsonSerializer.Deserialize<BetaImageBlockParam>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new BlockVariants::BetaImageBlockParamVariant(deserialized);
+                        return new BetaImageBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -95,14 +94,13 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaSearchResultBlockParam>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaSearchResultBlockParam>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new BlockVariants::BetaSearchResultBlockParamVariant(deserialized);
+                        return new BetaSearchResultBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -123,10 +121,9 @@ sealed class BlockConverter : JsonConverter<Block>
     {
         object variant = value switch
         {
-            BlockVariants::BetaTextBlockParamVariant(var betaTextBlockParam) => betaTextBlockParam,
-            BlockVariants::BetaImageBlockParamVariant(var betaImageBlockParam) =>
-                betaImageBlockParam,
-            BlockVariants::BetaSearchResultBlockParamVariant(var betaSearchResultBlockParam) =>
+            BetaTextBlockParamVariant(var betaTextBlockParam) => betaTextBlockParam,
+            BetaImageBlockParamVariant(var betaImageBlockParam) => betaImageBlockParam,
+            BetaSearchResultBlockParamVariant(var betaSearchResultBlockParam) =>
                 betaSearchResultBlockParam,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };

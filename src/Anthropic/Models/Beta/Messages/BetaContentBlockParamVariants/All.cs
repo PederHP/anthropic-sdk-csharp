@@ -1,15 +1,13 @@
-using Messages = Anthropic.Models.Beta.Messages;
-
 namespace Anthropic.Models.Beta.Messages.BetaContentBlockParamVariants;
 
 /// <summary>
 /// Regular text content.
 /// </summary>
-public sealed record class BetaTextBlockParamVariant(Messages::BetaTextBlockParam Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaTextBlockParamVariant, Messages::BetaTextBlockParam>
+public sealed record class BetaTextBlockParamVariant(BetaTextBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaTextBlockParamVariant, BetaTextBlockParam>
 {
-    public static BetaTextBlockParamVariant From(Messages::BetaTextBlockParam value)
+    public static BetaTextBlockParamVariant From(BetaTextBlockParam value)
     {
         return new(value);
     }
@@ -23,11 +21,11 @@ public sealed record class BetaTextBlockParamVariant(Messages::BetaTextBlockPara
 /// <summary>
 /// Image content specified directly as base64 data or as a reference via a URL.
 /// </summary>
-public sealed record class BetaImageBlockParamVariant(Messages::BetaImageBlockParam Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaImageBlockParamVariant, Messages::BetaImageBlockParam>
+public sealed record class BetaImageBlockParamVariant(BetaImageBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaImageBlockParamVariant, BetaImageBlockParam>
 {
-    public static BetaImageBlockParamVariant From(Messages::BetaImageBlockParam value)
+    public static BetaImageBlockParamVariant From(BetaImageBlockParam value)
     {
         return new(value);
     }
@@ -42,11 +40,11 @@ public sealed record class BetaImageBlockParamVariant(Messages::BetaImageBlockPa
 /// Document content, either specified directly as base64 data, as text, or as a
 /// reference via a URL.
 /// </summary>
-public sealed record class BetaRequestDocumentBlockVariant(Messages::BetaRequestDocumentBlock Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaRequestDocumentBlockVariant, Messages::BetaRequestDocumentBlock>
+public sealed record class BetaRequestDocumentBlockVariant(BetaRequestDocumentBlock Value)
+    : BetaContentBlockParam,
+        IVariant<BetaRequestDocumentBlockVariant, BetaRequestDocumentBlock>
 {
-    public static BetaRequestDocumentBlockVariant From(Messages::BetaRequestDocumentBlock value)
+    public static BetaRequestDocumentBlockVariant From(BetaRequestDocumentBlock value)
     {
         return new(value);
     }
@@ -60,13 +58,11 @@ public sealed record class BetaRequestDocumentBlockVariant(Messages::BetaRequest
 /// <summary>
 /// A search result block containing source, title, and content from search operations.
 /// </summary>
-public sealed record class BetaSearchResultBlockParamVariant(
-    Messages::BetaSearchResultBlockParam Value
-)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaSearchResultBlockParamVariant, Messages::BetaSearchResultBlockParam>
+public sealed record class BetaSearchResultBlockParamVariant(BetaSearchResultBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaSearchResultBlockParamVariant, BetaSearchResultBlockParam>
 {
-    public static BetaSearchResultBlockParamVariant From(Messages::BetaSearchResultBlockParam value)
+    public static BetaSearchResultBlockParamVariant From(BetaSearchResultBlockParam value)
     {
         return new(value);
     }
@@ -80,11 +76,11 @@ public sealed record class BetaSearchResultBlockParamVariant(
 /// <summary>
 /// A block specifying internal thinking by the model.
 /// </summary>
-public sealed record class BetaThinkingBlockParamVariant(Messages::BetaThinkingBlockParam Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaThinkingBlockParamVariant, Messages::BetaThinkingBlockParam>
+public sealed record class BetaThinkingBlockParamVariant(BetaThinkingBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaThinkingBlockParamVariant, BetaThinkingBlockParam>
 {
-    public static BetaThinkingBlockParamVariant From(Messages::BetaThinkingBlockParam value)
+    public static BetaThinkingBlockParamVariant From(BetaThinkingBlockParam value)
     {
         return new(value);
     }
@@ -99,14 +95,12 @@ public sealed record class BetaThinkingBlockParamVariant(Messages::BetaThinkingB
 /// A block specifying internal, redacted thinking by the model.
 /// </summary>
 public sealed record class BetaRedactedThinkingBlockParamVariant(
-    Messages::BetaRedactedThinkingBlockParam Value
+    BetaRedactedThinkingBlockParam Value
 )
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaRedactedThinkingBlockParamVariant, Messages::BetaRedactedThinkingBlockParam>
+    : BetaContentBlockParam,
+        IVariant<BetaRedactedThinkingBlockParamVariant, BetaRedactedThinkingBlockParam>
 {
-    public static BetaRedactedThinkingBlockParamVariant From(
-        Messages::BetaRedactedThinkingBlockParam value
-    )
+    public static BetaRedactedThinkingBlockParamVariant From(BetaRedactedThinkingBlockParam value)
     {
         return new(value);
     }
@@ -120,11 +114,11 @@ public sealed record class BetaRedactedThinkingBlockParamVariant(
 /// <summary>
 /// A block indicating a tool use by the model.
 /// </summary>
-public sealed record class BetaToolUseBlockParamVariant(Messages::BetaToolUseBlockParam Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaToolUseBlockParamVariant, Messages::BetaToolUseBlockParam>
+public sealed record class BetaToolUseBlockParamVariant(BetaToolUseBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaToolUseBlockParamVariant, BetaToolUseBlockParam>
 {
-    public static BetaToolUseBlockParamVariant From(Messages::BetaToolUseBlockParam value)
+    public static BetaToolUseBlockParamVariant From(BetaToolUseBlockParam value)
     {
         return new(value);
     }
@@ -138,11 +132,11 @@ public sealed record class BetaToolUseBlockParamVariant(Messages::BetaToolUseBlo
 /// <summary>
 /// A block specifying the results of a tool use by the model.
 /// </summary>
-public sealed record class BetaToolResultBlockParamVariant(Messages::BetaToolResultBlockParam Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaToolResultBlockParamVariant, Messages::BetaToolResultBlockParam>
+public sealed record class BetaToolResultBlockParamVariant(BetaToolResultBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaToolResultBlockParamVariant, BetaToolResultBlockParam>
 {
-    public static BetaToolResultBlockParamVariant From(Messages::BetaToolResultBlockParam value)
+    public static BetaToolResultBlockParamVariant From(BetaToolResultBlockParam value)
     {
         return new(value);
     }
@@ -153,15 +147,11 @@ public sealed record class BetaToolResultBlockParamVariant(Messages::BetaToolRes
     }
 }
 
-public sealed record class BetaServerToolUseBlockParamVariant(
-    Messages::BetaServerToolUseBlockParam Value
-)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaServerToolUseBlockParamVariant, Messages::BetaServerToolUseBlockParam>
+public sealed record class BetaServerToolUseBlockParamVariant(BetaServerToolUseBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaServerToolUseBlockParamVariant, BetaServerToolUseBlockParam>
 {
-    public static BetaServerToolUseBlockParamVariant From(
-        Messages::BetaServerToolUseBlockParam value
-    )
+    public static BetaServerToolUseBlockParamVariant From(BetaServerToolUseBlockParam value)
     {
         return new(value);
     }
@@ -173,16 +163,13 @@ public sealed record class BetaServerToolUseBlockParamVariant(
 }
 
 public sealed record class BetaWebSearchToolResultBlockParamVariant(
-    Messages::BetaWebSearchToolResultBlockParam Value
+    BetaWebSearchToolResultBlockParam Value
 )
-    : Messages::BetaContentBlockParam,
-        IVariant<
-            BetaWebSearchToolResultBlockParamVariant,
-            Messages::BetaWebSearchToolResultBlockParam
-        >
+    : BetaContentBlockParam,
+        IVariant<BetaWebSearchToolResultBlockParamVariant, BetaWebSearchToolResultBlockParam>
 {
     public static BetaWebSearchToolResultBlockParamVariant From(
-        Messages::BetaWebSearchToolResultBlockParam value
+        BetaWebSearchToolResultBlockParam value
     )
     {
         return new(value);
@@ -195,16 +182,16 @@ public sealed record class BetaWebSearchToolResultBlockParamVariant(
 }
 
 public sealed record class BetaCodeExecutionToolResultBlockParamVariant(
-    Messages::BetaCodeExecutionToolResultBlockParam Value
+    BetaCodeExecutionToolResultBlockParam Value
 )
-    : Messages::BetaContentBlockParam,
+    : BetaContentBlockParam,
         IVariant<
             BetaCodeExecutionToolResultBlockParamVariant,
-            Messages::BetaCodeExecutionToolResultBlockParam
+            BetaCodeExecutionToolResultBlockParam
         >
 {
     public static BetaCodeExecutionToolResultBlockParamVariant From(
-        Messages::BetaCodeExecutionToolResultBlockParam value
+        BetaCodeExecutionToolResultBlockParam value
     )
     {
         return new(value);
@@ -216,11 +203,11 @@ public sealed record class BetaCodeExecutionToolResultBlockParamVariant(
     }
 }
 
-public sealed record class BetaMCPToolUseBlockParamVariant(Messages::BetaMCPToolUseBlockParam Value)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaMCPToolUseBlockParamVariant, Messages::BetaMCPToolUseBlockParam>
+public sealed record class BetaMCPToolUseBlockParamVariant(BetaMCPToolUseBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaMCPToolUseBlockParamVariant, BetaMCPToolUseBlockParam>
 {
-    public static BetaMCPToolUseBlockParamVariant From(Messages::BetaMCPToolUseBlockParam value)
+    public static BetaMCPToolUseBlockParamVariant From(BetaMCPToolUseBlockParam value)
     {
         return new(value);
     }
@@ -232,16 +219,13 @@ public sealed record class BetaMCPToolUseBlockParamVariant(Messages::BetaMCPTool
 }
 
 public sealed record class BetaRequestMCPToolResultBlockParamVariant(
-    Messages::BetaRequestMCPToolResultBlockParam Value
+    BetaRequestMCPToolResultBlockParam Value
 )
-    : Messages::BetaContentBlockParam,
-        IVariant<
-            BetaRequestMCPToolResultBlockParamVariant,
-            Messages::BetaRequestMCPToolResultBlockParam
-        >
+    : BetaContentBlockParam,
+        IVariant<BetaRequestMCPToolResultBlockParamVariant, BetaRequestMCPToolResultBlockParam>
 {
     public static BetaRequestMCPToolResultBlockParamVariant From(
-        Messages::BetaRequestMCPToolResultBlockParam value
+        BetaRequestMCPToolResultBlockParam value
     )
     {
         return new(value);
@@ -257,15 +241,11 @@ public sealed record class BetaRequestMCPToolResultBlockParamVariant(
 /// A content block that represents a file to be uploaded to the container Files uploaded
 /// via this block will be available in the container's input directory.
 /// </summary>
-public sealed record class BetaContainerUploadBlockParamVariant(
-    Messages::BetaContainerUploadBlockParam Value
-)
-    : Messages::BetaContentBlockParam,
-        IVariant<BetaContainerUploadBlockParamVariant, Messages::BetaContainerUploadBlockParam>
+public sealed record class BetaContainerUploadBlockParamVariant(BetaContainerUploadBlockParam Value)
+    : BetaContentBlockParam,
+        IVariant<BetaContainerUploadBlockParamVariant, BetaContainerUploadBlockParam>
 {
-    public static BetaContainerUploadBlockParamVariant From(
-        Messages::BetaContainerUploadBlockParam value
-    )
+    public static BetaContainerUploadBlockParamVariant From(BetaContainerUploadBlockParam value)
     {
         return new(value);
     }

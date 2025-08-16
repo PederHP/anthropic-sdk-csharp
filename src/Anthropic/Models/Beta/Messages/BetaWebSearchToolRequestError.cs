@@ -1,30 +1,27 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaWebSearchToolRequestError>))]
+[JsonConverter(typeof(ModelConverter<BetaWebSearchToolRequestError>))]
 public sealed record class BetaWebSearchToolRequestError
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaWebSearchToolRequestError>
+    : ModelBase,
+        IFromRaw<BetaWebSearchToolRequestError>
 {
     public required BetaWebSearchToolResultErrorCode ErrorCode
     {
         get
         {
             if (!this.Properties.TryGetValue("error_code", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "error_code",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("error_code", "Missing required argument");
 
             return JsonSerializer.Deserialize<BetaWebSearchToolResultErrorCode>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("error_code");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("error_code");
         }
         set { this.Properties["error_code"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -34,15 +31,9 @@ public sealed record class BetaWebSearchToolRequestError
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaToolChoiceVariants = Anthropic.Models.Beta.Messages.BetaToolChoiceVariants;
+using Anthropic.Models.Beta.Messages.BetaToolChoiceVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -15,16 +16,16 @@ public abstract record class BetaToolChoice
     internal BetaToolChoice() { }
 
     public static implicit operator BetaToolChoice(BetaToolChoiceAuto value) =>
-        new BetaToolChoiceVariants::BetaToolChoiceAutoVariant(value);
+        new BetaToolChoiceAutoVariant(value);
 
     public static implicit operator BetaToolChoice(BetaToolChoiceAny value) =>
-        new BetaToolChoiceVariants::BetaToolChoiceAnyVariant(value);
+        new BetaToolChoiceAnyVariant(value);
 
     public static implicit operator BetaToolChoice(BetaToolChoiceTool value) =>
-        new BetaToolChoiceVariants::BetaToolChoiceToolVariant(value);
+        new BetaToolChoiceToolVariant(value);
 
     public static implicit operator BetaToolChoice(BetaToolChoiceNone value) =>
-        new BetaToolChoiceVariants::BetaToolChoiceNoneVariant(value);
+        new BetaToolChoiceNoneVariant(value);
 
     public abstract void Validate();
 }
@@ -33,7 +34,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
 {
     public override BetaToolChoice? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -62,7 +63,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaToolChoiceVariants::BetaToolChoiceAutoVariant(deserialized);
+                        return new BetaToolChoiceAutoVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -70,7 +71,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "any":
             {
@@ -81,7 +82,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     var deserialized = JsonSerializer.Deserialize<BetaToolChoiceAny>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaToolChoiceVariants::BetaToolChoiceAnyVariant(deserialized);
+                        return new BetaToolChoiceAnyVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -89,7 +90,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "tool":
             {
@@ -103,7 +104,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaToolChoiceVariants::BetaToolChoiceToolVariant(deserialized);
+                        return new BetaToolChoiceToolVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -111,7 +112,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "none":
             {
@@ -125,7 +126,7 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaToolChoiceVariants::BetaToolChoiceNoneVariant(deserialized);
+                        return new BetaToolChoiceNoneVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -133,11 +134,11 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -150,15 +151,11 @@ sealed class BetaToolChoiceConverter : JsonConverter<BetaToolChoice>
     {
         object variant = value switch
         {
-            BetaToolChoiceVariants::BetaToolChoiceAutoVariant(var betaToolChoiceAuto) =>
-                betaToolChoiceAuto,
-            BetaToolChoiceVariants::BetaToolChoiceAnyVariant(var betaToolChoiceAny) =>
-                betaToolChoiceAny,
-            BetaToolChoiceVariants::BetaToolChoiceToolVariant(var betaToolChoiceTool) =>
-                betaToolChoiceTool,
-            BetaToolChoiceVariants::BetaToolChoiceNoneVariant(var betaToolChoiceNone) =>
-                betaToolChoiceNone,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaToolChoiceAutoVariant(var betaToolChoiceAuto) => betaToolChoiceAuto,
+            BetaToolChoiceAnyVariant(var betaToolChoiceAny) => betaToolChoiceAny,
+            BetaToolChoiceToolVariant(var betaToolChoiceTool) => betaToolChoiceTool,
+            BetaToolChoiceNoneVariant(var betaToolChoiceNone) => betaToolChoiceNone,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

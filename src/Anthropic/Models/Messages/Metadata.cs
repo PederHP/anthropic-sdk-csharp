@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<Metadata>))]
-public sealed record class Metadata : Anthropic::ModelBase, Anthropic::IFromRaw<Metadata>
+[JsonConverter(typeof(ModelConverter<Metadata>))]
+public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
 {
     /// <summary>
     /// An external identifier for the user who is associated with the request.
@@ -23,10 +22,7 @@ public sealed record class Metadata : Anthropic::ModelBase, Anthropic::IFromRaw<
             if (!this.Properties.TryGetValue("user_id", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["user_id"] = JsonSerializer.SerializeToElement(value); }
     }

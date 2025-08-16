@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using Messages = Anthropic.Models.Messages;
+using Anthropic.Models.Messages;
 
 namespace Anthropic.Models.Completions;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<Completion>))]
-public sealed record class Completion : Anthropic::ModelBase, Anthropic::IFromRaw<Completion>
+[JsonConverter(typeof(ModelConverter<Completion>))]
+public sealed record class Completion : ModelBase, IFromRaw<Completion>
 {
     /// <summary>
     /// Unique object identifier.
@@ -23,10 +22,8 @@ public sealed record class Completion : Anthropic::ModelBase, Anthropic::IFromRa
             if (!this.Properties.TryGetValue("id", out JsonElement element))
                 throw new ArgumentOutOfRangeException("id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("id");
         }
         set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -41,10 +38,8 @@ public sealed record class Completion : Anthropic::ModelBase, Anthropic::IFromRa
             if (!this.Properties.TryGetValue("completion", out JsonElement element))
                 throw new ArgumentOutOfRangeException("completion", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("completion");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("completion");
         }
         set { this.Properties["completion"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -53,17 +48,15 @@ public sealed record class Completion : Anthropic::ModelBase, Anthropic::IFromRa
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Messages::Model Model
+    public required Model Model
     {
         get
         {
             if (!this.Properties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::Model>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<Model>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("model");
         }
         set { this.Properties["model"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -83,10 +76,7 @@ public sealed record class Completion : Anthropic::ModelBase, Anthropic::IFromRa
             if (!this.Properties.TryGetValue("stop_reason", out JsonElement element))
                 throw new ArgumentOutOfRangeException("stop_reason", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -103,10 +93,7 @@ public sealed record class Completion : Anthropic::ModelBase, Anthropic::IFromRa
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

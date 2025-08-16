@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -14,7 +15,7 @@ public abstract record class ParamsBase
 
     public Dictionary<string, JsonElement> HeaderProperties { get; set; } = [];
 
-    public abstract global::System.Uri Url(IAnthropicClient client);
+    public abstract Uri Url(IAnthropicClient client);
 
     protected static void AddQueryElementToCollection(
         NameValueCollection collection,

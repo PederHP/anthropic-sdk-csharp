@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 using System = System;
 
 namespace Anthropic.Models.Beta.Files.DeletedFileProperties;
@@ -9,8 +8,8 @@ namespace Anthropic.Models.Beta.Files.DeletedFileProperties;
 ///
 /// For file deletion, this is always `"file_deleted"`.
 /// </summary>
-[JsonConverter(typeof(Anthropic::EnumConverter<Type, string>))]
-public sealed record class Type(string value) : Anthropic::IEnum<Type, string>
+[JsonConverter(typeof(EnumConverter<Type, string>))]
+public sealed record class Type(string value) : IEnum<Type, string>
 {
     public static readonly Type FileDeleted = new("file_deleted");
 

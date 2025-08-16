@@ -1,31 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using CitationsDeltaProperties = Anthropic.Models.Messages.CitationsDeltaProperties;
+using Anthropic.Models.Messages.CitationsDeltaProperties;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<CitationsDelta>))]
-public sealed record class CitationsDelta
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<CitationsDelta>
+[JsonConverter(typeof(ModelConverter<CitationsDelta>))]
+public sealed record class CitationsDelta : ModelBase, IFromRaw<CitationsDelta>
 {
-    public required CitationsDeltaProperties::Citation Citation
+    public required Citation Citation
     {
         get
         {
             if (!this.Properties.TryGetValue("citation", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "citation",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("citation", "Missing required argument");
 
-            return JsonSerializer.Deserialize<CitationsDeltaProperties::Citation>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("citation");
+            return JsonSerializer.Deserialize<Citation>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("citation");
         }
         set { this.Properties["citation"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -35,15 +28,9 @@ public sealed record class CitationsDelta
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -72,7 +59,7 @@ public sealed record class CitationsDelta
     }
 
     [SetsRequiredMembers]
-    public CitationsDelta(CitationsDeltaProperties::Citation citation)
+    public CitationsDelta(Citation citation)
         : this()
     {
         this.Citation = citation;

@@ -1,49 +1,37 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaBase64ImageSourceProperties = Anthropic.Models.Beta.Messages.BetaBase64ImageSourceProperties;
+using Anthropic.Models.Beta.Messages.BetaBase64ImageSourceProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaBase64ImageSource>))]
-public sealed record class BetaBase64ImageSource
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaBase64ImageSource>
+[JsonConverter(typeof(ModelConverter<BetaBase64ImageSource>))]
+public sealed record class BetaBase64ImageSource : ModelBase, IFromRaw<BetaBase64ImageSource>
 {
     public required string Data
     {
         get
         {
             if (!this.Properties.TryGetValue("data", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "data",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("data", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("data");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("data");
         }
         set { this.Properties["data"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public required BetaBase64ImageSourceProperties::MediaType MediaType
+    public required MediaType MediaType
     {
         get
         {
             if (!this.Properties.TryGetValue("media_type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "media_type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("media_type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaBase64ImageSourceProperties::MediaType>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("media_type");
+            return JsonSerializer.Deserialize<MediaType>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("media_type");
         }
         set { this.Properties["media_type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -53,15 +41,9 @@ public sealed record class BetaBase64ImageSource
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

@@ -1,9 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ContentVariants = Anthropic.Models.Messages.MessageParamProperties.ContentVariants;
-using Messages = Anthropic.Models.Messages;
-using System = System;
 
 namespace Anthropic.Models.Messages.MessageParamProperties;
 
@@ -14,7 +13,7 @@ public abstract record class Content
 
     public static implicit operator Content(string value) => new ContentVariants::String(value);
 
-    public static implicit operator Content(List<Messages::ContentBlockParam> value) =>
+    public static implicit operator Content(List<ContentBlockParam> value) =>
         new ContentVariants::ContentBlockParams(value);
 
     public abstract void Validate();
@@ -24,7 +23,7 @@ sealed class ContentConverter : JsonConverter<Content>
 {
     public override Content? Read(
         ref Utf8JsonReader reader,
-        System::Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -45,7 +44,7 @@ sealed class ContentConverter : JsonConverter<Content>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<List<Messages::ContentBlockParam>>(
+            var deserialized = JsonSerializer.Deserialize<List<ContentBlockParam>>(
                 ref reader,
                 options
             );
@@ -59,7 +58,7 @@ sealed class ContentConverter : JsonConverter<Content>
             exceptions.Add(e);
         }
 
-        throw new System::AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
@@ -68,7 +67,7 @@ sealed class ContentConverter : JsonConverter<Content>
         {
             ContentVariants::String(var string1) => string1,
             ContentVariants::ContentBlockParams(var contentBlockParams) => contentBlockParams,
-            _ => throw new System::ArgumentOutOfRangeException(nameof(value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

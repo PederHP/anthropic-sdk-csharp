@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using MessageBatchResultVariants = Anthropic.Models.Messages.Batches.MessageBatchResultVariants;
+using Anthropic.Models.Messages.Batches.MessageBatchResultVariants;
 
 namespace Anthropic.Models.Messages.Batches;
 
@@ -18,16 +19,16 @@ public abstract record class MessageBatchResult
     internal MessageBatchResult() { }
 
     public static implicit operator MessageBatchResult(MessageBatchSucceededResult value) =>
-        new MessageBatchResultVariants::MessageBatchSucceededResultVariant(value);
+        new MessageBatchSucceededResultVariant(value);
 
     public static implicit operator MessageBatchResult(MessageBatchErroredResult value) =>
-        new MessageBatchResultVariants::MessageBatchErroredResultVariant(value);
+        new MessageBatchErroredResultVariant(value);
 
     public static implicit operator MessageBatchResult(MessageBatchCanceledResult value) =>
-        new MessageBatchResultVariants::MessageBatchCanceledResultVariant(value);
+        new MessageBatchCanceledResultVariant(value);
 
     public static implicit operator MessageBatchResult(MessageBatchExpiredResult value) =>
-        new MessageBatchResultVariants::MessageBatchExpiredResultVariant(value);
+        new MessageBatchExpiredResultVariant(value);
 
     public abstract void Validate();
 }
@@ -36,7 +37,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
 {
     public override MessageBatchResult? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -65,9 +66,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     );
                     if (deserialized != null)
                     {
-                        return new MessageBatchResultVariants::MessageBatchSucceededResultVariant(
-                            deserialized
-                        );
+                        return new MessageBatchSucceededResultVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -75,7 +74,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "errored":
             {
@@ -89,9 +88,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     );
                     if (deserialized != null)
                     {
-                        return new MessageBatchResultVariants::MessageBatchErroredResultVariant(
-                            deserialized
-                        );
+                        return new MessageBatchErroredResultVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -99,7 +96,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "canceled":
             {
@@ -113,9 +110,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     );
                     if (deserialized != null)
                     {
-                        return new MessageBatchResultVariants::MessageBatchCanceledResultVariant(
-                            deserialized
-                        );
+                        return new MessageBatchCanceledResultVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -123,7 +118,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "expired":
             {
@@ -137,9 +132,7 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     );
                     if (deserialized != null)
                     {
-                        return new MessageBatchResultVariants::MessageBatchExpiredResultVariant(
-                            deserialized
-                        );
+                        return new MessageBatchExpiredResultVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -147,11 +140,11 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -164,19 +157,15 @@ sealed class MessageBatchResultConverter : JsonConverter<MessageBatchResult>
     {
         object variant = value switch
         {
-            MessageBatchResultVariants::MessageBatchSucceededResultVariant(
-                var messageBatchSucceededResult
-            ) => messageBatchSucceededResult,
-            MessageBatchResultVariants::MessageBatchErroredResultVariant(
-                var messageBatchErroredResult
-            ) => messageBatchErroredResult,
-            MessageBatchResultVariants::MessageBatchCanceledResultVariant(
-                var messageBatchCanceledResult
-            ) => messageBatchCanceledResult,
-            MessageBatchResultVariants::MessageBatchExpiredResultVariant(
-                var messageBatchExpiredResult
-            ) => messageBatchExpiredResult,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            MessageBatchSucceededResultVariant(var messageBatchSucceededResult) =>
+                messageBatchSucceededResult,
+            MessageBatchErroredResultVariant(var messageBatchErroredResult) =>
+                messageBatchErroredResult,
+            MessageBatchCanceledResultVariant(var messageBatchCanceledResult) =>
+                messageBatchCanceledResult,
+            MessageBatchExpiredResultVariant(var messageBatchExpiredResult) =>
+                messageBatchExpiredResult,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

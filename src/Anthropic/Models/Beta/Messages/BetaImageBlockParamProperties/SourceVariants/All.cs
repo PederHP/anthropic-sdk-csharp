@@ -1,12 +1,10 @@
-using Messages = Anthropic.Models.Beta.Messages;
-
 namespace Anthropic.Models.Beta.Messages.BetaImageBlockParamProperties.SourceVariants;
 
-public sealed record class BetaBase64ImageSourceVariant(Messages::BetaBase64ImageSource Value)
+public sealed record class BetaBase64ImageSourceVariant(BetaBase64ImageSource Value)
     : Source,
-        IVariant<BetaBase64ImageSourceVariant, Messages::BetaBase64ImageSource>
+        IVariant<BetaBase64ImageSourceVariant, BetaBase64ImageSource>
 {
-    public static BetaBase64ImageSourceVariant From(Messages::BetaBase64ImageSource value)
+    public static BetaBase64ImageSourceVariant From(BetaBase64ImageSource value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class BetaBase64ImageSourceVariant(Messages::BetaBase64Imag
     }
 }
 
-public sealed record class BetaURLImageSourceVariant(Messages::BetaURLImageSource Value)
+public sealed record class BetaURLImageSourceVariant(BetaURLImageSource Value)
     : Source,
-        IVariant<BetaURLImageSourceVariant, Messages::BetaURLImageSource>
+        IVariant<BetaURLImageSourceVariant, BetaURLImageSource>
 {
-    public static BetaURLImageSourceVariant From(Messages::BetaURLImageSource value)
+    public static BetaURLImageSourceVariant From(BetaURLImageSource value)
     {
         return new(value);
     }
@@ -32,11 +30,11 @@ public sealed record class BetaURLImageSourceVariant(Messages::BetaURLImageSourc
     }
 }
 
-public sealed record class BetaFileImageSourceVariant(Messages::BetaFileImageSource Value)
+public sealed record class BetaFileImageSourceVariant(BetaFileImageSource Value)
     : Source,
-        IVariant<BetaFileImageSourceVariant, Messages::BetaFileImageSource>
+        IVariant<BetaFileImageSourceVariant, BetaFileImageSource>
 {
-    public static BetaFileImageSourceVariant From(Messages::BetaFileImageSource value)
+    public static BetaFileImageSourceVariant From(BetaFileImageSource value)
     {
         return new(value);
     }

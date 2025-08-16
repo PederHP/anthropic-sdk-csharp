@@ -1,15 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaMessageTokensCount>))]
-public sealed record class BetaMessageTokensCount
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaMessageTokensCount>
+[JsonConverter(typeof(ModelConverter<BetaMessageTokensCount>))]
+public sealed record class BetaMessageTokensCount : ModelBase, IFromRaw<BetaMessageTokensCount>
 {
     /// <summary>
     /// The total number of tokens across the provided list of messages, system prompt,
@@ -20,15 +18,9 @@ public sealed record class BetaMessageTokensCount
         get
         {
             if (!this.Properties.TryGetValue("input_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "input_tokens",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("input_tokens", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(value); }
     }

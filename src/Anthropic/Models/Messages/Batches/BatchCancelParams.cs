@@ -1,5 +1,5 @@
+using System;
 using System.Net.Http;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages.Batches;
 
@@ -14,13 +14,13 @@ namespace Anthropic.Models.Messages.Batches;
 ///
 /// Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
 /// </summary>
-public sealed record class BatchCancelParams : Anthropic::ParamsBase
+public sealed record class BatchCancelParams : ParamsBase
 {
     public required string MessageBatchID;
 
-    public override global::System.Uri Url(Anthropic::IAnthropicClient client)
+    public override Uri Url(IAnthropicClient client)
     {
-        return new global::System.UriBuilder(
+        return new UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/v1/messages/batches/{0}/cancel", this.MessageBatchID)
         )
@@ -29,12 +29,12 @@ public sealed record class BatchCancelParams : Anthropic::ParamsBase
         }.Uri;
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, Anthropic::IAnthropicClient client)
+    public void AddHeadersToRequest(HttpRequestMessage request, IAnthropicClient client)
     {
-        Anthropic::ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
         {
-            Anthropic::ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }

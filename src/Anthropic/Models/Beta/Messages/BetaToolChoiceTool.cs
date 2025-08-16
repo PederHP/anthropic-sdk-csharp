@@ -1,18 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
 /// <summary>
 /// The model will use the specified tool with `tool_choice.name`.
 /// </summary>
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaToolChoiceTool>))]
-public sealed record class BetaToolChoiceTool
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaToolChoiceTool>
+[JsonConverter(typeof(ModelConverter<BetaToolChoiceTool>))]
+public sealed record class BetaToolChoiceTool : ModelBase, IFromRaw<BetaToolChoiceTool>
 {
     /// <summary>
     /// The name of the tool to use.
@@ -22,15 +20,10 @@ public sealed record class BetaToolChoiceTool
         get
         {
             if (!this.Properties.TryGetValue("name", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "name",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("name", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("name");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("name");
         }
         set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -40,15 +33,9 @@ public sealed record class BetaToolChoiceTool
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -66,10 +53,7 @@ public sealed record class BetaToolChoiceTool
             if (!this.Properties.TryGetValue("disable_parallel_tool_use", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<bool?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
         set
         {

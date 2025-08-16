@@ -1,14 +1,14 @@
-using Files = Anthropic.Services.Beta.Files;
-using Messages = Anthropic.Services.Beta.Messages;
-using Models = Anthropic.Services.Beta.Models;
+using Anthropic.Services.Beta.Files;
+using Anthropic.Services.Beta.Messages;
+using Anthropic.Services.Beta.Models;
 
 namespace Anthropic.Services.Beta;
 
 public interface IBetaService
 {
-    Models::IModelService Models { get; }
+    IModelService Models { get; }
 
-    Messages::IMessageService Messages { get; }
+    IMessageService Messages { get; }
 
-    Files::IFileService Files { get; }
+    IFileService Files { get; }
 }

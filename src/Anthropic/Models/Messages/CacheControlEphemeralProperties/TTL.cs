@@ -1,6 +1,5 @@
 using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages.CacheControlEphemeralProperties;
 
@@ -11,8 +10,8 @@ namespace Anthropic.Models.Messages.CacheControlEphemeralProperties;
 ///
 /// Defaults to `5m`.
 /// </summary>
-[JsonConverter(typeof(Anthropic::EnumConverter<TTL, string>))]
-public sealed record class TTL(string value) : Anthropic::IEnum<TTL, string>
+[JsonConverter(typeof(EnumConverter<TTL, string>))]
+public sealed record class TTL(string value) : IEnum<TTL, string>
 {
     public static readonly TTL TTL5m = new("5m");
 

@@ -1,9 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ContentVariants = Anthropic.Models.Beta.Messages.BetaContentBlockSourceProperties.ContentVariants;
-using Messages = Anthropic.Models.Beta.Messages;
-using System = System;
 
 namespace Anthropic.Models.Beta.Messages.BetaContentBlockSourceProperties;
 
@@ -14,7 +13,7 @@ public abstract record class Content
 
     public static implicit operator Content(string value) => new ContentVariants::String(value);
 
-    public static implicit operator Content(List<Messages::BetaContentBlockSourceContent> value) =>
+    public static implicit operator Content(List<BetaContentBlockSourceContent> value) =>
         new ContentVariants::BetaContentBlockSourceContentVariant(value);
 
     public abstract void Validate();
@@ -24,7 +23,7 @@ sealed class ContentConverter : JsonConverter<Content>
 {
     public override Content? Read(
         ref Utf8JsonReader reader,
-        System::Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -45,9 +44,10 @@ sealed class ContentConverter : JsonConverter<Content>
 
         try
         {
-            var deserialized = JsonSerializer.Deserialize<
-                List<Messages::BetaContentBlockSourceContent>
-            >(ref reader, options);
+            var deserialized = JsonSerializer.Deserialize<List<BetaContentBlockSourceContent>>(
+                ref reader,
+                options
+            );
             if (deserialized != null)
             {
                 return new ContentVariants::BetaContentBlockSourceContentVariant(deserialized);
@@ -58,7 +58,7 @@ sealed class ContentConverter : JsonConverter<Content>
             exceptions.Add(e);
         }
 
-        throw new System::AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(Utf8JsonWriter writer, Content value, JsonSerializerOptions options)
@@ -69,7 +69,7 @@ sealed class ContentConverter : JsonConverter<Content>
             ContentVariants::BetaContentBlockSourceContentVariant(
                 var betaContentBlockSourceContent
             ) => betaContentBlockSourceContent,
-            _ => throw new System::ArgumentOutOfRangeException(nameof(value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

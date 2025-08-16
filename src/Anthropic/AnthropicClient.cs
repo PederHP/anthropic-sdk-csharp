@@ -1,38 +1,35 @@
-using Beta = Anthropic.Services.Beta;
-using Completions = Anthropic.Services.Completions;
-using Http = System.Net.Http;
-using Messages = Anthropic.Services.Messages;
-using Models = Anthropic.Services.Models;
+using System;
+using System.Net.Http;
+using Anthropic.Services.Beta;
+using Anthropic.Services.Completions;
+using Anthropic.Services.Messages;
+using Anthropic.Services.Models;
 
 namespace Anthropic;
 
 public sealed class AnthropicClient : IAnthropicClient
 {
-    public Http::HttpClient HttpClient { get; init; } = new();
+    public HttpClient HttpClient { get; init; } = new();
 
-    global::System.Lazy<global::System.Uri> _baseUrl = new(() =>
-        new global::System.Uri(
-            global::System.Environment.GetEnvironmentVariable("ANTHROPIC_BASE_URL")
-                ?? "https://api.anthropic.com"
+    Lazy<Uri> _baseUrl = new(() =>
+        new Uri(
+            Environment.GetEnvironmentVariable("ANTHROPIC_BASE_URL") ?? "https://api.anthropic.com"
         )
     );
-    public global::System.Uri BaseUrl
+    public Uri BaseUrl
     {
         get { return _baseUrl.Value; }
         init { _baseUrl = new(() => value); }
     }
 
-    global::System.Lazy<string?> _apiKey = new(() =>
-        global::System.Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY")
-    );
+    Lazy<string?> _apiKey = new(() => Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY"));
     public string? APIKey
     {
         get { return _apiKey.Value; }
         init { _apiKey = new(() => value); }
     }
 
-    global::System.Lazy<string?> _authToken = new(() =>
-        global::System.Environment.GetEnvironmentVariable("ANTHROPIC_AUTH_TOKEN")
+    Lazy<string?> _authToken = new(() => Environment.GetEnvironmentVariable("ANTHROPIC_AUTH_TOKEN")
     );
     public string? AuthToken
     {
@@ -40,35 +37,35 @@ public sealed class AnthropicClient : IAnthropicClient
         init { _authToken = new(() => value); }
     }
 
-    readonly global::System.Lazy<Completions::ICompletionService> _completions;
-    public Completions::ICompletionService Completions
+    readonly Lazy<ICompletionService> _completions;
+    public ICompletionService Completions
     {
         get { return _completions.Value; }
     }
 
-    readonly global::System.Lazy<Messages::IMessageService> _messages;
-    public Messages::IMessageService Messages
+    readonly Lazy<IMessageService> _messages;
+    public IMessageService Messages
     {
         get { return _messages.Value; }
     }
 
-    readonly global::System.Lazy<Models::IModelService> _models;
-    public Models::IModelService Models
+    readonly Lazy<IModelService> _models;
+    public IModelService Models
     {
         get { return _models.Value; }
     }
 
-    readonly global::System.Lazy<Beta::IBetaService> _beta;
-    public Beta::IBetaService Beta
+    readonly Lazy<IBetaService> _beta;
+    public IBetaService Beta
     {
         get { return _beta.Value; }
     }
 
     public AnthropicClient()
     {
-        _completions = new(() => new Completions::CompletionService(this));
-        _messages = new(() => new Messages::MessageService(this));
-        _models = new(() => new Models::ModelService(this));
-        _beta = new(() => new Beta::BetaService(this));
+        _completions = new(() => new CompletionService(this));
+        _messages = new(() => new MessageService(this));
+        _models = new(() => new ModelService(this));
+        _beta = new(() => new BetaService(this));
     }
 }

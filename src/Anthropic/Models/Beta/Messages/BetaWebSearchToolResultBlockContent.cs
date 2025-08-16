@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaWebSearchToolResultBlockContentVariants = Anthropic.Models.Beta.Messages.BetaWebSearchToolResultBlockContentVariants;
+using Anthropic.Models.Beta.Messages.BetaWebSearchToolResultBlockContentVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -12,12 +13,11 @@ public abstract record class BetaWebSearchToolResultBlockContent
 
     public static implicit operator BetaWebSearchToolResultBlockContent(
         BetaWebSearchToolResultError value
-    ) =>
-        new BetaWebSearchToolResultBlockContentVariants::BetaWebSearchToolResultErrorVariant(value);
+    ) => new BetaWebSearchToolResultErrorVariant(value);
 
     public static implicit operator BetaWebSearchToolResultBlockContent(
         List<BetaWebSearchResultBlock> value
-    ) => new BetaWebSearchToolResultBlockContentVariants::BetaWebSearchResultBlocks(value);
+    ) => new BetaWebSearchResultBlocks(value);
 
     public abstract void Validate();
 }
@@ -27,7 +27,7 @@ sealed class BetaWebSearchToolResultBlockContentConverter
 {
     public override BetaWebSearchToolResultBlockContent? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -41,9 +41,7 @@ sealed class BetaWebSearchToolResultBlockContentConverter
             );
             if (deserialized != null)
             {
-                return new BetaWebSearchToolResultBlockContentVariants::BetaWebSearchToolResultErrorVariant(
-                    deserialized
-                );
+                return new BetaWebSearchToolResultErrorVariant(deserialized);
             }
         }
         catch (JsonException e)
@@ -59,9 +57,7 @@ sealed class BetaWebSearchToolResultBlockContentConverter
             );
             if (deserialized != null)
             {
-                return new BetaWebSearchToolResultBlockContentVariants::BetaWebSearchResultBlocks(
-                    deserialized
-                );
+                return new BetaWebSearchResultBlocks(deserialized);
             }
         }
         catch (JsonException e)
@@ -69,7 +65,7 @@ sealed class BetaWebSearchToolResultBlockContentConverter
             exceptions.Add(e);
         }
 
-        throw new global::System.AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(
@@ -80,13 +76,10 @@ sealed class BetaWebSearchToolResultBlockContentConverter
     {
         object variant = value switch
         {
-            BetaWebSearchToolResultBlockContentVariants::BetaWebSearchToolResultErrorVariant(
-                var betaWebSearchToolResultError
-            ) => betaWebSearchToolResultError,
-            BetaWebSearchToolResultBlockContentVariants::BetaWebSearchResultBlocks(
-                var betaWebSearchResultBlocks
-            ) => betaWebSearchResultBlocks,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaWebSearchToolResultErrorVariant(var betaWebSearchToolResultError) =>
+                betaWebSearchToolResultError,
+            BetaWebSearchResultBlocks(var betaWebSearchResultBlocks) => betaWebSearchResultBlocks,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

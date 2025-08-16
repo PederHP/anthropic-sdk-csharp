@@ -1,15 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaToolTextEditor20250728>))]
+[JsonConverter(typeof(ModelConverter<BetaToolTextEditor20250728>))]
 public sealed record class BetaToolTextEditor20250728
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaToolTextEditor20250728>
+    : ModelBase,
+        IFromRaw<BetaToolTextEditor20250728>
 {
     /// <summary>
     /// Name of the tool.
@@ -21,15 +21,9 @@ public sealed record class BetaToolTextEditor20250728
         get
         {
             if (!this.Properties.TryGetValue("name", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "name",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("name", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -39,15 +33,9 @@ public sealed record class BetaToolTextEditor20250728
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -64,7 +52,7 @@ public sealed record class BetaToolTextEditor20250728
 
             return JsonSerializer.Deserialize<BetaCacheControlEphemeral?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
@@ -81,10 +69,7 @@ public sealed record class BetaToolTextEditor20250728
             if (!this.Properties.TryGetValue("max_characters", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<long?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["max_characters"] = JsonSerializer.SerializeToElement(value); }
     }

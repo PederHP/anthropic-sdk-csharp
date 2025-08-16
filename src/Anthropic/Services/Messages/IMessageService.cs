@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Anthropic.Models.Messages;
-using Batches = Anthropic.Services.Messages.Batches;
+using Anthropic.Services.Messages.Batches;
 
 namespace Anthropic.Services.Messages;
 
 public interface IMessageService
 {
-    Batches::IBatchService Batches { get; }
+    IBatchService Batches { get; }
 
     /// <summary>
     /// Send a structured list of input messages with text and/or image content, and

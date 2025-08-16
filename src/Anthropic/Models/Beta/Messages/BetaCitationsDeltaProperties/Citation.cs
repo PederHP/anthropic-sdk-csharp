@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using CitationVariants = Anthropic.Models.Beta.Messages.BetaCitationsDeltaProperties.CitationVariants;
-using Messages = Anthropic.Models.Beta.Messages;
+using Anthropic.Models.Beta.Messages.BetaCitationsDeltaProperties.CitationVariants;
 
 namespace Anthropic.Models.Beta.Messages.BetaCitationsDeltaProperties;
 
@@ -12,21 +11,20 @@ public abstract record class Citation
 {
     internal Citation() { }
 
-    public static implicit operator Citation(Messages::BetaCitationCharLocation value) =>
-        new CitationVariants::BetaCitationCharLocationVariant(value);
+    public static implicit operator Citation(BetaCitationCharLocation value) =>
+        new BetaCitationCharLocationVariant(value);
 
-    public static implicit operator Citation(Messages::BetaCitationPageLocation value) =>
-        new CitationVariants::BetaCitationPageLocationVariant(value);
+    public static implicit operator Citation(BetaCitationPageLocation value) =>
+        new BetaCitationPageLocationVariant(value);
 
-    public static implicit operator Citation(Messages::BetaCitationContentBlockLocation value) =>
-        new CitationVariants::BetaCitationContentBlockLocationVariant(value);
+    public static implicit operator Citation(BetaCitationContentBlockLocation value) =>
+        new BetaCitationContentBlockLocationVariant(value);
 
-    public static implicit operator Citation(
-        Messages::BetaCitationsWebSearchResultLocation value
-    ) => new CitationVariants::BetaCitationsWebSearchResultLocationVariant(value);
+    public static implicit operator Citation(BetaCitationsWebSearchResultLocation value) =>
+        new BetaCitationsWebSearchResultLocationVariant(value);
 
-    public static implicit operator Citation(Messages::BetaCitationSearchResultLocation value) =>
-        new CitationVariants::BetaCitationSearchResultLocationVariant(value);
+    public static implicit operator Citation(BetaCitationSearchResultLocation value) =>
+        new BetaCitationSearchResultLocationVariant(value);
 
     public abstract void Validate();
 }
@@ -58,14 +56,13 @@ sealed class CitationConverter : JsonConverter<Citation>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaCitationCharLocation>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaCitationCharLocation>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new CitationVariants::BetaCitationCharLocationVariant(deserialized);
+                        return new BetaCitationCharLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -81,14 +78,13 @@ sealed class CitationConverter : JsonConverter<Citation>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaCitationPageLocation>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaCitationPageLocation>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new CitationVariants::BetaCitationPageLocationVariant(deserialized);
+                        return new BetaCitationPageLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -104,16 +100,13 @@ sealed class CitationConverter : JsonConverter<Citation>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaCitationContentBlockLocation>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaCitationContentBlockLocation>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new CitationVariants::BetaCitationContentBlockLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationContentBlockLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -130,15 +123,13 @@ sealed class CitationConverter : JsonConverter<Citation>
                 try
                 {
                     var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaCitationsWebSearchResultLocation>(
+                        JsonSerializer.Deserialize<BetaCitationsWebSearchResultLocation>(
                             json,
                             options
                         );
                     if (deserialized != null)
                     {
-                        return new CitationVariants::BetaCitationsWebSearchResultLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationsWebSearchResultLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -154,16 +145,13 @@ sealed class CitationConverter : JsonConverter<Citation>
 
                 try
                 {
-                    var deserialized =
-                        JsonSerializer.Deserialize<Messages::BetaCitationSearchResultLocation>(
-                            json,
-                            options
-                        );
+                    var deserialized = JsonSerializer.Deserialize<BetaCitationSearchResultLocation>(
+                        json,
+                        options
+                    );
                     if (deserialized != null)
                     {
-                        return new CitationVariants::BetaCitationSearchResultLocationVariant(
-                            deserialized
-                        );
+                        return new BetaCitationSearchResultLocationVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -184,19 +172,16 @@ sealed class CitationConverter : JsonConverter<Citation>
     {
         object variant = value switch
         {
-            CitationVariants::BetaCitationCharLocationVariant(var betaCitationCharLocation) =>
+            BetaCitationCharLocationVariant(var betaCitationCharLocation) =>
                 betaCitationCharLocation,
-            CitationVariants::BetaCitationPageLocationVariant(var betaCitationPageLocation) =>
+            BetaCitationPageLocationVariant(var betaCitationPageLocation) =>
                 betaCitationPageLocation,
-            CitationVariants::BetaCitationContentBlockLocationVariant(
-                var betaCitationContentBlockLocation
-            ) => betaCitationContentBlockLocation,
-            CitationVariants::BetaCitationsWebSearchResultLocationVariant(
-                var betaCitationsWebSearchResultLocation
-            ) => betaCitationsWebSearchResultLocation,
-            CitationVariants::BetaCitationSearchResultLocationVariant(
-                var betaCitationSearchResultLocation
-            ) => betaCitationSearchResultLocation,
+            BetaCitationContentBlockLocationVariant(var betaCitationContentBlockLocation) =>
+                betaCitationContentBlockLocation,
+            BetaCitationsWebSearchResultLocationVariant(var betaCitationsWebSearchResultLocation) =>
+                betaCitationsWebSearchResultLocation,
+            BetaCitationSearchResultLocationVariant(var betaCitationSearchResultLocation) =>
+                betaCitationSearchResultLocation,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

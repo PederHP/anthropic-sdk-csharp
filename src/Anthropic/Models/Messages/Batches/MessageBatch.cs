@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using MessageBatchProperties = Anthropic.Models.Messages.Batches.MessageBatchProperties;
+using Anthropic.Models.Messages.Batches.MessageBatchProperties;
 
 namespace Anthropic.Models.Messages.Batches;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<MessageBatch>))]
-public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFromRaw<MessageBatch>
+[JsonConverter(typeof(ModelConverter<MessageBatch>))]
+public sealed record class MessageBatch : ModelBase, IFromRaw<MessageBatch>
 {
     /// <summary>
     /// Unique object identifier.
@@ -20,15 +20,10 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
         get
         {
             if (!this.Properties.TryGetValue("id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("id");
         }
         set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -37,20 +32,14 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
     /// RFC 3339 datetime string representing the time at which the Message Batch
     /// was archived and its results became unavailable.
     /// </summary>
-    public required global::System.DateTime? ArchivedAt
+    public required DateTime? ArchivedAt
     {
         get
         {
             if (!this.Properties.TryGetValue("archived_at", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "archived_at",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("archived_at", "Missing required argument");
 
-            return JsonSerializer.Deserialize<global::System.DateTime?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<DateTime?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["archived_at"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -59,20 +48,17 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
     /// RFC 3339 datetime string representing the time at which cancellation was
     /// initiated for the Message Batch. Specified only if cancellation was initiated.
     /// </summary>
-    public required global::System.DateTime? CancelInitiatedAt
+    public required DateTime? CancelInitiatedAt
     {
         get
         {
             if (!this.Properties.TryGetValue("cancel_initiated_at", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "cancel_initiated_at",
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<global::System.DateTime?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<DateTime?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["cancel_initiated_at"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -81,20 +67,14 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
     /// RFC 3339 datetime string representing the time at which the Message Batch
     /// was created.
     /// </summary>
-    public required global::System.DateTime CreatedAt
+    public required DateTime CreatedAt
     {
         get
         {
             if (!this.Properties.TryGetValue("created_at", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "created_at",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("created_at", "Missing required argument");
 
-            return JsonSerializer.Deserialize<global::System.DateTime>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<DateTime>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["created_at"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -106,20 +86,14 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
     /// Processing ends when every request in a Message Batch has either succeeded,
     /// errored, canceled, or expired.
     /// </summary>
-    public required global::System.DateTime? EndedAt
+    public required DateTime? EndedAt
     {
         get
         {
             if (!this.Properties.TryGetValue("ended_at", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "ended_at",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("ended_at", "Missing required argument");
 
-            return JsonSerializer.Deserialize<global::System.DateTime?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<DateTime?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["ended_at"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -128,20 +102,14 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
     /// RFC 3339 datetime string representing the time at which the Message Batch
     /// will expire and end processing, which is 24 hours after creation.
     /// </summary>
-    public required global::System.DateTime ExpiresAt
+    public required DateTime ExpiresAt
     {
         get
         {
             if (!this.Properties.TryGetValue("expires_at", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "expires_at",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("expires_at", "Missing required argument");
 
-            return JsonSerializer.Deserialize<global::System.DateTime>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<DateTime>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["expires_at"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -149,20 +117,20 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
     /// <summary>
     /// Processing status of the Message Batch.
     /// </summary>
-    public required MessageBatchProperties::ProcessingStatus ProcessingStatus
+    public required ProcessingStatus ProcessingStatus
     {
         get
         {
             if (!this.Properties.TryGetValue("processing_status", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "processing_status",
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<MessageBatchProperties::ProcessingStatus>(
+            return JsonSerializer.Deserialize<ProcessingStatus>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("processing_status");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("processing_status");
         }
         set { this.Properties["processing_status"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -179,15 +147,15 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
         get
         {
             if (!this.Properties.TryGetValue("request_counts", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "request_counts",
                     "Missing required argument"
                 );
 
             return JsonSerializer.Deserialize<MessageBatchRequestCounts>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("request_counts");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("request_counts");
         }
         set { this.Properties["request_counts"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -204,15 +172,9 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
         get
         {
             if (!this.Properties.TryGetValue("results_url", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "results_url",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("results_url", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["results_url"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -227,15 +189,9 @@ public sealed record class MessageBatch : Anthropic::ModelBase, Anthropic::IFrom
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

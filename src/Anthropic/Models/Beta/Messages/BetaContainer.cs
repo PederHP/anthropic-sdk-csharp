@@ -1,16 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
 /// <summary>
 /// Information about the container used in the request (for the code execution tool)
 /// </summary>
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaContainer>))]
-public sealed record class BetaContainer : Anthropic::ModelBase, Anthropic::IFromRaw<BetaContainer>
+[JsonConverter(typeof(ModelConverter<BetaContainer>))]
+public sealed record class BetaContainer : ModelBase, IFromRaw<BetaContainer>
 {
     /// <summary>
     /// Identifier for the container used in this request
@@ -20,15 +20,10 @@ public sealed record class BetaContainer : Anthropic::ModelBase, Anthropic::IFro
         get
         {
             if (!this.Properties.TryGetValue("id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("id");
         }
         set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -36,20 +31,14 @@ public sealed record class BetaContainer : Anthropic::ModelBase, Anthropic::IFro
     /// <summary>
     /// The time at which the container will expire.
     /// </summary>
-    public required global::System.DateTime ExpiresAt
+    public required DateTime ExpiresAt
     {
         get
         {
             if (!this.Properties.TryGetValue("expires_at", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "expires_at",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("expires_at", "Missing required argument");
 
-            return JsonSerializer.Deserialize<global::System.DateTime>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<DateTime>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["expires_at"] = JsonSerializer.SerializeToElement(value); }
     }

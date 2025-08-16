@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages.Batches;
 
@@ -10,10 +10,10 @@ namespace Anthropic.Models.Beta.Messages.Batches;
 /// This is a single line in the response `.jsonl` file and does not represent the
 /// response as a whole.
 /// </summary>
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaMessageBatchIndividualResponse>))]
+[JsonConverter(typeof(ModelConverter<BetaMessageBatchIndividualResponse>))]
 public sealed record class BetaMessageBatchIndividualResponse
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaMessageBatchIndividualResponse>
+    : ModelBase,
+        IFromRaw<BetaMessageBatchIndividualResponse>
 {
     /// <summary>
     /// Developer-provided ID created for each request in a Message Batch. Useful
@@ -26,15 +26,10 @@ public sealed record class BetaMessageBatchIndividualResponse
         get
         {
             if (!this.Properties.TryGetValue("custom_id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "custom_id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("custom_id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("custom_id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("custom_id");
         }
         set { this.Properties["custom_id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -51,15 +46,12 @@ public sealed record class BetaMessageBatchIndividualResponse
         get
         {
             if (!this.Properties.TryGetValue("result", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "result",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("result", "Missing required argument");
 
             return JsonSerializer.Deserialize<BetaMessageBatchResult>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("result");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("result");
         }
         set { this.Properties["result"] = JsonSerializer.SerializeToElement(value); }
     }

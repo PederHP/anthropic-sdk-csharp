@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Messages = Anthropic.Models.Beta.Messages;
 
 namespace Anthropic.Models.Beta.Messages.MessageCreateParamsProperties.SystemVariants;
 
-public sealed record class String(string Value) : System, IVariant<String, string>
+public sealed record class String(string Value) : SystemModel, IVariant<String, string>
 {
     public static String From(string value)
     {
@@ -13,11 +12,11 @@ public sealed record class String(string Value) : System, IVariant<String, strin
     public override void Validate() { }
 }
 
-public sealed record class BetaTextBlockParams(List<Messages::BetaTextBlockParam> Value)
-    : System,
-        IVariant<BetaTextBlockParams, List<Messages::BetaTextBlockParam>>
+public sealed record class BetaTextBlockParams(List<BetaTextBlockParam> Value)
+    : SystemModel,
+        IVariant<BetaTextBlockParams, List<BetaTextBlockParam>>
 {
-    public static BetaTextBlockParams From(List<Messages::BetaTextBlockParam> value)
+    public static BetaTextBlockParams From(List<BetaTextBlockParam> value)
     {
         return new(value);
     }

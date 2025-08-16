@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using WebSearchToolResultBlockParamContentVariants = Anthropic.Models.Messages.WebSearchToolResultBlockParamContentVariants;
+using Anthropic.Models.Messages.WebSearchToolResultBlockParamContentVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -12,11 +13,11 @@ public abstract record class WebSearchToolResultBlockParamContent
 
     public static implicit operator WebSearchToolResultBlockParamContent(
         List<WebSearchResultBlockParam> value
-    ) => new WebSearchToolResultBlockParamContentVariants::WebSearchToolResultBlockItem(value);
+    ) => new WebSearchToolResultBlockItem(value);
 
     public static implicit operator WebSearchToolResultBlockParamContent(
         WebSearchToolRequestError value
-    ) => new WebSearchToolResultBlockParamContentVariants::WebSearchToolRequestErrorVariant(value);
+    ) => new WebSearchToolRequestErrorVariant(value);
 
     public abstract void Validate();
 }
@@ -26,7 +27,7 @@ sealed class WebSearchToolResultBlockParamContentConverter
 {
     public override WebSearchToolResultBlockParamContent? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -40,9 +41,7 @@ sealed class WebSearchToolResultBlockParamContentConverter
             );
             if (deserialized != null)
             {
-                return new WebSearchToolResultBlockParamContentVariants::WebSearchToolRequestErrorVariant(
-                    deserialized
-                );
+                return new WebSearchToolRequestErrorVariant(deserialized);
             }
         }
         catch (JsonException e)
@@ -58,9 +57,7 @@ sealed class WebSearchToolResultBlockParamContentConverter
             );
             if (deserialized != null)
             {
-                return new WebSearchToolResultBlockParamContentVariants::WebSearchToolResultBlockItem(
-                    deserialized
-                );
+                return new WebSearchToolResultBlockItem(deserialized);
             }
         }
         catch (JsonException e)
@@ -68,7 +65,7 @@ sealed class WebSearchToolResultBlockParamContentConverter
             exceptions.Add(e);
         }
 
-        throw new global::System.AggregateException(exceptions);
+        throw new AggregateException(exceptions);
     }
 
     public override void Write(
@@ -79,13 +76,11 @@ sealed class WebSearchToolResultBlockParamContentConverter
     {
         object variant = value switch
         {
-            WebSearchToolResultBlockParamContentVariants::WebSearchToolResultBlockItem(
-                var webSearchToolResultBlockItem
-            ) => webSearchToolResultBlockItem,
-            WebSearchToolResultBlockParamContentVariants::WebSearchToolRequestErrorVariant(
-                var webSearchToolRequestError
-            ) => webSearchToolRequestError,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            WebSearchToolResultBlockItem(var webSearchToolResultBlockItem) =>
+                webSearchToolResultBlockItem,
+            WebSearchToolRequestErrorVariant(var webSearchToolRequestError) =>
+                webSearchToolRequestError,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

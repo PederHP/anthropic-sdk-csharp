@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BlockVariants = Anthropic.Models.Messages.ToolResultBlockParamProperties.ContentProperties.BlockVariants;
-using Messages = Anthropic.Models.Messages;
+using Anthropic.Models.Messages.ToolResultBlockParamProperties.ContentProperties.BlockVariants;
 
 namespace Anthropic.Models.Messages.ToolResultBlockParamProperties.ContentProperties;
 
@@ -12,14 +11,13 @@ public abstract record class Block
 {
     internal Block() { }
 
-    public static implicit operator Block(Messages::TextBlockParam value) =>
-        new BlockVariants::TextBlockParamVariant(value);
+    public static implicit operator Block(TextBlockParam value) => new TextBlockParamVariant(value);
 
-    public static implicit operator Block(Messages::ImageBlockParam value) =>
-        new BlockVariants::ImageBlockParamVariant(value);
+    public static implicit operator Block(ImageBlockParam value) =>
+        new ImageBlockParamVariant(value);
 
-    public static implicit operator Block(Messages::SearchResultBlockParam value) =>
-        new BlockVariants::SearchResultBlockParamVariant(value);
+    public static implicit operator Block(SearchResultBlockParam value) =>
+        new SearchResultBlockParamVariant(value);
 
     public abstract void Validate();
 }
@@ -51,13 +49,10 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::TextBlockParam>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<TextBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new BlockVariants::TextBlockParamVariant(deserialized);
+                        return new TextBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -73,13 +68,10 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::ImageBlockParam>(
-                        json,
-                        options
-                    );
+                    var deserialized = JsonSerializer.Deserialize<ImageBlockParam>(json, options);
                     if (deserialized != null)
                     {
-                        return new BlockVariants::ImageBlockParamVariant(deserialized);
+                        return new ImageBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -95,13 +87,13 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Messages::SearchResultBlockParam>(
+                    var deserialized = JsonSerializer.Deserialize<SearchResultBlockParam>(
                         json,
                         options
                     );
                     if (deserialized != null)
                     {
-                        return new BlockVariants::SearchResultBlockParamVariant(deserialized);
+                        return new SearchResultBlockParamVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -122,10 +114,9 @@ sealed class BlockConverter : JsonConverter<Block>
     {
         object variant = value switch
         {
-            BlockVariants::TextBlockParamVariant(var textBlockParam) => textBlockParam,
-            BlockVariants::ImageBlockParamVariant(var imageBlockParam) => imageBlockParam,
-            BlockVariants::SearchResultBlockParamVariant(var searchResultBlockParam) =>
-                searchResultBlockParam,
+            TextBlockParamVariant(var textBlockParam) => textBlockParam,
+            ImageBlockParamVariant(var imageBlockParam) => imageBlockParam,
+            SearchResultBlockParamVariant(var searchResultBlockParam) => searchResultBlockParam,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

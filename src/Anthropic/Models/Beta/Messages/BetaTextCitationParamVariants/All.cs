@@ -1,16 +1,10 @@
-using Messages = Anthropic.Models.Beta.Messages;
-
 namespace Anthropic.Models.Beta.Messages.BetaTextCitationParamVariants;
 
-public sealed record class BetaCitationCharLocationParamVariant(
-    Messages::BetaCitationCharLocationParam Value
-)
-    : Messages::BetaTextCitationParam,
-        IVariant<BetaCitationCharLocationParamVariant, Messages::BetaCitationCharLocationParam>
+public sealed record class BetaCitationCharLocationParamVariant(BetaCitationCharLocationParam Value)
+    : BetaTextCitationParam,
+        IVariant<BetaCitationCharLocationParamVariant, BetaCitationCharLocationParam>
 {
-    public static BetaCitationCharLocationParamVariant From(
-        Messages::BetaCitationCharLocationParam value
-    )
+    public static BetaCitationCharLocationParamVariant From(BetaCitationCharLocationParam value)
     {
         return new(value);
     }
@@ -21,15 +15,11 @@ public sealed record class BetaCitationCharLocationParamVariant(
     }
 }
 
-public sealed record class BetaCitationPageLocationParamVariant(
-    Messages::BetaCitationPageLocationParam Value
-)
-    : Messages::BetaTextCitationParam,
-        IVariant<BetaCitationPageLocationParamVariant, Messages::BetaCitationPageLocationParam>
+public sealed record class BetaCitationPageLocationParamVariant(BetaCitationPageLocationParam Value)
+    : BetaTextCitationParam,
+        IVariant<BetaCitationPageLocationParamVariant, BetaCitationPageLocationParam>
 {
-    public static BetaCitationPageLocationParamVariant From(
-        Messages::BetaCitationPageLocationParam value
-    )
+    public static BetaCitationPageLocationParamVariant From(BetaCitationPageLocationParam value)
     {
         return new(value);
     }
@@ -41,16 +31,16 @@ public sealed record class BetaCitationPageLocationParamVariant(
 }
 
 public sealed record class BetaCitationContentBlockLocationParamVariant(
-    Messages::BetaCitationContentBlockLocationParam Value
+    BetaCitationContentBlockLocationParam Value
 )
-    : Messages::BetaTextCitationParam,
+    : BetaTextCitationParam,
         IVariant<
             BetaCitationContentBlockLocationParamVariant,
-            Messages::BetaCitationContentBlockLocationParam
+            BetaCitationContentBlockLocationParam
         >
 {
     public static BetaCitationContentBlockLocationParamVariant From(
-        Messages::BetaCitationContentBlockLocationParam value
+        BetaCitationContentBlockLocationParam value
     )
     {
         return new(value);
@@ -63,16 +53,16 @@ public sealed record class BetaCitationContentBlockLocationParamVariant(
 }
 
 public sealed record class BetaCitationWebSearchResultLocationParamVariant(
-    Messages::BetaCitationWebSearchResultLocationParam Value
+    BetaCitationWebSearchResultLocationParam Value
 )
-    : Messages::BetaTextCitationParam,
+    : BetaTextCitationParam,
         IVariant<
             BetaCitationWebSearchResultLocationParamVariant,
-            Messages::BetaCitationWebSearchResultLocationParam
+            BetaCitationWebSearchResultLocationParam
         >
 {
     public static BetaCitationWebSearchResultLocationParamVariant From(
-        Messages::BetaCitationWebSearchResultLocationParam value
+        BetaCitationWebSearchResultLocationParam value
     )
     {
         return new(value);
@@ -85,16 +75,16 @@ public sealed record class BetaCitationWebSearchResultLocationParamVariant(
 }
 
 public sealed record class BetaCitationSearchResultLocationParamVariant(
-    Messages::BetaCitationSearchResultLocationParam Value
+    BetaCitationSearchResultLocationParam Value
 )
-    : Messages::BetaTextCitationParam,
+    : BetaTextCitationParam,
         IVariant<
             BetaCitationSearchResultLocationParamVariant,
-            Messages::BetaCitationSearchResultLocationParam
+            BetaCitationSearchResultLocationParam
         >
 {
     public static BetaCitationSearchResultLocationParamVariant From(
-        Messages::BetaCitationSearchResultLocationParam value
+        BetaCitationSearchResultLocationParam value
     )
     {
         return new(value);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
@@ -45,7 +46,7 @@ sealed record class SseMessage(string? Event, string Data, string? ID, int? Retr
                 case "ping":
                     continue;
                 case "error":
-                    throw new global::System.Exception();
+                    throw new Exception();
             }
         }
     }

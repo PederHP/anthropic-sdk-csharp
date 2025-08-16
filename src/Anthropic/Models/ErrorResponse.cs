@@ -1,28 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<ErrorResponse>))]
-public sealed record class ErrorResponse : Anthropic::ModelBase, Anthropic::IFromRaw<ErrorResponse>
+[JsonConverter(typeof(ModelConverter<ErrorResponse>))]
+public sealed record class ErrorResponse : ModelBase, IFromRaw<ErrorResponse>
 {
     public required ErrorObject Error
     {
         get
         {
             if (!this.Properties.TryGetValue("error", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "error",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("error", "Missing required argument");
 
-            return JsonSerializer.Deserialize<ErrorObject>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("error");
+            return JsonSerializer.Deserialize<ErrorObject>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("error");
         }
         set { this.Properties["error"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -32,15 +27,9 @@ public sealed record class ErrorResponse : Anthropic::ModelBase, Anthropic::IFro
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

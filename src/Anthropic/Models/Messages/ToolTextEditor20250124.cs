@@ -1,15 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<ToolTextEditor20250124>))]
-public sealed record class ToolTextEditor20250124
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<ToolTextEditor20250124>
+[JsonConverter(typeof(ModelConverter<ToolTextEditor20250124>))]
+public sealed record class ToolTextEditor20250124 : ModelBase, IFromRaw<ToolTextEditor20250124>
 {
     /// <summary>
     /// Name of the tool.
@@ -21,15 +19,9 @@ public sealed record class ToolTextEditor20250124
         get
         {
             if (!this.Properties.TryGetValue("name", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "name",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("name", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -39,15 +31,9 @@ public sealed record class ToolTextEditor20250124
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -64,7 +50,7 @@ public sealed record class ToolTextEditor20250124
 
             return JsonSerializer.Deserialize<CacheControlEphemeral?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }

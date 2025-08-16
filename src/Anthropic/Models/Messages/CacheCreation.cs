@@ -1,13 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<CacheCreation>))]
-public sealed record class CacheCreation : Anthropic::ModelBase, Anthropic::IFromRaw<CacheCreation>
+[JsonConverter(typeof(ModelConverter<CacheCreation>))]
+public sealed record class CacheCreation : ModelBase, IFromRaw<CacheCreation>
 {
     /// <summary>
     /// The number of input tokens used to create the 1 hour cache entry.
@@ -17,15 +17,12 @@ public sealed record class CacheCreation : Anthropic::ModelBase, Anthropic::IFro
         get
         {
             if (!this.Properties.TryGetValue("ephemeral_1h_input_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "ephemeral_1h_input_tokens",
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set
         {
@@ -41,15 +38,12 @@ public sealed record class CacheCreation : Anthropic::ModelBase, Anthropic::IFro
         get
         {
             if (!this.Properties.TryGetValue("ephemeral_5m_input_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(
                     "ephemeral_5m_input_tokens",
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set
         {

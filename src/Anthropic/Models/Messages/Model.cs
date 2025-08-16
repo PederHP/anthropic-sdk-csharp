@@ -1,5 +1,5 @@
+using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
@@ -7,8 +7,8 @@ namespace Anthropic.Models.Messages;
 /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
 /// for additional details and options.
 /// </summary>
-[JsonConverter(typeof(Anthropic::EnumConverter<Model, string>))]
-public sealed record class Model(string value) : Anthropic::IEnum<Model, string>
+[JsonConverter(typeof(EnumConverter<Model, string>))]
+public sealed record class Model(string value) : IEnum<Model, string>
 {
     /// <summary>
     /// High-performance model with early extended thinking
@@ -198,7 +198,7 @@ public sealed record class Model(string value) : Anthropic::IEnum<Model, string>
             "claude-3-opus-latest" => Value.Claude3OpusLatest,
             "claude-3-opus-20240229" => Value.Claude_3_Opus_20240229,
             "claude-3-haiku-20240307" => Value.Claude_3_Haiku_20240307,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(_value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
         };
 
     public string Raw()

@@ -1,40 +1,38 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
-using Anthropic = Anthropic;
-using Beta = Anthropic.Models.Beta;
-using System = System;
 
 namespace Anthropic.Models.Beta.Files;
 
 /// <summary>
 /// Delete File
 /// </summary>
-public sealed record class FileDeleteParams : Anthropic::ParamsBase
+public sealed record class FileDeleteParams : ParamsBase
 {
     public required string FileID;
 
     /// <summary>
     /// Optional header to specify the beta version(s) you want to use.
     /// </summary>
-    public List<Beta::AnthropicBeta>? Betas
+    public List<AnthropicBeta>? Betas
     {
         get
         {
             if (!this.HeaderProperties.TryGetValue("betas", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<Beta::AnthropicBeta>?>(
+            return JsonSerializer.Deserialize<List<AnthropicBeta>?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public override System::Uri Url(Anthropic::IAnthropicClient client)
+    public override Uri Url(IAnthropicClient client)
     {
-        return new System::UriBuilder(
+        return new UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/')
                 + string.Format("/v1/files/{0}?beta=true", this.FileID)
         )
@@ -43,12 +41,12 @@ public sealed record class FileDeleteParams : Anthropic::ParamsBase
         }.Uri;
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, Anthropic::IAnthropicClient client)
+    public void AddHeadersToRequest(HttpRequestMessage request, IAnthropicClient client)
     {
-        Anthropic::ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
         {
-            Anthropic::ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }

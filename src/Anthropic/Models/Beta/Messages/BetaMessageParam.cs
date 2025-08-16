@@ -1,49 +1,37 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaMessageParamProperties = Anthropic.Models.Beta.Messages.BetaMessageParamProperties;
+using Anthropic.Models.Beta.Messages.BetaMessageParamProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaMessageParam>))]
-public sealed record class BetaMessageParam
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaMessageParam>
+[JsonConverter(typeof(ModelConverter<BetaMessageParam>))]
+public sealed record class BetaMessageParam : ModelBase, IFromRaw<BetaMessageParam>
 {
-    public required BetaMessageParamProperties::Content Content
+    public required Content Content
     {
         get
         {
             if (!this.Properties.TryGetValue("content", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "content",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("content", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaMessageParamProperties::Content>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("content");
+            return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("content");
         }
         set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public required BetaMessageParamProperties::Role Role
+    public required Role Role
     {
         get
         {
             if (!this.Properties.TryGetValue("role", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "role",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("role", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaMessageParamProperties::Role>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("role");
+            return JsonSerializer.Deserialize<Role>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("role");
         }
         set { this.Properties["role"] = JsonSerializer.SerializeToElement(value); }
     }

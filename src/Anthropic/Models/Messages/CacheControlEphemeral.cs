@@ -1,31 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using CacheControlEphemeralProperties = Anthropic.Models.Messages.CacheControlEphemeralProperties;
+using Anthropic.Models.Messages.CacheControlEphemeralProperties;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<CacheControlEphemeral>))]
-public sealed record class CacheControlEphemeral
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<CacheControlEphemeral>
+[JsonConverter(typeof(ModelConverter<CacheControlEphemeral>))]
+public sealed record class CacheControlEphemeral : ModelBase, IFromRaw<CacheControlEphemeral>
 {
     public JsonElement Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -37,17 +29,14 @@ public sealed record class CacheControlEphemeral
     ///
     /// Defaults to `5m`.
     /// </summary>
-    public CacheControlEphemeralProperties::TTL? TTL
+    public TTL? TTL
     {
         get
         {
             if (!this.Properties.TryGetValue("ttl", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<CacheControlEphemeralProperties::TTL?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<TTL?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["ttl"] = JsonSerializer.SerializeToElement(value); }
     }

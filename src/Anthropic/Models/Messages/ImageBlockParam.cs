@@ -1,31 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using ImageBlockParamProperties = Anthropic.Models.Messages.ImageBlockParamProperties;
+using Anthropic.Models.Messages.ImageBlockParamProperties;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<ImageBlockParam>))]
-public sealed record class ImageBlockParam
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<ImageBlockParam>
+[JsonConverter(typeof(ModelConverter<ImageBlockParam>))]
+public sealed record class ImageBlockParam : ModelBase, IFromRaw<ImageBlockParam>
 {
-    public required ImageBlockParamProperties::Source Source
+    public required Source Source
     {
         get
         {
             if (!this.Properties.TryGetValue("source", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "source",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("source", "Missing required argument");
 
-            return JsonSerializer.Deserialize<ImageBlockParamProperties::Source>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("source");
+            return JsonSerializer.Deserialize<Source>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("source");
         }
         set { this.Properties["source"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -35,15 +28,9 @@ public sealed record class ImageBlockParam
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -60,7 +47,7 @@ public sealed record class ImageBlockParam
 
             return JsonSerializer.Deserialize<CacheControlEphemeral?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
@@ -91,7 +78,7 @@ public sealed record class ImageBlockParam
     }
 
     [SetsRequiredMembers]
-    public ImageBlockParam(ImageBlockParamProperties::Source source)
+    public ImageBlockParam(Source source)
         : this()
     {
         this.Source = source;

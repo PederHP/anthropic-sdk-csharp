@@ -1,15 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<ThinkingConfigEnabled>))]
-public sealed record class ThinkingConfigEnabled
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<ThinkingConfigEnabled>
+[JsonConverter(typeof(ModelConverter<ThinkingConfigEnabled>))]
+public sealed record class ThinkingConfigEnabled : ModelBase, IFromRaw<ThinkingConfigEnabled>
 {
     /// <summary>
     /// Determines how many tokens Claude can use for its internal reasoning process.
@@ -26,15 +24,9 @@ public sealed record class ThinkingConfigEnabled
         get
         {
             if (!this.Properties.TryGetValue("budget_tokens", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "budget_tokens",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("budget_tokens", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["budget_tokens"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -44,15 +36,9 @@ public sealed record class ThinkingConfigEnabled
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

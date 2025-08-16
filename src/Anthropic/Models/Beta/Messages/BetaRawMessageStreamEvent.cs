@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaRawMessageStreamEventVariants = Anthropic.Models.Beta.Messages.BetaRawMessageStreamEventVariants;
+using Anthropic.Models.Beta.Messages.BetaRawMessageStreamEventVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -11,24 +12,24 @@ public abstract record class BetaRawMessageStreamEvent
     internal BetaRawMessageStreamEvent() { }
 
     public static implicit operator BetaRawMessageStreamEvent(BetaRawMessageStartEvent value) =>
-        new BetaRawMessageStreamEventVariants::BetaRawMessageStartEventVariant(value);
+        new BetaRawMessageStartEventVariant(value);
 
     public static implicit operator BetaRawMessageStreamEvent(BetaRawMessageDeltaEvent value) =>
-        new BetaRawMessageStreamEventVariants::BetaRawMessageDeltaEventVariant(value);
+        new BetaRawMessageDeltaEventVariant(value);
 
     public static implicit operator BetaRawMessageStreamEvent(BetaRawMessageStopEvent value) =>
-        new BetaRawMessageStreamEventVariants::BetaRawMessageStopEventVariant(value);
+        new BetaRawMessageStopEventVariant(value);
 
     public static implicit operator BetaRawMessageStreamEvent(
         BetaRawContentBlockStartEvent value
-    ) => new BetaRawMessageStreamEventVariants::BetaRawContentBlockStartEventVariant(value);
+    ) => new BetaRawContentBlockStartEventVariant(value);
 
     public static implicit operator BetaRawMessageStreamEvent(
         BetaRawContentBlockDeltaEvent value
-    ) => new BetaRawMessageStreamEventVariants::BetaRawContentBlockDeltaEventVariant(value);
+    ) => new BetaRawContentBlockDeltaEventVariant(value);
 
     public static implicit operator BetaRawMessageStreamEvent(BetaRawContentBlockStopEvent value) =>
-        new BetaRawMessageStreamEventVariants::BetaRawContentBlockStopEventVariant(value);
+        new BetaRawContentBlockStopEventVariant(value);
 
     public abstract void Validate();
 }
@@ -37,7 +38,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
 {
     public override BetaRawMessageStreamEvent? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -66,9 +67,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawMessageStreamEventVariants::BetaRawMessageStartEventVariant(
-                            deserialized
-                        );
+                        return new BetaRawMessageStartEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -76,7 +75,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "message_delta":
             {
@@ -90,9 +89,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawMessageStreamEventVariants::BetaRawMessageDeltaEventVariant(
-                            deserialized
-                        );
+                        return new BetaRawMessageDeltaEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -100,7 +97,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "message_stop":
             {
@@ -114,9 +111,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawMessageStreamEventVariants::BetaRawMessageStopEventVariant(
-                            deserialized
-                        );
+                        return new BetaRawMessageStopEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -124,7 +119,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_start":
             {
@@ -138,9 +133,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawMessageStreamEventVariants::BetaRawContentBlockStartEventVariant(
-                            deserialized
-                        );
+                        return new BetaRawContentBlockStartEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -148,7 +141,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_delta":
             {
@@ -162,9 +155,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawMessageStreamEventVariants::BetaRawContentBlockDeltaEventVariant(
-                            deserialized
-                        );
+                        return new BetaRawContentBlockDeltaEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -172,7 +163,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_stop":
             {
@@ -186,9 +177,7 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     );
                     if (deserialized != null)
                     {
-                        return new BetaRawMessageStreamEventVariants::BetaRawContentBlockStopEventVariant(
-                            deserialized
-                        );
+                        return new BetaRawContentBlockStopEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -196,11 +185,11 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -213,25 +202,18 @@ sealed class BetaRawMessageStreamEventConverter : JsonConverter<BetaRawMessageSt
     {
         object variant = value switch
         {
-            BetaRawMessageStreamEventVariants::BetaRawMessageStartEventVariant(
-                var betaRawMessageStartEvent
-            ) => betaRawMessageStartEvent,
-            BetaRawMessageStreamEventVariants::BetaRawMessageDeltaEventVariant(
-                var betaRawMessageDeltaEvent
-            ) => betaRawMessageDeltaEvent,
-            BetaRawMessageStreamEventVariants::BetaRawMessageStopEventVariant(
-                var betaRawMessageStopEvent
-            ) => betaRawMessageStopEvent,
-            BetaRawMessageStreamEventVariants::BetaRawContentBlockStartEventVariant(
-                var betaRawContentBlockStartEvent
-            ) => betaRawContentBlockStartEvent,
-            BetaRawMessageStreamEventVariants::BetaRawContentBlockDeltaEventVariant(
-                var betaRawContentBlockDeltaEvent
-            ) => betaRawContentBlockDeltaEvent,
-            BetaRawMessageStreamEventVariants::BetaRawContentBlockStopEventVariant(
-                var betaRawContentBlockStopEvent
-            ) => betaRawContentBlockStopEvent,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaRawMessageStartEventVariant(var betaRawMessageStartEvent) =>
+                betaRawMessageStartEvent,
+            BetaRawMessageDeltaEventVariant(var betaRawMessageDeltaEvent) =>
+                betaRawMessageDeltaEvent,
+            BetaRawMessageStopEventVariant(var betaRawMessageStopEvent) => betaRawMessageStopEvent,
+            BetaRawContentBlockStartEventVariant(var betaRawContentBlockStartEvent) =>
+                betaRawContentBlockStartEvent,
+            BetaRawContentBlockDeltaEventVariant(var betaRawContentBlockDeltaEvent) =>
+                betaRawContentBlockDeltaEvent,
+            BetaRawContentBlockStopEventVariant(var betaRawContentBlockStopEvent) =>
+                betaRawContentBlockStopEvent,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

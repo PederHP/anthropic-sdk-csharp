@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetaContentBlockVariants = Anthropic.Models.Beta.Messages.BetaContentBlockVariants;
+using Anthropic.Models.Beta.Messages.BetaContentBlockVariants;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -14,34 +15,34 @@ public abstract record class BetaContentBlock
     internal BetaContentBlock() { }
 
     public static implicit operator BetaContentBlock(BetaTextBlock value) =>
-        new BetaContentBlockVariants::BetaTextBlockVariant(value);
+        new BetaTextBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaThinkingBlock value) =>
-        new BetaContentBlockVariants::BetaThinkingBlockVariant(value);
+        new BetaThinkingBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaRedactedThinkingBlock value) =>
-        new BetaContentBlockVariants::BetaRedactedThinkingBlockVariant(value);
+        new BetaRedactedThinkingBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaToolUseBlock value) =>
-        new BetaContentBlockVariants::BetaToolUseBlockVariant(value);
+        new BetaToolUseBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaServerToolUseBlock value) =>
-        new BetaContentBlockVariants::BetaServerToolUseBlockVariant(value);
+        new BetaServerToolUseBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaWebSearchToolResultBlock value) =>
-        new BetaContentBlockVariants::BetaWebSearchToolResultBlockVariant(value);
+        new BetaWebSearchToolResultBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaCodeExecutionToolResultBlock value) =>
-        new BetaContentBlockVariants::BetaCodeExecutionToolResultBlockVariant(value);
+        new BetaCodeExecutionToolResultBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaMCPToolUseBlock value) =>
-        new BetaContentBlockVariants::BetaMCPToolUseBlockVariant(value);
+        new BetaMCPToolUseBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaMCPToolResultBlock value) =>
-        new BetaContentBlockVariants::BetaMCPToolResultBlockVariant(value);
+        new BetaMCPToolResultBlockVariant(value);
 
     public static implicit operator BetaContentBlock(BetaContainerUploadBlock value) =>
-        new BetaContentBlockVariants::BetaContainerUploadBlockVariant(value);
+        new BetaContainerUploadBlockVariant(value);
 
     public abstract void Validate();
 }
@@ -50,7 +51,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
 {
     public override BetaContentBlock? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -76,7 +77,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     var deserialized = JsonSerializer.Deserialize<BetaTextBlock>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaTextBlockVariant(deserialized);
+                        return new BetaTextBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -84,7 +85,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "thinking":
             {
@@ -95,7 +96,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     var deserialized = JsonSerializer.Deserialize<BetaThinkingBlock>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaThinkingBlockVariant(deserialized);
+                        return new BetaThinkingBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -103,7 +104,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "redacted_thinking":
             {
@@ -117,9 +118,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaRedactedThinkingBlockVariant(
-                            deserialized
-                        );
+                        return new BetaRedactedThinkingBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -127,7 +126,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "tool_use":
             {
@@ -138,7 +137,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     var deserialized = JsonSerializer.Deserialize<BetaToolUseBlock>(json, options);
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaToolUseBlockVariant(deserialized);
+                        return new BetaToolUseBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -146,7 +145,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "server_tool_use":
             {
@@ -160,9 +159,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaServerToolUseBlockVariant(
-                            deserialized
-                        );
+                        return new BetaServerToolUseBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -170,7 +167,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "web_search_tool_result":
             {
@@ -184,9 +181,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaWebSearchToolResultBlockVariant(
-                            deserialized
-                        );
+                        return new BetaWebSearchToolResultBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -194,7 +189,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "code_execution_tool_result":
             {
@@ -208,9 +203,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaCodeExecutionToolResultBlockVariant(
-                            deserialized
-                        );
+                        return new BetaCodeExecutionToolResultBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -218,7 +211,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "mcp_tool_use":
             {
@@ -232,9 +225,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaMCPToolUseBlockVariant(
-                            deserialized
-                        );
+                        return new BetaMCPToolUseBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -242,7 +233,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "mcp_tool_result":
             {
@@ -256,9 +247,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaMCPToolResultBlockVariant(
-                            deserialized
-                        );
+                        return new BetaMCPToolResultBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -266,7 +255,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "container_upload":
             {
@@ -280,9 +269,7 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     );
                     if (deserialized != null)
                     {
-                        return new BetaContentBlockVariants::BetaContainerUploadBlockVariant(
-                            deserialized
-                        );
+                        return new BetaContainerUploadBlockVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -290,11 +277,11 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -307,30 +294,21 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
     {
         object variant = value switch
         {
-            BetaContentBlockVariants::BetaTextBlockVariant(var betaTextBlock) => betaTextBlock,
-            BetaContentBlockVariants::BetaThinkingBlockVariant(var betaThinkingBlock) =>
-                betaThinkingBlock,
-            BetaContentBlockVariants::BetaRedactedThinkingBlockVariant(
-                var betaRedactedThinkingBlock
-            ) => betaRedactedThinkingBlock,
-            BetaContentBlockVariants::BetaToolUseBlockVariant(var betaToolUseBlock) =>
-                betaToolUseBlock,
-            BetaContentBlockVariants::BetaServerToolUseBlockVariant(var betaServerToolUseBlock) =>
-                betaServerToolUseBlock,
-            BetaContentBlockVariants::BetaWebSearchToolResultBlockVariant(
-                var betaWebSearchToolResultBlock
-            ) => betaWebSearchToolResultBlock,
-            BetaContentBlockVariants::BetaCodeExecutionToolResultBlockVariant(
-                var betaCodeExecutionToolResultBlock
-            ) => betaCodeExecutionToolResultBlock,
-            BetaContentBlockVariants::BetaMCPToolUseBlockVariant(var betaMCPToolUseBlock) =>
-                betaMCPToolUseBlock,
-            BetaContentBlockVariants::BetaMCPToolResultBlockVariant(var betaMCPToolResultBlock) =>
-                betaMCPToolResultBlock,
-            BetaContentBlockVariants::BetaContainerUploadBlockVariant(
-                var betaContainerUploadBlock
-            ) => betaContainerUploadBlock,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            BetaTextBlockVariant(var betaTextBlock) => betaTextBlock,
+            BetaThinkingBlockVariant(var betaThinkingBlock) => betaThinkingBlock,
+            BetaRedactedThinkingBlockVariant(var betaRedactedThinkingBlock) =>
+                betaRedactedThinkingBlock,
+            BetaToolUseBlockVariant(var betaToolUseBlock) => betaToolUseBlock,
+            BetaServerToolUseBlockVariant(var betaServerToolUseBlock) => betaServerToolUseBlock,
+            BetaWebSearchToolResultBlockVariant(var betaWebSearchToolResultBlock) =>
+                betaWebSearchToolResultBlock,
+            BetaCodeExecutionToolResultBlockVariant(var betaCodeExecutionToolResultBlock) =>
+                betaCodeExecutionToolResultBlock,
+            BetaMCPToolUseBlockVariant(var betaMCPToolUseBlock) => betaMCPToolUseBlock,
+            BetaMCPToolResultBlockVariant(var betaMCPToolResultBlock) => betaMCPToolResultBlock,
+            BetaContainerUploadBlockVariant(var betaContainerUploadBlock) =>
+                betaContainerUploadBlock,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

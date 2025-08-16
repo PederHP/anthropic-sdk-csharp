@@ -1,28 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<ThinkingBlock>))]
-public sealed record class ThinkingBlock : Anthropic::ModelBase, Anthropic::IFromRaw<ThinkingBlock>
+[JsonConverter(typeof(ModelConverter<ThinkingBlock>))]
+public sealed record class ThinkingBlock : ModelBase, IFromRaw<ThinkingBlock>
 {
     public required string Signature
     {
         get
         {
             if (!this.Properties.TryGetValue("signature", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "signature",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("signature", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("signature");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("signature");
         }
         set { this.Properties["signature"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -32,15 +27,10 @@ public sealed record class ThinkingBlock : Anthropic::ModelBase, Anthropic::IFro
         get
         {
             if (!this.Properties.TryGetValue("thinking", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "thinking",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("thinking", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("thinking");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("thinking");
         }
         set { this.Properties["thinking"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -50,15 +40,9 @@ public sealed record class ThinkingBlock : Anthropic::ModelBase, Anthropic::IFro
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }

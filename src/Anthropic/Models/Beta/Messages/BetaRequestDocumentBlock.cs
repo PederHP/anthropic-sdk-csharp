@@ -1,31 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaRequestDocumentBlockProperties = Anthropic.Models.Beta.Messages.BetaRequestDocumentBlockProperties;
+using Anthropic.Models.Beta.Messages.BetaRequestDocumentBlockProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaRequestDocumentBlock>))]
-public sealed record class BetaRequestDocumentBlock
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaRequestDocumentBlock>
+[JsonConverter(typeof(ModelConverter<BetaRequestDocumentBlock>))]
+public sealed record class BetaRequestDocumentBlock : ModelBase, IFromRaw<BetaRequestDocumentBlock>
 {
-    public required BetaRequestDocumentBlockProperties::Source Source
+    public required Source Source
     {
         get
         {
             if (!this.Properties.TryGetValue("source", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "source",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("source", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaRequestDocumentBlockProperties::Source>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("source");
+            return JsonSerializer.Deserialize<Source>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("source");
         }
         set { this.Properties["source"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -35,15 +28,9 @@ public sealed record class BetaRequestDocumentBlock
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -60,7 +47,7 @@ public sealed record class BetaRequestDocumentBlock
 
             return JsonSerializer.Deserialize<BetaCacheControlEphemeral?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
@@ -75,7 +62,7 @@ public sealed record class BetaRequestDocumentBlock
 
             return JsonSerializer.Deserialize<BetaCitationsConfigParam?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["citations"] = JsonSerializer.SerializeToElement(value); }
@@ -88,10 +75,7 @@ public sealed record class BetaRequestDocumentBlock
             if (!this.Properties.TryGetValue("context", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["context"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -103,10 +87,7 @@ public sealed record class BetaRequestDocumentBlock
             if (!this.Properties.TryGetValue("title", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<string?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["title"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -141,7 +122,7 @@ public sealed record class BetaRequestDocumentBlock
     }
 
     [SetsRequiredMembers]
-    public BetaRequestDocumentBlock(BetaRequestDocumentBlockProperties::Source source)
+    public BetaRequestDocumentBlock(Source source)
         : this()
     {
         this.Source = source;

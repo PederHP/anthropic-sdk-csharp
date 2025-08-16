@@ -1,9 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using Anthropic = Anthropic;
-using BatchCreateParamsProperties = Anthropic.Models.Messages.Batches.BatchCreateParamsProperties;
+using Anthropic.Models.Messages.Batches.BatchCreateParamsProperties;
 
 namespace Anthropic.Models.Messages.Batches;
 
@@ -16,7 +16,7 @@ namespace Anthropic.Models.Messages.Batches;
 ///
 /// Learn more about the Message Batches API in our [user guide](/en/docs/build-with-claude/batch-processing)
 /// </summary>
-public sealed record class BatchCreateParams : Anthropic::ParamsBase
+public sealed record class BatchCreateParams : ParamsBase
 {
     public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
@@ -24,29 +24,22 @@ public sealed record class BatchCreateParams : Anthropic::ParamsBase
     /// List of requests for prompt completion. Each is an individual request to create
     /// a Message.
     /// </summary>
-    public required List<BatchCreateParamsProperties::Request> Requests
+    public required List<Request> Requests
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("requests", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "requests",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("requests", "Missing required argument");
 
-            return JsonSerializer.Deserialize<List<BatchCreateParamsProperties::Request>>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("requests");
+            return JsonSerializer.Deserialize<List<Request>>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("requests");
         }
         set { this.BodyProperties["requests"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public override global::System.Uri Url(Anthropic::IAnthropicClient client)
+    public override Uri Url(IAnthropicClient client)
     {
-        return new global::System.UriBuilder(
-            client.BaseUrl.ToString().TrimEnd('/') + "/v1/messages/batches"
-        )
+        return new UriBuilder(client.BaseUrl.ToString().TrimEnd('/') + "/v1/messages/batches")
         {
             Query = this.QueryString(client),
         }.Uri;
@@ -61,12 +54,12 @@ public sealed record class BatchCreateParams : Anthropic::ParamsBase
         );
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, Anthropic::IAnthropicClient client)
+    public void AddHeadersToRequest(HttpRequestMessage request, IAnthropicClient client)
     {
-        Anthropic::ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
         {
-            Anthropic::ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }

@@ -1,12 +1,10 @@
-using Messages = Anthropic.Models.Messages;
-
 namespace Anthropic.Models.Messages.ToolResultBlockParamProperties.ContentProperties.BlockVariants;
 
-public sealed record class TextBlockParamVariant(Messages::TextBlockParam Value)
+public sealed record class TextBlockParamVariant(TextBlockParam Value)
     : Block,
-        IVariant<TextBlockParamVariant, Messages::TextBlockParam>
+        IVariant<TextBlockParamVariant, TextBlockParam>
 {
-    public static TextBlockParamVariant From(Messages::TextBlockParam value)
+    public static TextBlockParamVariant From(TextBlockParam value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class TextBlockParamVariant(Messages::TextBlockParam Value)
     }
 }
 
-public sealed record class ImageBlockParamVariant(Messages::ImageBlockParam Value)
+public sealed record class ImageBlockParamVariant(ImageBlockParam Value)
     : Block,
-        IVariant<ImageBlockParamVariant, Messages::ImageBlockParam>
+        IVariant<ImageBlockParamVariant, ImageBlockParam>
 {
-    public static ImageBlockParamVariant From(Messages::ImageBlockParam value)
+    public static ImageBlockParamVariant From(ImageBlockParam value)
     {
         return new(value);
     }
@@ -32,11 +30,11 @@ public sealed record class ImageBlockParamVariant(Messages::ImageBlockParam Valu
     }
 }
 
-public sealed record class SearchResultBlockParamVariant(Messages::SearchResultBlockParam Value)
+public sealed record class SearchResultBlockParamVariant(SearchResultBlockParam Value)
     : Block,
-        IVariant<SearchResultBlockParamVariant, Messages::SearchResultBlockParam>
+        IVariant<SearchResultBlockParamVariant, SearchResultBlockParam>
 {
-    public static SearchResultBlockParamVariant From(Messages::SearchResultBlockParam value)
+    public static SearchResultBlockParamVariant From(SearchResultBlockParam value)
     {
         return new(value);
     }

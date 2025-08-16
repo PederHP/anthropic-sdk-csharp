@@ -1,10 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using Anthropic = Anthropic;
-using Beta = Anthropic.Models.Beta;
-using MessageCountTokensParamsProperties = Anthropic.Models.Beta.Messages.MessageCountTokensParamsProperties;
+using Anthropic.Models.Beta.Messages.MessageCountTokensParamsProperties;
 using Messages = Anthropic.Models.Messages;
 
 namespace Anthropic.Models.Beta.Messages;
@@ -17,7 +16,7 @@ namespace Anthropic.Models.Beta.Messages;
 ///
 /// Learn more about token counting in our [user guide](/en/docs/build-with-claude/token-counting)
 /// </summary>
-public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
+public sealed record class MessageCountTokensParams : ParamsBase
 {
     public Dictionary<string, JsonElement> BodyProperties { get; set; } = [];
 
@@ -87,15 +86,12 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
         get
         {
             if (!this.BodyProperties.TryGetValue("messages", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "messages",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("messages", "Missing required argument");
 
             return JsonSerializer.Deserialize<List<BetaMessageParam>>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("messages");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("messages");
         }
         set { this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -109,15 +105,10 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
         get
         {
             if (!this.BodyProperties.TryGetValue("model", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "model",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::Model>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("model");
+            return JsonSerializer.Deserialize<Messages::Model>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("model");
         }
         set { this.BodyProperties["model"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -134,7 +125,7 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
 
             return JsonSerializer.Deserialize<List<BetaRequestMCPServerURLDefinition>?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.BodyProperties["mcp_servers"] = JsonSerializer.SerializeToElement(value); }
@@ -146,17 +137,14 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
     /// A system prompt is a way of providing context and instructions to Claude,
     /// such as specifying a particular goal or role. See our [guide to system prompts](https://docs.anthropic.com/en/docs/system-prompts).
     /// </summary>
-    public MessageCountTokensParamsProperties::System? System
+    public SystemModel? System
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("system", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<MessageCountTokensParamsProperties::System?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<SystemModel?>(element, ModelBase.SerializerOptions);
         }
         set { this.BodyProperties["system"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -180,7 +168,7 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
 
             return JsonSerializer.Deserialize<BetaThinkingConfigParam?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(value); }
@@ -199,7 +187,7 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
 
             return JsonSerializer.Deserialize<BetaToolChoice?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(value); }
@@ -251,17 +239,14 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
     ///
     /// See our [guide](https://docs.anthropic.com/en/docs/tool-use) for more details.
     /// </summary>
-    public List<MessageCountTokensParamsProperties::Tool>? Tools
+    public List<Tool>? Tools
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("tools", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<MessageCountTokensParamsProperties::Tool>?>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<List<Tool>?>(element, ModelBase.SerializerOptions);
         }
         set { this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -269,24 +254,24 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
     /// <summary>
     /// Optional header to specify the beta version(s) you want to use.
     /// </summary>
-    public List<Beta::AnthropicBeta>? Betas
+    public List<AnthropicBeta>? Betas
     {
         get
         {
             if (!this.HeaderProperties.TryGetValue("betas", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<Beta::AnthropicBeta>?>(
+            return JsonSerializer.Deserialize<List<AnthropicBeta>?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(value); }
     }
 
-    public override global::System.Uri Url(Anthropic::IAnthropicClient client)
+    public override Uri Url(IAnthropicClient client)
     {
-        return new global::System.UriBuilder(
+        return new UriBuilder(
             client.BaseUrl.ToString().TrimEnd('/') + "/v1/messages/count_tokens?beta=true"
         )
         {
@@ -303,12 +288,12 @@ public sealed record class MessageCountTokensParams : Anthropic::ParamsBase
         );
     }
 
-    public void AddHeadersToRequest(HttpRequestMessage request, Anthropic::IAnthropicClient client)
+    public void AddHeadersToRequest(HttpRequestMessage request, IAnthropicClient client)
     {
-        Anthropic::ParamsBase.AddDefaultHeaders(request, client);
+        ParamsBase.AddDefaultHeaders(request, client);
         foreach (var item in this.HeaderProperties)
         {
-            Anthropic::ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
+            ParamsBase.AddHeaderElementToRequest(request, item.Key, item.Value);
         }
     }
 }

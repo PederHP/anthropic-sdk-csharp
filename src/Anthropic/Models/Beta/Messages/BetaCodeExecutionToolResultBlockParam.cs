@@ -1,30 +1,27 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaCodeExecutionToolResultBlockParam>))]
+[JsonConverter(typeof(ModelConverter<BetaCodeExecutionToolResultBlockParam>))]
 public sealed record class BetaCodeExecutionToolResultBlockParam
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaCodeExecutionToolResultBlockParam>
+    : ModelBase,
+        IFromRaw<BetaCodeExecutionToolResultBlockParam>
 {
     public required BetaCodeExecutionToolResultBlockParamContent Content
     {
         get
         {
             if (!this.Properties.TryGetValue("content", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "content",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("content", "Missing required argument");
 
             return JsonSerializer.Deserialize<BetaCodeExecutionToolResultBlockParamContent>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("content");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("content");
         }
         set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -34,15 +31,10 @@ public sealed record class BetaCodeExecutionToolResultBlockParam
         get
         {
             if (!this.Properties.TryGetValue("tool_use_id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "tool_use_id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("tool_use_id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("tool_use_id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("tool_use_id");
         }
         set { this.Properties["tool_use_id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -52,15 +44,9 @@ public sealed record class BetaCodeExecutionToolResultBlockParam
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -77,7 +63,7 @@ public sealed record class BetaCodeExecutionToolResultBlockParam
 
             return JsonSerializer.Deserialize<BetaCacheControlEphemeral?>(
                 element,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             );
         }
         set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }

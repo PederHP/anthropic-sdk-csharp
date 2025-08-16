@@ -1,12 +1,10 @@
-using Models = Anthropic.Models;
-
 namespace Anthropic.Models.ErrorObjectVariants;
 
-public sealed record class InvalidRequestErrorVariant(Models::InvalidRequestError Value)
-    : Models::ErrorObject,
-        IVariant<InvalidRequestErrorVariant, Models::InvalidRequestError>
+public sealed record class InvalidRequestErrorVariant(InvalidRequestError Value)
+    : ErrorObject,
+        IVariant<InvalidRequestErrorVariant, InvalidRequestError>
 {
-    public static InvalidRequestErrorVariant From(Models::InvalidRequestError value)
+    public static InvalidRequestErrorVariant From(InvalidRequestError value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class InvalidRequestErrorVariant(Models::InvalidRequestErro
     }
 }
 
-public sealed record class AuthenticationErrorVariant(Models::AuthenticationError Value)
-    : Models::ErrorObject,
-        IVariant<AuthenticationErrorVariant, Models::AuthenticationError>
+public sealed record class AuthenticationErrorVariant(AuthenticationError Value)
+    : ErrorObject,
+        IVariant<AuthenticationErrorVariant, AuthenticationError>
 {
-    public static AuthenticationErrorVariant From(Models::AuthenticationError value)
+    public static AuthenticationErrorVariant From(AuthenticationError value)
     {
         return new(value);
     }
@@ -32,11 +30,11 @@ public sealed record class AuthenticationErrorVariant(Models::AuthenticationErro
     }
 }
 
-public sealed record class BillingErrorVariant(Models::BillingError Value)
-    : Models::ErrorObject,
-        IVariant<BillingErrorVariant, Models::BillingError>
+public sealed record class BillingErrorVariant(BillingError Value)
+    : ErrorObject,
+        IVariant<BillingErrorVariant, BillingError>
 {
-    public static BillingErrorVariant From(Models::BillingError value)
+    public static BillingErrorVariant From(BillingError value)
     {
         return new(value);
     }
@@ -47,11 +45,11 @@ public sealed record class BillingErrorVariant(Models::BillingError Value)
     }
 }
 
-public sealed record class PermissionErrorVariant(Models::PermissionError Value)
-    : Models::ErrorObject,
-        IVariant<PermissionErrorVariant, Models::PermissionError>
+public sealed record class PermissionErrorVariant(PermissionError Value)
+    : ErrorObject,
+        IVariant<PermissionErrorVariant, PermissionError>
 {
-    public static PermissionErrorVariant From(Models::PermissionError value)
+    public static PermissionErrorVariant From(PermissionError value)
     {
         return new(value);
     }
@@ -62,11 +60,11 @@ public sealed record class PermissionErrorVariant(Models::PermissionError Value)
     }
 }
 
-public sealed record class NotFoundErrorVariant(Models::NotFoundError Value)
-    : Models::ErrorObject,
-        IVariant<NotFoundErrorVariant, Models::NotFoundError>
+public sealed record class NotFoundErrorVariant(NotFoundError Value)
+    : ErrorObject,
+        IVariant<NotFoundErrorVariant, NotFoundError>
 {
-    public static NotFoundErrorVariant From(Models::NotFoundError value)
+    public static NotFoundErrorVariant From(NotFoundError value)
     {
         return new(value);
     }
@@ -77,11 +75,11 @@ public sealed record class NotFoundErrorVariant(Models::NotFoundError Value)
     }
 }
 
-public sealed record class RateLimitErrorVariant(Models::RateLimitError Value)
-    : Models::ErrorObject,
-        IVariant<RateLimitErrorVariant, Models::RateLimitError>
+public sealed record class RateLimitErrorVariant(RateLimitError Value)
+    : ErrorObject,
+        IVariant<RateLimitErrorVariant, RateLimitError>
 {
-    public static RateLimitErrorVariant From(Models::RateLimitError value)
+    public static RateLimitErrorVariant From(RateLimitError value)
     {
         return new(value);
     }
@@ -92,11 +90,11 @@ public sealed record class RateLimitErrorVariant(Models::RateLimitError Value)
     }
 }
 
-public sealed record class GatewayTimeoutErrorVariant(Models::GatewayTimeoutError Value)
-    : Models::ErrorObject,
-        IVariant<GatewayTimeoutErrorVariant, Models::GatewayTimeoutError>
+public sealed record class GatewayTimeoutErrorVariant(GatewayTimeoutError Value)
+    : ErrorObject,
+        IVariant<GatewayTimeoutErrorVariant, GatewayTimeoutError>
 {
-    public static GatewayTimeoutErrorVariant From(Models::GatewayTimeoutError value)
+    public static GatewayTimeoutErrorVariant From(GatewayTimeoutError value)
     {
         return new(value);
     }
@@ -107,11 +105,11 @@ public sealed record class GatewayTimeoutErrorVariant(Models::GatewayTimeoutErro
     }
 }
 
-public sealed record class APIErrorObjectVariant(Models::APIErrorObject Value)
-    : Models::ErrorObject,
-        IVariant<APIErrorObjectVariant, Models::APIErrorObject>
+public sealed record class APIErrorObjectVariant(APIErrorObject Value)
+    : ErrorObject,
+        IVariant<APIErrorObjectVariant, APIErrorObject>
 {
-    public static APIErrorObjectVariant From(Models::APIErrorObject value)
+    public static APIErrorObjectVariant From(APIErrorObject value)
     {
         return new(value);
     }
@@ -122,11 +120,11 @@ public sealed record class APIErrorObjectVariant(Models::APIErrorObject Value)
     }
 }
 
-public sealed record class OverloadedErrorVariant(Models::OverloadedError Value)
-    : Models::ErrorObject,
-        IVariant<OverloadedErrorVariant, Models::OverloadedError>
+public sealed record class OverloadedErrorVariant(OverloadedError Value)
+    : ErrorObject,
+        IVariant<OverloadedErrorVariant, OverloadedError>
 {
-    public static OverloadedErrorVariant From(Models::OverloadedError value)
+    public static OverloadedErrorVariant From(OverloadedError value)
     {
         return new(value);
     }

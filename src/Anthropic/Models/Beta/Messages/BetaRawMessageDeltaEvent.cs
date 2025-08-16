@@ -1,31 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaRawMessageDeltaEventProperties = Anthropic.Models.Beta.Messages.BetaRawMessageDeltaEventProperties;
+using Anthropic.Models.Beta.Messages.BetaRawMessageDeltaEventProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaRawMessageDeltaEvent>))]
-public sealed record class BetaRawMessageDeltaEvent
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaRawMessageDeltaEvent>
+[JsonConverter(typeof(ModelConverter<BetaRawMessageDeltaEvent>))]
+public sealed record class BetaRawMessageDeltaEvent : ModelBase, IFromRaw<BetaRawMessageDeltaEvent>
 {
-    public required BetaRawMessageDeltaEventProperties::Delta Delta
+    public required Delta Delta
     {
         get
         {
             if (!this.Properties.TryGetValue("delta", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "delta",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("delta", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaRawMessageDeltaEventProperties::Delta>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("delta");
+            return JsonSerializer.Deserialize<Delta>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("delta");
         }
         set { this.Properties["delta"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -35,15 +28,9 @@ public sealed record class BetaRawMessageDeltaEvent
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -70,15 +57,12 @@ public sealed record class BetaRawMessageDeltaEvent
         get
         {
             if (!this.Properties.TryGetValue("usage", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "usage",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("usage", "Missing required argument");
 
             return JsonSerializer.Deserialize<BetaMessageDeltaUsage>(
                     element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("usage");
+                    ModelBase.SerializerOptions
+                ) ?? throw new ArgumentNullException("usage");
         }
         set { this.Properties["usage"] = JsonSerializer.SerializeToElement(value); }
     }

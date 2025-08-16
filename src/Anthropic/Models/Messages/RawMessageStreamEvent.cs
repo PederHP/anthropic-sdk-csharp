@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using RawMessageStreamEventVariants = Anthropic.Models.Messages.RawMessageStreamEventVariants;
+using Anthropic.Models.Messages.RawMessageStreamEventVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -11,22 +12,22 @@ public abstract record class RawMessageStreamEvent
     internal RawMessageStreamEvent() { }
 
     public static implicit operator RawMessageStreamEvent(RawMessageStartEvent value) =>
-        new RawMessageStreamEventVariants::RawMessageStartEventVariant(value);
+        new RawMessageStartEventVariant(value);
 
     public static implicit operator RawMessageStreamEvent(RawMessageDeltaEvent value) =>
-        new RawMessageStreamEventVariants::RawMessageDeltaEventVariant(value);
+        new RawMessageDeltaEventVariant(value);
 
     public static implicit operator RawMessageStreamEvent(RawMessageStopEvent value) =>
-        new RawMessageStreamEventVariants::RawMessageStopEventVariant(value);
+        new RawMessageStopEventVariant(value);
 
     public static implicit operator RawMessageStreamEvent(RawContentBlockStartEvent value) =>
-        new RawMessageStreamEventVariants::RawContentBlockStartEventVariant(value);
+        new RawContentBlockStartEventVariant(value);
 
     public static implicit operator RawMessageStreamEvent(RawContentBlockDeltaEvent value) =>
-        new RawMessageStreamEventVariants::RawContentBlockDeltaEventVariant(value);
+        new RawContentBlockDeltaEventVariant(value);
 
     public static implicit operator RawMessageStreamEvent(RawContentBlockStopEvent value) =>
-        new RawMessageStreamEventVariants::RawContentBlockStopEventVariant(value);
+        new RawContentBlockStopEventVariant(value);
 
     public abstract void Validate();
 }
@@ -35,7 +36,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
 {
     public override RawMessageStreamEvent? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -64,9 +65,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     );
                     if (deserialized != null)
                     {
-                        return new RawMessageStreamEventVariants::RawMessageStartEventVariant(
-                            deserialized
-                        );
+                        return new RawMessageStartEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -74,7 +73,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "message_delta":
             {
@@ -88,9 +87,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     );
                     if (deserialized != null)
                     {
-                        return new RawMessageStreamEventVariants::RawMessageDeltaEventVariant(
-                            deserialized
-                        );
+                        return new RawMessageDeltaEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -98,7 +95,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "message_stop":
             {
@@ -112,9 +109,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     );
                     if (deserialized != null)
                     {
-                        return new RawMessageStreamEventVariants::RawMessageStopEventVariant(
-                            deserialized
-                        );
+                        return new RawMessageStopEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -122,7 +117,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_start":
             {
@@ -136,9 +131,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     );
                     if (deserialized != null)
                     {
-                        return new RawMessageStreamEventVariants::RawContentBlockStartEventVariant(
-                            deserialized
-                        );
+                        return new RawContentBlockStartEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -146,7 +139,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_delta":
             {
@@ -160,9 +153,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     );
                     if (deserialized != null)
                     {
-                        return new RawMessageStreamEventVariants::RawContentBlockDeltaEventVariant(
-                            deserialized
-                        );
+                        return new RawContentBlockDeltaEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -170,7 +161,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "content_block_stop":
             {
@@ -184,9 +175,7 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     );
                     if (deserialized != null)
                     {
-                        return new RawMessageStreamEventVariants::RawContentBlockStopEventVariant(
-                            deserialized
-                        );
+                        return new RawContentBlockStopEventVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -194,11 +183,11 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -211,22 +200,16 @@ sealed class RawMessageStreamEventConverter : JsonConverter<RawMessageStreamEven
     {
         object variant = value switch
         {
-            RawMessageStreamEventVariants::RawMessageStartEventVariant(var rawMessageStartEvent) =>
-                rawMessageStartEvent,
-            RawMessageStreamEventVariants::RawMessageDeltaEventVariant(var rawMessageDeltaEvent) =>
-                rawMessageDeltaEvent,
-            RawMessageStreamEventVariants::RawMessageStopEventVariant(var rawMessageStopEvent) =>
-                rawMessageStopEvent,
-            RawMessageStreamEventVariants::RawContentBlockStartEventVariant(
-                var rawContentBlockStartEvent
-            ) => rawContentBlockStartEvent,
-            RawMessageStreamEventVariants::RawContentBlockDeltaEventVariant(
-                var rawContentBlockDeltaEvent
-            ) => rawContentBlockDeltaEvent,
-            RawMessageStreamEventVariants::RawContentBlockStopEventVariant(
-                var rawContentBlockStopEvent
-            ) => rawContentBlockStopEvent,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            RawMessageStartEventVariant(var rawMessageStartEvent) => rawMessageStartEvent,
+            RawMessageDeltaEventVariant(var rawMessageDeltaEvent) => rawMessageDeltaEvent,
+            RawMessageStopEventVariant(var rawMessageStopEvent) => rawMessageStopEvent,
+            RawContentBlockStartEventVariant(var rawContentBlockStartEvent) =>
+                rawContentBlockStartEvent,
+            RawContentBlockDeltaEventVariant(var rawContentBlockDeltaEvent) =>
+                rawContentBlockDeltaEvent,
+            RawContentBlockStopEventVariant(var rawContentBlockStopEvent) =>
+                rawContentBlockStopEvent,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

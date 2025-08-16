@@ -1,26 +1,27 @@
-using Beta = Anthropic.Services.Beta;
-using Completions = Anthropic.Services.Completions;
-using Http = System.Net.Http;
-using Messages = Anthropic.Services.Messages;
-using Models = Anthropic.Services.Models;
+using System;
+using System.Net.Http;
+using Anthropic.Services.Beta;
+using Anthropic.Services.Completions;
+using Anthropic.Services.Messages;
+using Anthropic.Services.Models;
 
 namespace Anthropic;
 
 public interface IAnthropicClient
 {
-    Http::HttpClient HttpClient { get; init; }
+    HttpClient HttpClient { get; init; }
 
-    global::System.Uri BaseUrl { get; init; }
+    Uri BaseUrl { get; init; }
 
     string? APIKey { get; init; }
 
     string? AuthToken { get; init; }
 
-    Completions::ICompletionService Completions { get; }
+    ICompletionService Completions { get; }
 
-    Messages::IMessageService Messages { get; }
+    IMessageService Messages { get; }
 
-    Models::IModelService Models { get; }
+    IModelService Models { get; }
 
-    Beta::IBetaService Beta { get; }
+    IBetaService Beta { get; }
 }

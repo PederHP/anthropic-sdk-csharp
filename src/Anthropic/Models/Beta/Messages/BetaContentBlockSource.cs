@@ -1,31 +1,24 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using BetaContentBlockSourceProperties = Anthropic.Models.Beta.Messages.BetaContentBlockSourceProperties;
+using Anthropic.Models.Beta.Messages.BetaContentBlockSourceProperties;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaContentBlockSource>))]
-public sealed record class BetaContentBlockSource
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaContentBlockSource>
+[JsonConverter(typeof(ModelConverter<BetaContentBlockSource>))]
+public sealed record class BetaContentBlockSource : ModelBase, IFromRaw<BetaContentBlockSource>
 {
-    public required BetaContentBlockSourceProperties::Content Content
+    public required Content Content
     {
         get
         {
             if (!this.Properties.TryGetValue("content", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "content",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("content", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaContentBlockSourceProperties::Content>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("content");
+            return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("content");
         }
         set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -35,15 +28,9 @@ public sealed record class BetaContentBlockSource
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "type",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<JsonElement>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -74,7 +61,7 @@ public sealed record class BetaContentBlockSource
     }
 
     [SetsRequiredMembers]
-    public BetaContentBlockSource(BetaContentBlockSourceProperties::Content content)
+    public BetaContentBlockSource(Content content)
         : this()
     {
         this.Content = content;

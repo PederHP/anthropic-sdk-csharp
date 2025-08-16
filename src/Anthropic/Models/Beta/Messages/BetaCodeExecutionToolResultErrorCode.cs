@@ -1,11 +1,11 @@
+using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::EnumConverter<BetaCodeExecutionToolResultErrorCode, string>))]
+[JsonConverter(typeof(EnumConverter<BetaCodeExecutionToolResultErrorCode, string>))]
 public sealed record class BetaCodeExecutionToolResultErrorCode(string value)
-    : Anthropic::IEnum<BetaCodeExecutionToolResultErrorCode, string>
+    : IEnum<BetaCodeExecutionToolResultErrorCode, string>
 {
     public static readonly BetaCodeExecutionToolResultErrorCode InvalidToolInput = new(
         "invalid_tool_input"
@@ -38,7 +38,7 @@ public sealed record class BetaCodeExecutionToolResultErrorCode(string value)
             "unavailable" => Value.Unavailable,
             "too_many_requests" => Value.TooManyRequests,
             "execution_time_exceeded" => Value.ExecutionTimeExceeded,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(_value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
         };
 
     public string Raw()

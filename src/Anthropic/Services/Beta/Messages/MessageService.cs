@@ -4,23 +4,22 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Anthropic.Models.Beta.Messages;
-using Anthropic = Anthropic;
-using Batches = Anthropic.Services.Beta.Messages.Batches;
+using Anthropic.Services.Beta.Messages.Batches;
 
 namespace Anthropic.Services.Beta.Messages;
 
 public sealed class MessageService : IMessageService
 {
-    readonly Anthropic::IAnthropicClient _client;
+    readonly IAnthropicClient _client;
 
-    public MessageService(Anthropic::IAnthropicClient client)
+    public MessageService(IAnthropicClient client)
     {
         _client = client;
-        _batches = new(() => new Batches::BatchService(client));
+        _batches = new(() => new BatchService(client));
     }
 
-    readonly Lazy<Batches::IBatchService> _batches;
-    public Batches::IBatchService Batches
+    readonly Lazy<IBatchService> _batches;
+    public IBatchService Batches
     {
         get { return _batches.Value; }
     }
@@ -37,7 +36,7 @@ public sealed class MessageService : IMessageService
             .ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
         {
-            throw new Anthropic::HttpException(
+            throw new HttpException(
                 response.StatusCode,
                 await response.Content.ReadAsStringAsync().ConfigureAwait(false)
             );
@@ -45,7 +44,7 @@ public sealed class MessageService : IMessageService
 
         return JsonSerializer.Deserialize<BetaMessage>(
                 await response.Content.ReadAsStreamAsync().ConfigureAwait(false),
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             ) ?? throw new NullReferenceException();
     }
 
@@ -64,17 +63,17 @@ public sealed class MessageService : IMessageService
             .ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
         {
-            throw new Anthropic::HttpException(
+            throw new HttpException(
                 response.StatusCode,
                 await response.Content.ReadAsStringAsync().ConfigureAwait(false)
             );
         }
 
-        await foreach (var message in Anthropic::SseMessage.GetEnumerable(response))
+        await foreach (var message in SseMessage.GetEnumerable(response))
         {
             yield return JsonSerializer.Deserialize<BetaRawMessageStreamEvent>(
                 message.Data,
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             ) ?? throw new NullReferenceException();
         }
     }
@@ -91,7 +90,7 @@ public sealed class MessageService : IMessageService
             .ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
         {
-            throw new Anthropic::HttpException(
+            throw new HttpException(
                 response.StatusCode,
                 await response.Content.ReadAsStringAsync().ConfigureAwait(false)
             );
@@ -99,7 +98,7 @@ public sealed class MessageService : IMessageService
 
         return JsonSerializer.Deserialize<BetaMessageTokensCount>(
                 await response.Content.ReadAsStreamAsync().ConfigureAwait(false),
-                Anthropic::ModelBase.SerializerOptions
+                ModelBase.SerializerOptions
             ) ?? throw new NullReferenceException();
     }
 }

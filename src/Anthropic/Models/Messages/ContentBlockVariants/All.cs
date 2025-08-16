@@ -1,12 +1,10 @@
-using Messages = Anthropic.Models.Messages;
-
 namespace Anthropic.Models.Messages.ContentBlockVariants;
 
-public sealed record class TextBlockVariant(Messages::TextBlock Value)
-    : Messages::ContentBlock,
-        IVariant<TextBlockVariant, Messages::TextBlock>
+public sealed record class TextBlockVariant(TextBlock Value)
+    : ContentBlock,
+        IVariant<TextBlockVariant, TextBlock>
 {
-    public static TextBlockVariant From(Messages::TextBlock value)
+    public static TextBlockVariant From(TextBlock value)
     {
         return new(value);
     }
@@ -17,11 +15,11 @@ public sealed record class TextBlockVariant(Messages::TextBlock Value)
     }
 }
 
-public sealed record class ThinkingBlockVariant(Messages::ThinkingBlock Value)
-    : Messages::ContentBlock,
-        IVariant<ThinkingBlockVariant, Messages::ThinkingBlock>
+public sealed record class ThinkingBlockVariant(ThinkingBlock Value)
+    : ContentBlock,
+        IVariant<ThinkingBlockVariant, ThinkingBlock>
 {
-    public static ThinkingBlockVariant From(Messages::ThinkingBlock value)
+    public static ThinkingBlockVariant From(ThinkingBlock value)
     {
         return new(value);
     }
@@ -32,11 +30,11 @@ public sealed record class ThinkingBlockVariant(Messages::ThinkingBlock Value)
     }
 }
 
-public sealed record class RedactedThinkingBlockVariant(Messages::RedactedThinkingBlock Value)
-    : Messages::ContentBlock,
-        IVariant<RedactedThinkingBlockVariant, Messages::RedactedThinkingBlock>
+public sealed record class RedactedThinkingBlockVariant(RedactedThinkingBlock Value)
+    : ContentBlock,
+        IVariant<RedactedThinkingBlockVariant, RedactedThinkingBlock>
 {
-    public static RedactedThinkingBlockVariant From(Messages::RedactedThinkingBlock value)
+    public static RedactedThinkingBlockVariant From(RedactedThinkingBlock value)
     {
         return new(value);
     }
@@ -47,11 +45,11 @@ public sealed record class RedactedThinkingBlockVariant(Messages::RedactedThinki
     }
 }
 
-public sealed record class ToolUseBlockVariant(Messages::ToolUseBlock Value)
-    : Messages::ContentBlock,
-        IVariant<ToolUseBlockVariant, Messages::ToolUseBlock>
+public sealed record class ToolUseBlockVariant(ToolUseBlock Value)
+    : ContentBlock,
+        IVariant<ToolUseBlockVariant, ToolUseBlock>
 {
-    public static ToolUseBlockVariant From(Messages::ToolUseBlock value)
+    public static ToolUseBlockVariant From(ToolUseBlock value)
     {
         return new(value);
     }
@@ -62,11 +60,11 @@ public sealed record class ToolUseBlockVariant(Messages::ToolUseBlock Value)
     }
 }
 
-public sealed record class ServerToolUseBlockVariant(Messages::ServerToolUseBlock Value)
-    : Messages::ContentBlock,
-        IVariant<ServerToolUseBlockVariant, Messages::ServerToolUseBlock>
+public sealed record class ServerToolUseBlockVariant(ServerToolUseBlock Value)
+    : ContentBlock,
+        IVariant<ServerToolUseBlockVariant, ServerToolUseBlock>
 {
-    public static ServerToolUseBlockVariant From(Messages::ServerToolUseBlock value)
+    public static ServerToolUseBlockVariant From(ServerToolUseBlock value)
     {
         return new(value);
     }
@@ -77,11 +75,11 @@ public sealed record class ServerToolUseBlockVariant(Messages::ServerToolUseBloc
     }
 }
 
-public sealed record class WebSearchToolResultBlockVariant(Messages::WebSearchToolResultBlock Value)
-    : Messages::ContentBlock,
-        IVariant<WebSearchToolResultBlockVariant, Messages::WebSearchToolResultBlock>
+public sealed record class WebSearchToolResultBlockVariant(WebSearchToolResultBlock Value)
+    : ContentBlock,
+        IVariant<WebSearchToolResultBlockVariant, WebSearchToolResultBlock>
 {
-    public static WebSearchToolResultBlockVariant From(Messages::WebSearchToolResultBlock value)
+    public static WebSearchToolResultBlockVariant From(WebSearchToolResultBlock value)
     {
         return new(value);
     }

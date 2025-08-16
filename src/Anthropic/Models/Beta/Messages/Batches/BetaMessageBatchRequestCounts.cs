@@ -1,15 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages.Batches;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<BetaMessageBatchRequestCounts>))]
+[JsonConverter(typeof(ModelConverter<BetaMessageBatchRequestCounts>))]
 public sealed record class BetaMessageBatchRequestCounts
-    : Anthropic::ModelBase,
-        Anthropic::IFromRaw<BetaMessageBatchRequestCounts>
+    : ModelBase,
+        IFromRaw<BetaMessageBatchRequestCounts>
 {
     /// <summary>
     /// Number of requests in the Message Batch that have been canceled.
@@ -21,15 +21,9 @@ public sealed record class BetaMessageBatchRequestCounts
         get
         {
             if (!this.Properties.TryGetValue("canceled", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "canceled",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("canceled", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["canceled"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -44,15 +38,9 @@ public sealed record class BetaMessageBatchRequestCounts
         get
         {
             if (!this.Properties.TryGetValue("errored", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "errored",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("errored", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["errored"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -67,15 +55,9 @@ public sealed record class BetaMessageBatchRequestCounts
         get
         {
             if (!this.Properties.TryGetValue("expired", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "expired",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("expired", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["expired"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -88,15 +70,9 @@ public sealed record class BetaMessageBatchRequestCounts
         get
         {
             if (!this.Properties.TryGetValue("processing", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "processing",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("processing", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["processing"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -111,15 +87,9 @@ public sealed record class BetaMessageBatchRequestCounts
         get
         {
             if (!this.Properties.TryGetValue("succeeded", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "succeeded",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("succeeded", "Missing required argument");
 
-            return JsonSerializer.Deserialize<long>(
-                element,
-                Anthropic::ModelBase.SerializerOptions
-            );
+            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
         set { this.Properties["succeeded"] = JsonSerializer.SerializeToElement(value); }
     }

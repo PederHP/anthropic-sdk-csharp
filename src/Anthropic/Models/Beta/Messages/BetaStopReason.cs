@@ -1,10 +1,10 @@
+using System;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(Anthropic::EnumConverter<BetaStopReason, string>))]
-public sealed record class BetaStopReason(string value) : Anthropic::IEnum<BetaStopReason, string>
+[JsonConverter(typeof(EnumConverter<BetaStopReason, string>))]
+public sealed record class BetaStopReason(string value) : IEnum<BetaStopReason, string>
 {
     public static readonly BetaStopReason EndTurn = new("end_turn");
 
@@ -39,7 +39,7 @@ public sealed record class BetaStopReason(string value) : Anthropic::IEnum<BetaS
             "tool_use" => Value.ToolUse,
             "pause_turn" => Value.PauseTurn,
             "refusal" => Value.Refusal,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(_value)),
+            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
         };
 
     public string Raw()

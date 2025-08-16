@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ThinkingConfigParamVariants = Anthropic.Models.Messages.ThinkingConfigParamVariants;
+using Anthropic.Models.Messages.ThinkingConfigParamVariants;
 
 namespace Anthropic.Models.Messages;
 
@@ -21,10 +22,10 @@ public abstract record class ThinkingConfigParam
     internal ThinkingConfigParam() { }
 
     public static implicit operator ThinkingConfigParam(ThinkingConfigEnabled value) =>
-        new ThinkingConfigParamVariants::ThinkingConfigEnabledVariant(value);
+        new ThinkingConfigEnabledVariant(value);
 
     public static implicit operator ThinkingConfigParam(ThinkingConfigDisabled value) =>
-        new ThinkingConfigParamVariants::ThinkingConfigDisabledVariant(value);
+        new ThinkingConfigDisabledVariant(value);
 
     public abstract void Validate();
 }
@@ -33,7 +34,7 @@ sealed class ThinkingConfigParamConverter : JsonConverter<ThinkingConfigParam>
 {
     public override ThinkingConfigParam? Read(
         ref Utf8JsonReader reader,
-        global::System.Type _typeToConvert,
+        Type _typeToConvert,
         JsonSerializerOptions options
     )
     {
@@ -62,9 +63,7 @@ sealed class ThinkingConfigParamConverter : JsonConverter<ThinkingConfigParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ThinkingConfigParamVariants::ThinkingConfigEnabledVariant(
-                            deserialized
-                        );
+                        return new ThinkingConfigEnabledVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -72,7 +71,7 @@ sealed class ThinkingConfigParamConverter : JsonConverter<ThinkingConfigParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             case "disabled":
             {
@@ -86,9 +85,7 @@ sealed class ThinkingConfigParamConverter : JsonConverter<ThinkingConfigParam>
                     );
                     if (deserialized != null)
                     {
-                        return new ThinkingConfigParamVariants::ThinkingConfigDisabledVariant(
-                            deserialized
-                        );
+                        return new ThinkingConfigDisabledVariant(deserialized);
                     }
                 }
                 catch (JsonException e)
@@ -96,11 +93,11 @@ sealed class ThinkingConfigParamConverter : JsonConverter<ThinkingConfigParam>
                     exceptions.Add(e);
                 }
 
-                throw new global::System.AggregateException(exceptions);
+                throw new AggregateException(exceptions);
             }
             default:
             {
-                throw new global::System.Exception();
+                throw new Exception();
             }
         }
     }
@@ -113,12 +110,9 @@ sealed class ThinkingConfigParamConverter : JsonConverter<ThinkingConfigParam>
     {
         object variant = value switch
         {
-            ThinkingConfigParamVariants::ThinkingConfigEnabledVariant(var thinkingConfigEnabled) =>
-                thinkingConfigEnabled,
-            ThinkingConfigParamVariants::ThinkingConfigDisabledVariant(
-                var thinkingConfigDisabled
-            ) => thinkingConfigDisabled,
-            _ => throw new global::System.ArgumentOutOfRangeException(nameof(value)),
+            ThinkingConfigEnabledVariant(var thinkingConfigEnabled) => thinkingConfigEnabled,
+            ThinkingConfigDisabledVariant(var thinkingConfigDisabled) => thinkingConfigDisabled,
+            _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);
     }

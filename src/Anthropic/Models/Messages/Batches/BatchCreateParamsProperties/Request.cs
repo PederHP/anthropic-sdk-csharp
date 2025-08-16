@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Anthropic = Anthropic;
-using RequestProperties = Anthropic.Models.Messages.Batches.BatchCreateParamsProperties.RequestProperties;
+using Anthropic.Models.Messages.Batches.BatchCreateParamsProperties.RequestProperties;
 
 namespace Anthropic.Models.Messages.Batches.BatchCreateParamsProperties;
 
-[JsonConverter(typeof(Anthropic::ModelConverter<Request>))]
-public sealed record class Request : Anthropic::ModelBase, Anthropic::IFromRaw<Request>
+[JsonConverter(typeof(ModelConverter<Request>))]
+public sealed record class Request : ModelBase, IFromRaw<Request>
 {
     /// <summary>
     /// Developer-provided ID created for each request in a Message Batch. Useful
@@ -21,15 +21,10 @@ public sealed record class Request : Anthropic::ModelBase, Anthropic::IFromRaw<R
         get
         {
             if (!this.Properties.TryGetValue("custom_id", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "custom_id",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("custom_id", "Missing required argument");
 
-            return JsonSerializer.Deserialize<string>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("custom_id");
+            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("custom_id");
         }
         set { this.Properties["custom_id"] = JsonSerializer.SerializeToElement(value); }
     }
@@ -40,20 +35,15 @@ public sealed record class Request : Anthropic::ModelBase, Anthropic::IFromRaw<R
     /// See the [Messages API reference](/en/api/messages) for full documentation
     /// on available parameters.
     /// </summary>
-    public required RequestProperties::Params Params
+    public required Params Params
     {
         get
         {
             if (!this.Properties.TryGetValue("params", out JsonElement element))
-                throw new global::System.ArgumentOutOfRangeException(
-                    "params",
-                    "Missing required argument"
-                );
+                throw new ArgumentOutOfRangeException("params", "Missing required argument");
 
-            return JsonSerializer.Deserialize<RequestProperties::Params>(
-                    element,
-                    Anthropic::ModelBase.SerializerOptions
-                ) ?? throw new global::System.ArgumentNullException("params");
+            return JsonSerializer.Deserialize<Params>(element, ModelBase.SerializerOptions)
+                ?? throw new ArgumentNullException("params");
         }
         set { this.Properties["params"] = JsonSerializer.SerializeToElement(value); }
     }
