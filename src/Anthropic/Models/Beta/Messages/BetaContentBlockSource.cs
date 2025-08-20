@@ -20,7 +20,13 @@ public sealed record class BetaContentBlockSource : ModelBase, IFromRaw<BetaCont
             return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -32,7 +38,13 @@ public sealed record class BetaContentBlockSource : ModelBase, IFromRaw<BetaCont
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

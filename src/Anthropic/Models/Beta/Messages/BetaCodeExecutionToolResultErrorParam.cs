@@ -11,19 +11,24 @@ public sealed record class BetaCodeExecutionToolResultErrorParam
     : ModelBase,
         IFromRaw<BetaCodeExecutionToolResultErrorParam>
 {
-    public required BetaCodeExecutionToolResultErrorCode ErrorCode
+    public required ApiEnum<string, BetaCodeExecutionToolResultErrorCode> ErrorCode
     {
         get
         {
             if (!this.Properties.TryGetValue("error_code", out JsonElement element))
                 throw new ArgumentOutOfRangeException("error_code", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaCodeExecutionToolResultErrorCode>(
-                    element,
-                    ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("error_code");
+            return JsonSerializer.Deserialize<
+                ApiEnum<string, BetaCodeExecutionToolResultErrorCode>
+            >(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["error_code"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["error_code"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -35,7 +40,13 @@ public sealed record class BetaCodeExecutionToolResultErrorParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()
@@ -64,7 +75,9 @@ public sealed record class BetaCodeExecutionToolResultErrorParam
     }
 
     [SetsRequiredMembers]
-    public BetaCodeExecutionToolResultErrorParam(BetaCodeExecutionToolResultErrorCode errorCode)
+    public BetaCodeExecutionToolResultErrorParam(
+        ApiEnum<string, BetaCodeExecutionToolResultErrorCode> errorCode
+    )
         : this()
     {
         this.ErrorCode = errorCode;

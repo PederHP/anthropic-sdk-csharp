@@ -34,25 +34,37 @@ public sealed record class BatchCreateParams : ParamsBase
             return JsonSerializer.Deserialize<List<Request>>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("requests");
         }
-        set { this.BodyProperties["requests"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["requests"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// Optional header to specify the beta version(s) you want to use.
     /// </summary>
-    public List<AnthropicBeta>? Betas
+    public List<ApiEnum<string, AnthropicBeta>>? Betas
     {
         get
         {
             if (!this.HeaderProperties.TryGetValue("betas", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<AnthropicBeta>?>(
+            return JsonSerializer.Deserialize<List<ApiEnum<string, AnthropicBeta>>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set { this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override Uri Url(IAnthropicClient client)

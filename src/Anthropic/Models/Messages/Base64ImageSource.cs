@@ -20,20 +20,34 @@ public sealed record class Base64ImageSource : ModelBase, IFromRaw<Base64ImageSo
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("data");
         }
-        set { this.Properties["data"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["data"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
-    public required MediaType MediaType
+    public required ApiEnum<string, MediaType> MediaType
     {
         get
         {
             if (!this.Properties.TryGetValue("media_type", out JsonElement element))
                 throw new ArgumentOutOfRangeException("media_type", "Missing required argument");
 
-            return JsonSerializer.Deserialize<MediaType>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("media_type");
+            return JsonSerializer.Deserialize<ApiEnum<string, MediaType>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["media_type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["media_type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -45,7 +59,13 @@ public sealed record class Base64ImageSource : ModelBase, IFromRaw<Base64ImageSo
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

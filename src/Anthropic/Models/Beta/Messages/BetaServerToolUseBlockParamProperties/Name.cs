@@ -1,43 +1,43 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Beta.Messages.BetaServerToolUseBlockParamProperties;
 
-[JsonConverter(typeof(EnumConverter<Name, string>))]
-public sealed record class Name(string value) : IEnum<Name, string>
+[JsonConverter(typeof(NameConverter))]
+public enum Name
 {
-    public static readonly Name WebSearch = new("web_search");
+    WebSearch,
+    CodeExecution,
+}
 
-    public static readonly Name CodeExecution = new("code_execution");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class NameConverter : JsonConverter<Name>
+{
+    public override Name Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        WebSearch,
-        CodeExecution,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "web_search" => Value.WebSearch,
-            "code_execution" => Value.CodeExecution,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "web_search" => Name.WebSearch,
+            "code_execution" => Name.CodeExecution,
+            _ => (Name)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(Utf8JsonWriter writer, Name value, JsonSerializerOptions options)
     {
-        Known();
-    }
-
-    public static Name FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Name.WebSearch => "web_search",
+                Name.CodeExecution => "code_execution",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

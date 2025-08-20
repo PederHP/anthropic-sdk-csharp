@@ -22,7 +22,13 @@ public sealed record class BetaMessageTokensCount : ModelBase, IFromRaw<BetaMess
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

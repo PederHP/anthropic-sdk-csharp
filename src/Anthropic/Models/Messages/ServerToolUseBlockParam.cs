@@ -19,7 +19,13 @@ public sealed record class ServerToolUseBlockParam : ModelBase, IFromRaw<ServerT
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required JsonElement Input
@@ -31,7 +37,13 @@ public sealed record class ServerToolUseBlockParam : ModelBase, IFromRaw<ServerT
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["input"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["input"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Name
@@ -43,7 +55,13 @@ public sealed record class ServerToolUseBlockParam : ModelBase, IFromRaw<ServerT
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -55,7 +73,13 @@ public sealed record class ServerToolUseBlockParam : ModelBase, IFromRaw<ServerT
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -73,7 +97,13 @@ public sealed record class ServerToolUseBlockParam : ModelBase, IFromRaw<ServerT
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

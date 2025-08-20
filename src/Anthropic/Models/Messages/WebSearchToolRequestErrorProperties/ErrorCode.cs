@@ -1,55 +1,56 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Messages.WebSearchToolRequestErrorProperties;
 
-[JsonConverter(typeof(EnumConverter<ErrorCode, string>))]
-public sealed record class ErrorCode(string value) : IEnum<ErrorCode, string>
+[JsonConverter(typeof(ErrorCodeConverter))]
+public enum ErrorCode
 {
-    public static readonly ErrorCode InvalidToolInput = new("invalid_tool_input");
+    InvalidToolInput,
+    Unavailable,
+    MaxUsesExceeded,
+    TooManyRequests,
+    QueryTooLong,
+}
 
-    public static readonly ErrorCode Unavailable = new("unavailable");
-
-    public static readonly ErrorCode MaxUsesExceeded = new("max_uses_exceeded");
-
-    public static readonly ErrorCode TooManyRequests = new("too_many_requests");
-
-    public static readonly ErrorCode QueryTooLong = new("query_too_long");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class ErrorCodeConverter : JsonConverter<ErrorCode>
+{
+    public override ErrorCode Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        InvalidToolInput,
-        Unavailable,
-        MaxUsesExceeded,
-        TooManyRequests,
-        QueryTooLong,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "invalid_tool_input" => Value.InvalidToolInput,
-            "unavailable" => Value.Unavailable,
-            "max_uses_exceeded" => Value.MaxUsesExceeded,
-            "too_many_requests" => Value.TooManyRequests,
-            "query_too_long" => Value.QueryTooLong,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "invalid_tool_input" => ErrorCode.InvalidToolInput,
+            "unavailable" => ErrorCode.Unavailable,
+            "max_uses_exceeded" => ErrorCode.MaxUsesExceeded,
+            "too_many_requests" => ErrorCode.TooManyRequests,
+            "query_too_long" => ErrorCode.QueryTooLong,
+            _ => (ErrorCode)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        ErrorCode value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static ErrorCode FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ErrorCode.InvalidToolInput => "invalid_tool_input",
+                ErrorCode.Unavailable => "unavailable",
+                ErrorCode.MaxUsesExceeded => "max_uses_exceeded",
+                ErrorCode.TooManyRequests => "too_many_requests",
+                ErrorCode.QueryTooLong => "query_too_long",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

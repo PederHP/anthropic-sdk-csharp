@@ -28,7 +28,13 @@ public sealed record class ThinkingConfigEnabled : ModelBase, IFromRaw<ThinkingC
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["budget_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["budget_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -40,7 +46,13 @@ public sealed record class ThinkingConfigEnabled : ModelBase, IFromRaw<ThinkingC
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

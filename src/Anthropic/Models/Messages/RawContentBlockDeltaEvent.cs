@@ -23,7 +23,13 @@ public sealed record class RawContentBlockDeltaEvent
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("delta");
         }
-        set { this.Properties["delta"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["delta"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required long Index
@@ -35,7 +41,13 @@ public sealed record class RawContentBlockDeltaEvent
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["index"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["index"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -47,7 +59,13 @@ public sealed record class RawContentBlockDeltaEvent
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

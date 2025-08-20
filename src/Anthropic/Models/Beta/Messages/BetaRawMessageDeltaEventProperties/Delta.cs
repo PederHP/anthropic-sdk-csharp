@@ -20,22 +20,34 @@ public sealed record class Delta : ModelBase, IFromRaw<Delta>
 
             return JsonSerializer.Deserialize<BetaContainer?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["container"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["container"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
-    public required BetaStopReason? StopReason
+    public required ApiEnum<string, BetaStopReason>? StopReason
     {
         get
         {
             if (!this.Properties.TryGetValue("stop_reason", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<BetaStopReason?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, BetaStopReason>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string? StopSequence
@@ -47,7 +59,13 @@ public sealed record class Delta : ModelBase, IFromRaw<Delta>
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

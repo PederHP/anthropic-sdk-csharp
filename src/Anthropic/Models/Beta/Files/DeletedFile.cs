@@ -23,7 +23,13 @@ public sealed record class DeletedFile : ModelBase, IFromRaw<DeletedFile>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -31,19 +37,25 @@ public sealed record class DeletedFile : ModelBase, IFromRaw<DeletedFile>
     ///
     /// For file deletion, this is always `"file_deleted"`.
     /// </summary>
-    public DeletedFileProperties::Type? Type
+    public ApiEnum<string, DeletedFileProperties::Type>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<DeletedFileProperties::Type?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, DeletedFileProperties::Type>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

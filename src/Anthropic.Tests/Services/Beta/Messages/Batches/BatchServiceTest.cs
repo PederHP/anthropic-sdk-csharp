@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Anthropic.Models.Beta.Messages;
 using Anthropic.Models.Beta.Messages.Batches.BatchCreateParamsProperties.RequestProperties.ParamsProperties;
 using Anthropic.Models.Beta.Messages.BetaCacheControlEphemeralProperties;
 using Anthropic.Models.Beta.Messages.BetaMessageParamProperties;
 using Anthropic.Models.Beta.Messages.BetaToolProperties;
-using Anthropic.Models.Messages;
-using Messages = Anthropic.Models.Beta.Messages;
+using Messages = Anthropic.Models.Messages;
 
 namespace Anthropic.Tests.Services.Beta.Messages.Batches;
 
@@ -27,7 +27,7 @@ public class BatchServiceTest : TestBase
                         {
                             MaxTokens = 1024,
                             Messages = [new() { Content = "Hello, world", Role = Role.User }],
-                            Model = Model.Claude3_7SonnetLatest,
+                            Model = Messages::Model.Claude3_7SonnetLatest,
                             Container = "container",
                             MCPServers =
                             [
@@ -47,7 +47,7 @@ public class BatchServiceTest : TestBase
                             ServiceTier = ServiceTier.Auto,
                             StopSequences = ["string"],
                             Stream = true,
-                            System = new List<Messages::BetaTextBlockParam>()
+                            System = new List<BetaTextBlockParam>()
                             {
                                 new()
                                 {
@@ -55,7 +55,7 @@ public class BatchServiceTest : TestBase
                                     CacheControl = new() { TTL = TTL.TTL5m },
                                     Citations =
                                     [
-                                        new Messages::BetaCitationCharLocationParam()
+                                        new BetaCitationCharLocationParam()
                                         {
                                             CitedText = "cited_text",
                                             DocumentIndex = 0,
@@ -67,14 +67,11 @@ public class BatchServiceTest : TestBase
                                 },
                             },
                             Temperature = 1,
-                            Thinking = new Messages::BetaThinkingConfigEnabled(1024),
-                            ToolChoice = new Messages::BetaToolChoiceAuto()
-                            {
-                                DisableParallelToolUse = true,
-                            },
+                            Thinking = new BetaThinkingConfigEnabled(1024),
+                            ToolChoice = new BetaToolChoiceAuto() { DisableParallelToolUse = true },
                             Tools =
                             [
-                                new Messages::BetaTool()
+                                new BetaTool()
                                 {
                                     InputSchema = new()
                                     {

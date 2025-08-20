@@ -17,7 +17,13 @@ public sealed record class BetaCitationsConfigParam : ModelBase, IFromRaw<BetaCi
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["enabled"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["enabled"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

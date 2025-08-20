@@ -20,20 +20,34 @@ public sealed record class BetaMessageParam : ModelBase, IFromRaw<BetaMessagePar
             return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
-    public required Role Role
+    public required ApiEnum<string, Role> Role
     {
         get
         {
             if (!this.Properties.TryGetValue("role", out JsonElement element))
                 throw new ArgumentOutOfRangeException("role", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Role>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("role");
+            return JsonSerializer.Deserialize<ApiEnum<string, Role>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["role"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["role"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

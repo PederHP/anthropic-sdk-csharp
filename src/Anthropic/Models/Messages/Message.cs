@@ -24,7 +24,13 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -61,24 +67,38 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Model Model
+    public required ApiEnum<string, Model> Model
     {
         get
         {
             if (!this.Properties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Model>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<ApiEnum<string, Model>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["model"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["model"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -95,7 +115,13 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["role"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["role"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -112,16 +138,25 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
     /// In non-streaming mode this value is always non-null. In streaming mode, it
     /// is null in the `message_start` event and non-null otherwise.
     /// </summary>
-    public required StopReason? StopReason
+    public required ApiEnum<string, StopReason>? StopReason
     {
         get
         {
             if (!this.Properties.TryGetValue("stop_reason", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<StopReason?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, StopReason>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -139,7 +174,13 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -156,7 +197,13 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -186,7 +233,13 @@ public sealed record class Message : ModelBase, IFromRaw<Message>
             return JsonSerializer.Deserialize<Usage>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("usage");
         }
-        set { this.Properties["usage"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["usage"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

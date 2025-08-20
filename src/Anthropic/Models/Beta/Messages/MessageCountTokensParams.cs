@@ -93,24 +93,38 @@ public sealed record class MessageCountTokensParams : ParamsBase
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("messages");
         }
-        set { this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Messages::Model Model
+    public required ApiEnum<string, Messages::Model> Model
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::Model>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<ApiEnum<string, Messages::Model>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.BodyProperties["model"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["model"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -128,7 +142,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["mcp_servers"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["mcp_servers"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -146,7 +166,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
 
             return JsonSerializer.Deserialize<SystemModel?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["system"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["system"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -171,7 +197,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -190,7 +222,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -248,25 +286,37 @@ public sealed record class MessageCountTokensParams : ParamsBase
 
             return JsonSerializer.Deserialize<List<Tool>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// Optional header to specify the beta version(s) you want to use.
     /// </summary>
-    public List<AnthropicBeta>? Betas
+    public List<ApiEnum<string, AnthropicBeta>>? Betas
     {
         get
         {
             if (!this.HeaderProperties.TryGetValue("betas", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<List<AnthropicBeta>?>(
+            return JsonSerializer.Deserialize<List<ApiEnum<string, AnthropicBeta>>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set { this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.HeaderProperties["betas"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override Uri Url(IAnthropicClient client)

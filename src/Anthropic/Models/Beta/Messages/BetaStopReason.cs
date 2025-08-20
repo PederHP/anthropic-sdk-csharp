@@ -1,59 +1,59 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(EnumConverter<BetaStopReason, string>))]
-public sealed record class BetaStopReason(string value) : IEnum<BetaStopReason, string>
+[JsonConverter(typeof(BetaStopReasonConverter))]
+public enum BetaStopReason
 {
-    public static readonly BetaStopReason EndTurn = new("end_turn");
+    EndTurn,
+    MaxTokens,
+    StopSequence,
+    ToolUse,
+    PauseTurn,
+    Refusal,
+}
 
-    public static readonly BetaStopReason MaxTokens = new("max_tokens");
-
-    public static readonly BetaStopReason StopSequence = new("stop_sequence");
-
-    public static readonly BetaStopReason ToolUse = new("tool_use");
-
-    public static readonly BetaStopReason PauseTurn = new("pause_turn");
-
-    public static readonly BetaStopReason Refusal = new("refusal");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class BetaStopReasonConverter : JsonConverter<BetaStopReason>
+{
+    public override BetaStopReason Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        EndTurn,
-        MaxTokens,
-        StopSequence,
-        ToolUse,
-        PauseTurn,
-        Refusal,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "end_turn" => Value.EndTurn,
-            "max_tokens" => Value.MaxTokens,
-            "stop_sequence" => Value.StopSequence,
-            "tool_use" => Value.ToolUse,
-            "pause_turn" => Value.PauseTurn,
-            "refusal" => Value.Refusal,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "end_turn" => BetaStopReason.EndTurn,
+            "max_tokens" => BetaStopReason.MaxTokens,
+            "stop_sequence" => BetaStopReason.StopSequence,
+            "tool_use" => BetaStopReason.ToolUse,
+            "pause_turn" => BetaStopReason.PauseTurn,
+            "refusal" => BetaStopReason.Refusal,
+            _ => (BetaStopReason)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        BetaStopReason value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static BetaStopReason FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                BetaStopReason.EndTurn => "end_turn",
+                BetaStopReason.MaxTokens => "max_tokens",
+                BetaStopReason.StopSequence => "stop_sequence",
+                BetaStopReason.ToolUse => "tool_use",
+                BetaStopReason.PauseTurn => "pause_turn",
+                BetaStopReason.Refusal => "refusal",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

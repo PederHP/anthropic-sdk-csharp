@@ -26,7 +26,8 @@ public sealed record class MessageDeltaUsage : ModelBase, IFromRaw<MessageDeltaU
         set
         {
             this.Properties["cache_creation_input_tokens"] = JsonSerializer.SerializeToElement(
-                value
+                value,
+                ModelBase.SerializerOptions
             );
         }
     }
@@ -45,7 +46,10 @@ public sealed record class MessageDeltaUsage : ModelBase, IFromRaw<MessageDeltaU
         }
         set
         {
-            this.Properties["cache_read_input_tokens"] = JsonSerializer.SerializeToElement(value);
+            this.Properties["cache_read_input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
         }
     }
 
@@ -61,7 +65,13 @@ public sealed record class MessageDeltaUsage : ModelBase, IFromRaw<MessageDeltaU
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -76,7 +86,13 @@ public sealed record class MessageDeltaUsage : ModelBase, IFromRaw<MessageDeltaU
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["output_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["output_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -94,7 +110,13 @@ public sealed record class MessageDeltaUsage : ModelBase, IFromRaw<MessageDeltaU
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["server_tool_use"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["server_tool_use"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

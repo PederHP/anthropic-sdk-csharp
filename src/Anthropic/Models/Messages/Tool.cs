@@ -28,7 +28,13 @@ public sealed record class Tool : ModelBase, IFromRaw<Tool>
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("input_schema");
         }
-        set { this.Properties["input_schema"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["input_schema"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -46,7 +52,13 @@ public sealed record class Tool : ModelBase, IFromRaw<Tool>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("name");
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -64,7 +76,13 @@ public sealed record class Tool : ModelBase, IFromRaw<Tool>
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -84,22 +102,34 @@ public sealed record class Tool : ModelBase, IFromRaw<Tool>
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["description"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["description"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
-    public ToolProperties::Type? Type
+    public ApiEnum<string, ToolProperties::Type>? Type
     {
         get
         {
             if (!this.Properties.TryGetValue("type", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ToolProperties::Type?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, ToolProperties::Type>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

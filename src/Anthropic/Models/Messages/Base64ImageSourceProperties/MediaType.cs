@@ -1,51 +1,53 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Messages.Base64ImageSourceProperties;
 
-[JsonConverter(typeof(EnumConverter<MediaType, string>))]
-public sealed record class MediaType(string value) : IEnum<MediaType, string>
+[JsonConverter(typeof(MediaTypeConverter))]
+public enum MediaType
 {
-    public static readonly MediaType ImageJPEG = new("image/jpeg");
+    ImageJPEG,
+    ImagePNG,
+    ImageGIF,
+    ImageWebP,
+}
 
-    public static readonly MediaType ImagePNG = new("image/png");
-
-    public static readonly MediaType ImageGIF = new("image/gif");
-
-    public static readonly MediaType ImageWebP = new("image/webp");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class MediaTypeConverter : JsonConverter<MediaType>
+{
+    public override MediaType Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        ImageJPEG,
-        ImagePNG,
-        ImageGIF,
-        ImageWebP,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "image/jpeg" => Value.ImageJPEG,
-            "image/png" => Value.ImagePNG,
-            "image/gif" => Value.ImageGIF,
-            "image/webp" => Value.ImageWebP,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "image/jpeg" => MediaType.ImageJPEG,
+            "image/png" => MediaType.ImagePNG,
+            "image/gif" => MediaType.ImageGIF,
+            "image/webp" => MediaType.ImageWebP,
+            _ => (MediaType)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        MediaType value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static MediaType FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                MediaType.ImageJPEG => "image/jpeg",
+                MediaType.ImagePNG => "image/png",
+                MediaType.ImageGIF => "image/gif",
+                MediaType.ImageWebP => "image/webp",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

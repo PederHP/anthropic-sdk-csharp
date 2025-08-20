@@ -24,7 +24,13 @@ public sealed record class ServerToolUsage : ModelBase, IFromRaw<ServerToolUsage
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["web_search_requests"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["web_search_requests"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

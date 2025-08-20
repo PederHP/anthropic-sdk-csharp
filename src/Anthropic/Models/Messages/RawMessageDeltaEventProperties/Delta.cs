@@ -8,16 +8,25 @@ namespace Anthropic.Models.Messages.RawMessageDeltaEventProperties;
 [JsonConverter(typeof(ModelConverter<Delta>))]
 public sealed record class Delta : ModelBase, IFromRaw<Delta>
 {
-    public required StopReason? StopReason
+    public required ApiEnum<string, StopReason>? StopReason
     {
         get
         {
             if (!this.Properties.TryGetValue("stop_reason", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<StopReason?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, StopReason>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string? StopSequence
@@ -29,7 +38,13 @@ public sealed record class Delta : ModelBase, IFromRaw<Delta>
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

@@ -1,43 +1,43 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Beta.Messages.BetaMessageParamProperties;
 
-[JsonConverter(typeof(EnumConverter<Role, string>))]
-public sealed record class Role(string value) : IEnum<Role, string>
+[JsonConverter(typeof(RoleConverter))]
+public enum Role
 {
-    public static readonly Role User = new("user");
+    User,
+    Assistant,
+}
 
-    public static readonly Role Assistant = new("assistant");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class RoleConverter : JsonConverter<Role>
+{
+    public override Role Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        User,
-        Assistant,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "user" => Value.User,
-            "assistant" => Value.Assistant,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "user" => Role.User,
+            "assistant" => Role.Assistant,
+            _ => (Role)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(Utf8JsonWriter writer, Role value, JsonSerializerOptions options)
     {
-        Known();
-    }
-
-    public static Role FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                Role.User => "user",
+                Role.Assistant => "assistant",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

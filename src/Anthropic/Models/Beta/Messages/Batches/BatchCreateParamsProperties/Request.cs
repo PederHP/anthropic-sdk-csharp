@@ -26,7 +26,13 @@ public sealed record class Request : ModelBase, IFromRaw<Request>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("custom_id");
         }
-        set { this.Properties["custom_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["custom_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -45,7 +51,13 @@ public sealed record class Request : ModelBase, IFromRaw<Request>
             return JsonSerializer.Deserialize<Params>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("params");
         }
-        set { this.Properties["params"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["params"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

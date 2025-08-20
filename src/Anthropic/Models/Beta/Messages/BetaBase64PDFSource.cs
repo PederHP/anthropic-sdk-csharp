@@ -19,7 +19,13 @@ public sealed record class BetaBase64PDFSource : ModelBase, IFromRaw<BetaBase64P
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("data");
         }
-        set { this.Properties["data"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["data"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement MediaType
@@ -31,7 +37,13 @@ public sealed record class BetaBase64PDFSource : ModelBase, IFromRaw<BetaBase64P
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["media_type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["media_type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -43,7 +55,13 @@ public sealed record class BetaBase64PDFSource : ModelBase, IFromRaw<BetaBase64P
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

@@ -37,7 +37,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["max_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["max_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -113,24 +119,38 @@ public sealed record class MessageCreateParams : ParamsBase
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("messages");
         }
-        set { this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Model Model
+    public required ApiEnum<string, Model> Model
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Model>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<ApiEnum<string, Model>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.BodyProperties["model"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["model"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -145,7 +165,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<Metadata?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["metadata"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["metadata"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -155,16 +181,25 @@ public sealed record class MessageCreateParams : ParamsBase
     /// Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers)
     /// for details.
     /// </summary>
-    public ServiceTier? ServiceTier
+    public ApiEnum<string, ServiceTier>? ServiceTier
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("service_tier", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ServiceTier?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, ServiceTier>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.BodyProperties["service_tier"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["service_tier"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -187,7 +222,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["stop_sequences"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["stop_sequences"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -205,7 +246,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<SystemModel?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["system"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["system"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -226,7 +273,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["temperature"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["temperature"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -251,7 +304,13 @@ public sealed record class MessageCreateParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -267,7 +326,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<ToolChoice?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -328,7 +393,13 @@ public sealed record class MessageCreateParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -348,7 +419,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["top_k"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["top_k"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -370,7 +447,13 @@ public sealed record class MessageCreateParams : ParamsBase
 
             return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["top_p"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["top_p"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override Uri Url(IAnthropicClient client)

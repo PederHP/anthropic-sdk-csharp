@@ -21,7 +21,13 @@ public sealed record class BatchListPageResponse : ModelBase, IFromRaw<BatchList
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("data");
         }
-        set { this.Properties["data"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["data"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -36,7 +42,13 @@ public sealed record class BatchListPageResponse : ModelBase, IFromRaw<BatchList
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["first_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["first_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -51,7 +63,13 @@ public sealed record class BatchListPageResponse : ModelBase, IFromRaw<BatchList
 
             return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["has_more"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["has_more"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -66,7 +84,13 @@ public sealed record class BatchListPageResponse : ModelBase, IFromRaw<BatchList
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["last_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["last_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

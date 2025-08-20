@@ -20,7 +20,13 @@ public sealed record class BetaMCPToolResultBlock : ModelBase, IFromRaw<BetaMCPT
             return JsonSerializer.Deserialize<Content>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required bool IsError
@@ -32,7 +38,13 @@ public sealed record class BetaMCPToolResultBlock : ModelBase, IFromRaw<BetaMCPT
 
             return JsonSerializer.Deserialize<bool>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["is_error"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["is_error"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string ToolUseID
@@ -45,7 +57,13 @@ public sealed record class BetaMCPToolResultBlock : ModelBase, IFromRaw<BetaMCPT
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("tool_use_id");
         }
-        set { this.Properties["tool_use_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["tool_use_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -57,7 +75,13 @@ public sealed record class BetaMCPToolResultBlock : ModelBase, IFromRaw<BetaMCPT
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

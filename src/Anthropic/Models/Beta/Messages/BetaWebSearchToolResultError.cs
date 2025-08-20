@@ -11,19 +11,25 @@ public sealed record class BetaWebSearchToolResultError
     : ModelBase,
         IFromRaw<BetaWebSearchToolResultError>
 {
-    public required BetaWebSearchToolResultErrorCode ErrorCode
+    public required ApiEnum<string, BetaWebSearchToolResultErrorCode> ErrorCode
     {
         get
         {
             if (!this.Properties.TryGetValue("error_code", out JsonElement element))
                 throw new ArgumentOutOfRangeException("error_code", "Missing required argument");
 
-            return JsonSerializer.Deserialize<BetaWebSearchToolResultErrorCode>(
-                    element,
-                    ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("error_code");
+            return JsonSerializer.Deserialize<ApiEnum<string, BetaWebSearchToolResultErrorCode>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["error_code"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["error_code"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -35,7 +41,13 @@ public sealed record class BetaWebSearchToolResultError
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()
@@ -64,7 +76,7 @@ public sealed record class BetaWebSearchToolResultError
     }
 
     [SetsRequiredMembers]
-    public BetaWebSearchToolResultError(BetaWebSearchToolResultErrorCode errorCode)
+    public BetaWebSearchToolResultError(ApiEnum<string, BetaWebSearchToolResultErrorCode> errorCode)
         : this()
     {
         this.ErrorCode = errorCode;

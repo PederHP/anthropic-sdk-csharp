@@ -25,7 +25,13 @@ public sealed record class ToolChoiceTool : ModelBase, IFromRaw<ToolChoiceTool>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("name");
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -37,7 +43,13 @@ public sealed record class ToolChoiceTool : ModelBase, IFromRaw<ToolChoiceTool>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -57,7 +69,10 @@ public sealed record class ToolChoiceTool : ModelBase, IFromRaw<ToolChoiceTool>
         }
         set
         {
-            this.Properties["disable_parallel_tool_use"] = JsonSerializer.SerializeToElement(value);
+            this.Properties["disable_parallel_tool_use"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
         }
     }
 

@@ -24,7 +24,13 @@ public sealed record class BetaWebSearchResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("encrypted_content");
         }
-        set { this.Properties["encrypted_content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["encrypted_content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Title
@@ -37,7 +43,13 @@ public sealed record class BetaWebSearchResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("title");
         }
-        set { this.Properties["title"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["title"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -49,7 +61,13 @@ public sealed record class BetaWebSearchResultBlockParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string URL
@@ -62,7 +80,13 @@ public sealed record class BetaWebSearchResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("url");
         }
-        set { this.Properties["url"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["url"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? PageAge
@@ -74,7 +98,13 @@ public sealed record class BetaWebSearchResultBlockParam
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["page_age"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["page_age"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

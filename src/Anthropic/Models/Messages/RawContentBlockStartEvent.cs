@@ -24,7 +24,13 @@ public sealed record class RawContentBlockStartEvent
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("content_block");
         }
-        set { this.Properties["content_block"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content_block"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required long Index
@@ -36,7 +42,13 @@ public sealed record class RawContentBlockStartEvent
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["index"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["index"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -48,7 +60,13 @@ public sealed record class RawContentBlockStartEvent
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

@@ -1,58 +1,55 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Beta.Messages;
 
-[JsonConverter(typeof(EnumConverter<BetaCodeExecutionToolResultErrorCode, string>))]
-public sealed record class BetaCodeExecutionToolResultErrorCode(string value)
-    : IEnum<BetaCodeExecutionToolResultErrorCode, string>
+[JsonConverter(typeof(BetaCodeExecutionToolResultErrorCodeConverter))]
+public enum BetaCodeExecutionToolResultErrorCode
 {
-    public static readonly BetaCodeExecutionToolResultErrorCode InvalidToolInput = new(
-        "invalid_tool_input"
-    );
+    InvalidToolInput,
+    Unavailable,
+    TooManyRequests,
+    ExecutionTimeExceeded,
+}
 
-    public static readonly BetaCodeExecutionToolResultErrorCode Unavailable = new("unavailable");
-
-    public static readonly BetaCodeExecutionToolResultErrorCode TooManyRequests = new(
-        "too_many_requests"
-    );
-
-    public static readonly BetaCodeExecutionToolResultErrorCode ExecutionTimeExceeded = new(
-        "execution_time_exceeded"
-    );
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class BetaCodeExecutionToolResultErrorCodeConverter
+    : JsonConverter<BetaCodeExecutionToolResultErrorCode>
+{
+    public override BetaCodeExecutionToolResultErrorCode Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        InvalidToolInput,
-        Unavailable,
-        TooManyRequests,
-        ExecutionTimeExceeded,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "invalid_tool_input" => Value.InvalidToolInput,
-            "unavailable" => Value.Unavailable,
-            "too_many_requests" => Value.TooManyRequests,
-            "execution_time_exceeded" => Value.ExecutionTimeExceeded,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "invalid_tool_input" => BetaCodeExecutionToolResultErrorCode.InvalidToolInput,
+            "unavailable" => BetaCodeExecutionToolResultErrorCode.Unavailable,
+            "too_many_requests" => BetaCodeExecutionToolResultErrorCode.TooManyRequests,
+            "execution_time_exceeded" => BetaCodeExecutionToolResultErrorCode.ExecutionTimeExceeded,
+            _ => (BetaCodeExecutionToolResultErrorCode)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        BetaCodeExecutionToolResultErrorCode value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static BetaCodeExecutionToolResultErrorCode FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                BetaCodeExecutionToolResultErrorCode.InvalidToolInput => "invalid_tool_input",
+                BetaCodeExecutionToolResultErrorCode.Unavailable => "unavailable",
+                BetaCodeExecutionToolResultErrorCode.TooManyRequests => "too_many_requests",
+                BetaCodeExecutionToolResultErrorCode.ExecutionTimeExceeded =>
+                    "execution_time_exceeded",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

@@ -31,7 +31,13 @@ public sealed record class BetaMessageBatchIndividualResponse
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("custom_id");
         }
-        set { this.Properties["custom_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["custom_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -53,7 +59,13 @@ public sealed record class BetaMessageBatchIndividualResponse
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("result");
         }
-        set { this.Properties["result"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["result"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

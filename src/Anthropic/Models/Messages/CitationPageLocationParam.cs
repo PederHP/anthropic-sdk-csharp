@@ -21,7 +21,13 @@ public sealed record class CitationPageLocationParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("cited_text");
         }
-        set { this.Properties["cited_text"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cited_text"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required long DocumentIndex
@@ -36,7 +42,13 @@ public sealed record class CitationPageLocationParam
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["document_index"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["document_index"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string? DocumentTitle
@@ -48,7 +60,13 @@ public sealed record class CitationPageLocationParam
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["document_title"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["document_title"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required long EndPageNumber
@@ -63,7 +81,13 @@ public sealed record class CitationPageLocationParam
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["end_page_number"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["end_page_number"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required long StartPageNumber
@@ -78,7 +102,13 @@ public sealed record class CitationPageLocationParam
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["start_page_number"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["start_page_number"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -90,7 +120,13 @@ public sealed record class CitationPageLocationParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

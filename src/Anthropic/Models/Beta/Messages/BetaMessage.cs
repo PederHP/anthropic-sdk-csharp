@@ -25,7 +25,13 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -40,7 +46,13 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
 
             return JsonSerializer.Deserialize<BetaContainer?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["container"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["container"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -77,24 +89,38 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Messages::Model Model
+    public required ApiEnum<string, Messages::Model> Model
     {
         get
         {
             if (!this.Properties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Messages::Model>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<ApiEnum<string, Messages::Model>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["model"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["model"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -111,7 +137,13 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["role"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["role"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -128,19 +160,25 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
     /// In non-streaming mode this value is always non-null. In streaming mode, it
     /// is null in the `message_start` event and non-null otherwise.
     /// </summary>
-    public required BetaStopReason? StopReason
+    public required ApiEnum<string, BetaStopReason>? StopReason
     {
         get
         {
             if (!this.Properties.TryGetValue("stop_reason", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<BetaStopReason?>(
+            return JsonSerializer.Deserialize<ApiEnum<string, BetaStopReason>?>(
                 element,
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_reason"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -158,7 +196,13 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_sequence"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -175,7 +219,13 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -205,7 +255,13 @@ public sealed record class BetaMessage : ModelBase, IFromRaw<BetaMessage>
             return JsonSerializer.Deserialize<BetaUsage>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("usage");
         }
-        set { this.Properties["usage"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["usage"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

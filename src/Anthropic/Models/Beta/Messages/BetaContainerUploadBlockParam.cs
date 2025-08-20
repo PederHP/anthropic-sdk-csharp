@@ -25,7 +25,13 @@ public sealed record class BetaContainerUploadBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("file_id");
         }
-        set { this.Properties["file_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["file_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -37,7 +43,13 @@ public sealed record class BetaContainerUploadBlockParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -55,7 +67,13 @@ public sealed record class BetaContainerUploadBlockParam
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

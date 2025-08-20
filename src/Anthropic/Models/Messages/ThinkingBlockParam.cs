@@ -19,7 +19,13 @@ public sealed record class ThinkingBlockParam : ModelBase, IFromRaw<ThinkingBloc
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("signature");
         }
-        set { this.Properties["signature"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["signature"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Thinking
@@ -32,7 +38,13 @@ public sealed record class ThinkingBlockParam : ModelBase, IFromRaw<ThinkingBloc
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("thinking");
         }
-        set { this.Properties["thinking"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["thinking"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -44,7 +56,13 @@ public sealed record class ThinkingBlockParam : ModelBase, IFromRaw<ThinkingBloc
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

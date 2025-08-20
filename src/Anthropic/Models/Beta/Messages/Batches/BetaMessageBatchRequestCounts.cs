@@ -25,7 +25,13 @@ public sealed record class BetaMessageBatchRequestCounts
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["canceled"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["canceled"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -42,7 +48,13 @@ public sealed record class BetaMessageBatchRequestCounts
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["errored"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["errored"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -59,7 +71,13 @@ public sealed record class BetaMessageBatchRequestCounts
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["expired"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["expired"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -74,7 +92,13 @@ public sealed record class BetaMessageBatchRequestCounts
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["processing"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["processing"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -91,7 +115,13 @@ public sealed record class BetaMessageBatchRequestCounts
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["succeeded"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["succeeded"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

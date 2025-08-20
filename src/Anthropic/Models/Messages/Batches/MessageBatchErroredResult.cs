@@ -21,7 +21,13 @@ public sealed record class MessageBatchErroredResult
             return JsonSerializer.Deserialize<ErrorResponse>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("error");
         }
-        set { this.Properties["error"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["error"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -33,7 +39,13 @@ public sealed record class MessageBatchErroredResult
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

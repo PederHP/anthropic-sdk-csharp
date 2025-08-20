@@ -26,7 +26,13 @@ public sealed record class BetaWebSearchTool20250305
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -38,7 +44,13 @@ public sealed record class BetaWebSearchTool20250305
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -54,7 +66,13 @@ public sealed record class BetaWebSearchTool20250305
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["allowed_domains"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["allowed_domains"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -69,7 +87,13 @@ public sealed record class BetaWebSearchTool20250305
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["blocked_domains"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["blocked_domains"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -87,7 +111,13 @@ public sealed record class BetaWebSearchTool20250305
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -102,7 +132,13 @@ public sealed record class BetaWebSearchTool20250305
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["max_uses"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["max_uses"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -117,7 +153,13 @@ public sealed record class BetaWebSearchTool20250305
 
             return JsonSerializer.Deserialize<UserLocation?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["user_location"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["user_location"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

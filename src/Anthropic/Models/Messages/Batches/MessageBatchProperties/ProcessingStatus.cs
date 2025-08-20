@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Messages.Batches.MessageBatchProperties;
@@ -6,45 +7,47 @@ namespace Anthropic.Models.Messages.Batches.MessageBatchProperties;
 /// <summary>
 /// Processing status of the Message Batch.
 /// </summary>
-[JsonConverter(typeof(EnumConverter<ProcessingStatus, string>))]
-public sealed record class ProcessingStatus(string value) : IEnum<ProcessingStatus, string>
+[JsonConverter(typeof(ProcessingStatusConverter))]
+public enum ProcessingStatus
 {
-    public static readonly ProcessingStatus InProgress = new("in_progress");
+    InProgress,
+    Canceling,
+    Ended,
+}
 
-    public static readonly ProcessingStatus Canceling = new("canceling");
-
-    public static readonly ProcessingStatus Ended = new("ended");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class ProcessingStatusConverter : JsonConverter<ProcessingStatus>
+{
+    public override ProcessingStatus Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        InProgress,
-        Canceling,
-        Ended,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "in_progress" => Value.InProgress,
-            "canceling" => Value.Canceling,
-            "ended" => Value.Ended,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "in_progress" => ProcessingStatus.InProgress,
+            "canceling" => ProcessingStatus.Canceling,
+            "ended" => ProcessingStatus.Ended,
+            _ => (ProcessingStatus)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        ProcessingStatus value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static ProcessingStatus FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ProcessingStatus.InProgress => "in_progress",
+                ProcessingStatus.Canceling => "canceling",
+                ProcessingStatus.Ended => "ended",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

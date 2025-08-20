@@ -21,7 +21,13 @@ public sealed record class BetaToolChoiceAny : ModelBase, IFromRaw<BetaToolChoic
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -41,7 +47,10 @@ public sealed record class BetaToolChoiceAny : ModelBase, IFromRaw<BetaToolChoic
         }
         set
         {
-            this.Properties["disable_parallel_tool_use"] = JsonSerializer.SerializeToElement(value);
+            this.Properties["disable_parallel_tool_use"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
         }
     }
 

@@ -24,7 +24,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -39,7 +45,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
 
             return JsonSerializer.Deserialize<DateTime>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["created_at"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["created_at"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -55,7 +67,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("filename");
         }
-        set { this.Properties["filename"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["filename"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -71,7 +89,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("mime_type");
         }
-        set { this.Properties["mime_type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["mime_type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -86,7 +110,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["size_bytes"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["size_bytes"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -103,7 +133,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -118,7 +154,13 @@ public sealed record class FileMetadata : ModelBase, IFromRaw<FileMetadata>
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["downloadable"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["downloadable"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

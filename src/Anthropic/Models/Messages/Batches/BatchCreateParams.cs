@@ -34,7 +34,13 @@ public sealed record class BatchCreateParams : ParamsBase
             return JsonSerializer.Deserialize<List<Request>>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("requests");
         }
-        set { this.BodyProperties["requests"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["requests"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override Uri Url(IAnthropicClient client)

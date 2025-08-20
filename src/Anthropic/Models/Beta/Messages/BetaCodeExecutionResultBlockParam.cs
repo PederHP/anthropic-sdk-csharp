@@ -23,7 +23,13 @@ public sealed record class BetaCodeExecutionResultBlockParam
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required long ReturnCode
@@ -35,7 +41,13 @@ public sealed record class BetaCodeExecutionResultBlockParam
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["return_code"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["return_code"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Stderr
@@ -48,7 +60,13 @@ public sealed record class BetaCodeExecutionResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("stderr");
         }
-        set { this.Properties["stderr"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stderr"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Stdout
@@ -61,7 +79,13 @@ public sealed record class BetaCodeExecutionResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("stdout");
         }
-        set { this.Properties["stdout"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stdout"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -73,7 +97,13 @@ public sealed record class BetaCodeExecutionResultBlockParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

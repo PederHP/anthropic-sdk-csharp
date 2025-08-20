@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Messages.UsageProperties;
@@ -6,45 +7,47 @@ namespace Anthropic.Models.Messages.UsageProperties;
 /// <summary>
 /// If the request used the priority, standard, or batch tier.
 /// </summary>
-[JsonConverter(typeof(EnumConverter<ServiceTier, string>))]
-public sealed record class ServiceTier(string value) : IEnum<ServiceTier, string>
+[JsonConverter(typeof(ServiceTierConverter))]
+public enum ServiceTier
 {
-    public static readonly ServiceTier Standard = new("standard");
+    Standard,
+    Priority,
+    Batch,
+}
 
-    public static readonly ServiceTier Priority = new("priority");
-
-    public static readonly ServiceTier Batch = new("batch");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class ServiceTierConverter : JsonConverter<ServiceTier>
+{
+    public override ServiceTier Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        Standard,
-        Priority,
-        Batch,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "standard" => Value.Standard,
-            "priority" => Value.Priority,
-            "batch" => Value.Batch,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "standard" => ServiceTier.Standard,
+            "priority" => ServiceTier.Priority,
+            "batch" => ServiceTier.Batch,
+            _ => (ServiceTier)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        ServiceTier value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static ServiceTier FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ServiceTier.Standard => "standard",
+                ServiceTier.Priority => "priority",
+                ServiceTier.Batch => "batch",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

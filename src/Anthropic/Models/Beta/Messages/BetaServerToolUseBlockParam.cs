@@ -22,7 +22,13 @@ public sealed record class BetaServerToolUseBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required JsonElement Input
@@ -34,20 +40,34 @@ public sealed record class BetaServerToolUseBlockParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["input"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["input"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
-    public required Name Name
+    public required ApiEnum<string, Name> Name
     {
         get
         {
             if (!this.Properties.TryGetValue("name", out JsonElement element))
                 throw new ArgumentOutOfRangeException("name", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Name>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("name");
+            return JsonSerializer.Deserialize<ApiEnum<string, Name>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -59,7 +79,13 @@ public sealed record class BetaServerToolUseBlockParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -77,7 +103,13 @@ public sealed record class BetaServerToolUseBlockParam
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

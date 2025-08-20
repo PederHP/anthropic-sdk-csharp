@@ -20,7 +20,13 @@ public sealed record class DocumentBlockParam : ModelBase, IFromRaw<DocumentBloc
             return JsonSerializer.Deserialize<Source>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("source");
         }
-        set { this.Properties["source"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["source"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -32,7 +38,13 @@ public sealed record class DocumentBlockParam : ModelBase, IFromRaw<DocumentBloc
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -50,7 +62,13 @@ public sealed record class DocumentBlockParam : ModelBase, IFromRaw<DocumentBloc
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public CitationsConfigParam? Citations
@@ -65,7 +83,13 @@ public sealed record class DocumentBlockParam : ModelBase, IFromRaw<DocumentBloc
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["citations"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["citations"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? Context
@@ -77,7 +101,13 @@ public sealed record class DocumentBlockParam : ModelBase, IFromRaw<DocumentBloc
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["context"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["context"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? Title
@@ -89,7 +119,13 @@ public sealed record class DocumentBlockParam : ModelBase, IFromRaw<DocumentBloc
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["title"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["title"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

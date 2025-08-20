@@ -26,7 +26,10 @@ public sealed record class BetaCacheCreation : ModelBase, IFromRaw<BetaCacheCrea
         }
         set
         {
-            this.Properties["ephemeral_1h_input_tokens"] = JsonSerializer.SerializeToElement(value);
+            this.Properties["ephemeral_1h_input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
         }
     }
 
@@ -47,7 +50,10 @@ public sealed record class BetaCacheCreation : ModelBase, IFromRaw<BetaCacheCrea
         }
         set
         {
-            this.Properties["ephemeral_5m_input_tokens"] = JsonSerializer.SerializeToElement(value);
+            this.Properties["ephemeral_5m_input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
         }
     }
 

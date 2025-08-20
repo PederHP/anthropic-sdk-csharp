@@ -92,24 +92,38 @@ public sealed record class MessageCountTokensParams : ParamsBase
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("messages");
         }
-        set { this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["messages"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Model Model
+    public required ApiEnum<string, Model> Model
     {
         get
         {
             if (!this.BodyProperties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Model>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<ApiEnum<string, Model>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.BodyProperties["model"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["model"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -127,7 +141,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
 
             return JsonSerializer.Deserialize<SystemModel?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["system"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["system"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -152,7 +172,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["thinking"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -168,7 +194,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
 
             return JsonSerializer.Deserialize<ToolChoice?>(element, ModelBase.SerializerOptions);
         }
-        set { this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["tool_choice"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -229,7 +261,13 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 ModelBase.SerializerOptions
             );
         }
-        set { this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.BodyProperties["tools"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override Uri Url(IAnthropicClient client)

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System = System;
 
@@ -8,37 +9,37 @@ namespace Anthropic.Models.Beta.Files.DeletedFileProperties;
 ///
 /// For file deletion, this is always `"file_deleted"`.
 /// </summary>
-[JsonConverter(typeof(EnumConverter<Type, string>))]
-public sealed record class Type(string value) : IEnum<Type, string>
+[JsonConverter(typeof(TypeConverter))]
+public enum Type
 {
-    public static readonly Type FileDeleted = new("file_deleted");
+    FileDeleted,
+}
 
-    readonly string _value = value;
-
-    public enum Value
+sealed class TypeConverter : JsonConverter<Type>
+{
+    public override Type Read(
+        ref Utf8JsonReader reader,
+        System::Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        FileDeleted,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "file_deleted" => Value.FileDeleted,
-            _ => throw new System::ArgumentOutOfRangeException(nameof(_value)),
+            "file_deleted" => DeletedFileProperties.Type.FileDeleted,
+            _ => (Type)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
     {
-        Known();
-    }
-
-    public static Type FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                DeletedFileProperties.Type.FileDeleted => "file_deleted",
+                _ => throw new System::ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

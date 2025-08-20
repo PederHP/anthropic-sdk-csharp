@@ -1,39 +1,40 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System = System;
 
 namespace Anthropic.Models.Beta.Messages.BetaToolProperties;
 
-[JsonConverter(typeof(EnumConverter<Type, string>))]
-public sealed record class Type(string value) : IEnum<Type, string>
+[JsonConverter(typeof(TypeConverter))]
+public enum Type
 {
-    public static readonly Type Custom = new("custom");
+    Custom,
+}
 
-    readonly string _value = value;
-
-    public enum Value
+sealed class TypeConverter : JsonConverter<Type>
+{
+    public override Type Read(
+        ref Utf8JsonReader reader,
+        System::Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        Custom,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "custom" => Value.Custom,
-            _ => throw new System::ArgumentOutOfRangeException(nameof(_value)),
+            "custom" => BetaToolProperties.Type.Custom,
+            _ => (Type)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
     {
-        Known();
-    }
-
-    public static Type FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                BetaToolProperties.Type.Custom => "custom",
+                _ => throw new System::ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

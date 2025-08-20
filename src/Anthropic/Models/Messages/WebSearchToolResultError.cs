@@ -10,17 +10,25 @@ namespace Anthropic.Models.Messages;
 [JsonConverter(typeof(ModelConverter<WebSearchToolResultError>))]
 public sealed record class WebSearchToolResultError : ModelBase, IFromRaw<WebSearchToolResultError>
 {
-    public required ErrorCode ErrorCode
+    public required ApiEnum<string, ErrorCode> ErrorCode
     {
         get
         {
             if (!this.Properties.TryGetValue("error_code", out JsonElement element))
                 throw new ArgumentOutOfRangeException("error_code", "Missing required argument");
 
-            return JsonSerializer.Deserialize<ErrorCode>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("error_code");
+            return JsonSerializer.Deserialize<ApiEnum<string, ErrorCode>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["error_code"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["error_code"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -32,7 +40,13 @@ public sealed record class WebSearchToolResultError : ModelBase, IFromRaw<WebSea
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()
@@ -61,7 +75,7 @@ public sealed record class WebSearchToolResultError : ModelBase, IFromRaw<WebSea
     }
 
     [SetsRequiredMembers]
-    public WebSearchToolResultError(ErrorCode errorCode)
+    public WebSearchToolResultError(ApiEnum<string, ErrorCode> errorCode)
         : this()
     {
         this.ErrorCode = errorCode;

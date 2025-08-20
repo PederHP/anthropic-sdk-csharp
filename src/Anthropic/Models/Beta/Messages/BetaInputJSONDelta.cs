@@ -19,7 +19,13 @@ public sealed record class BetaInputJSONDelta : ModelBase, IFromRaw<BetaInputJSO
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("partial_json");
         }
-        set { this.Properties["partial_json"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["partial_json"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -31,7 +37,13 @@ public sealed record class BetaInputJSONDelta : ModelBase, IFromRaw<BetaInputJSO
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

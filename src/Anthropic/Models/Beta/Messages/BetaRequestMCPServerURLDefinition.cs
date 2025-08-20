@@ -21,7 +21,13 @@ public sealed record class BetaRequestMCPServerURLDefinition
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("name");
         }
-        set { this.Properties["name"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["name"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -33,7 +39,13 @@ public sealed record class BetaRequestMCPServerURLDefinition
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string URL
@@ -46,7 +58,13 @@ public sealed record class BetaRequestMCPServerURLDefinition
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("url");
         }
-        set { this.Properties["url"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["url"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public string? AuthorizationToken
@@ -58,7 +76,13 @@ public sealed record class BetaRequestMCPServerURLDefinition
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["authorization_token"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["authorization_token"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public BetaRequestMCPServerToolConfiguration? ToolConfiguration
@@ -73,7 +97,13 @@ public sealed record class BetaRequestMCPServerURLDefinition
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["tool_configuration"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["tool_configuration"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

@@ -34,7 +34,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["max_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["max_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -110,24 +116,38 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("messages");
         }
-        set { this.Properties["messages"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["messages"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// The model that will complete your prompt.\n\nSee [models](https://docs.anthropic.com/en/docs/models-overview)
     /// for additional details and options.
     /// </summary>
-    public required Model Model
+    public required ApiEnum<string, Model> Model
     {
         get
         {
             if (!this.Properties.TryGetValue("model", out JsonElement element))
                 throw new ArgumentOutOfRangeException("model", "Missing required argument");
 
-            return JsonSerializer.Deserialize<Model>(element, ModelBase.SerializerOptions)
-                ?? throw new ArgumentNullException("model");
+            return JsonSerializer.Deserialize<ApiEnum<string, Model>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["model"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["model"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -142,7 +162,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<Metadata?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["metadata"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["metadata"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -152,16 +178,25 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
     /// Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers)
     /// for details.
     /// </summary>
-    public ServiceTier? ServiceTier
+    public ApiEnum<string, ServiceTier>? ServiceTier
     {
         get
         {
             if (!this.Properties.TryGetValue("service_tier", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ServiceTier?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, ServiceTier>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["service_tier"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["service_tier"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -184,7 +219,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["stop_sequences"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stop_sequences"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -201,7 +242,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["stream"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["stream"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -219,7 +266,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<SystemModel?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["system"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["system"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -240,7 +293,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["temperature"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["temperature"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -265,7 +324,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["thinking"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["thinking"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -281,7 +346,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<ToolChoice?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["tool_choice"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["tool_choice"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -342,7 +413,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["tools"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["tools"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -362,7 +439,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["top_k"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["top_k"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -384,7 +467,13 @@ public sealed record class Params : ModelBase, IFromRaw<Params>
 
             return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["top_p"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["top_p"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

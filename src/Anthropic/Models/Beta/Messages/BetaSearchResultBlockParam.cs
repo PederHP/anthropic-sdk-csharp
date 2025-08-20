@@ -23,7 +23,13 @@ public sealed record class BetaSearchResultBlockParam
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("content");
         }
-        set { this.Properties["content"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["content"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Source
@@ -36,7 +42,13 @@ public sealed record class BetaSearchResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("source");
         }
-        set { this.Properties["source"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["source"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string Title
@@ -49,7 +61,13 @@ public sealed record class BetaSearchResultBlockParam
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("title");
         }
-        set { this.Properties["title"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["title"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -61,7 +79,13 @@ public sealed record class BetaSearchResultBlockParam
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -79,7 +103,13 @@ public sealed record class BetaSearchResultBlockParam
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public BetaCitationsConfigParam? Citations
@@ -94,7 +124,13 @@ public sealed record class BetaSearchResultBlockParam
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["citations"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["citations"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

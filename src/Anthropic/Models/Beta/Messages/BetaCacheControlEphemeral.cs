@@ -21,7 +21,13 @@ public sealed record class BetaCacheControlEphemeral
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -31,16 +37,25 @@ public sealed record class BetaCacheControlEphemeral
     ///
     /// Defaults to `5m`.
     /// </summary>
-    public TTL? TTL
+    public ApiEnum<string, TTL>? TTL
     {
         get
         {
             if (!this.Properties.TryGetValue("ttl", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<TTL?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, TTL>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["ttl"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["ttl"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

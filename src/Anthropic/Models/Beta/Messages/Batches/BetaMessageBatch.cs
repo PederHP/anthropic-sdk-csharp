@@ -25,7 +25,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("id");
         }
-        set { this.Properties["id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -41,7 +47,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<DateTime?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["archived_at"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["archived_at"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -57,7 +69,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<DateTime?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["cancel_initiated_at"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cancel_initiated_at"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -73,7 +91,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<DateTime>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["created_at"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["created_at"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -92,7 +116,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<DateTime?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["ended_at"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["ended_at"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -108,13 +138,19 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<DateTime>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["expires_at"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["expires_at"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// Processing status of the Message Batch.
     /// </summary>
-    public required ProcessingStatus ProcessingStatus
+    public required ApiEnum<string, ProcessingStatus> ProcessingStatus
     {
         get
         {
@@ -124,12 +160,18 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
                     "Missing required argument"
                 );
 
-            return JsonSerializer.Deserialize<ProcessingStatus>(
-                    element,
-                    ModelBase.SerializerOptions
-                ) ?? throw new ArgumentNullException("processing_status");
+            return JsonSerializer.Deserialize<ApiEnum<string, ProcessingStatus>>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["processing_status"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["processing_status"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -154,7 +196,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("request_counts");
         }
-        set { this.Properties["request_counts"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["request_counts"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -173,7 +221,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["results_url"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["results_url"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -190,7 +244,13 @@ public sealed record class BetaMessageBatch : ModelBase, IFromRaw<BetaMessageBat
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

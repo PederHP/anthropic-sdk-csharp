@@ -19,7 +19,13 @@ public sealed record class BetaRequestMCPServerToolConfiguration
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["allowed_tools"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["allowed_tools"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public bool? Enabled
@@ -31,7 +37,13 @@ public sealed record class BetaRequestMCPServerToolConfiguration
 
             return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["enabled"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["enabled"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

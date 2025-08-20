@@ -22,7 +22,13 @@ public sealed record class Usage : ModelBase, IFromRaw<Usage>
 
             return JsonSerializer.Deserialize<CacheCreation?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["cache_creation"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_creation"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -42,7 +48,8 @@ public sealed record class Usage : ModelBase, IFromRaw<Usage>
         set
         {
             this.Properties["cache_creation_input_tokens"] = JsonSerializer.SerializeToElement(
-                value
+                value,
+                ModelBase.SerializerOptions
             );
         }
     }
@@ -61,7 +68,10 @@ public sealed record class Usage : ModelBase, IFromRaw<Usage>
         }
         set
         {
-            this.Properties["cache_read_input_tokens"] = JsonSerializer.SerializeToElement(value);
+            this.Properties["cache_read_input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
         }
     }
 
@@ -77,7 +87,13 @@ public sealed record class Usage : ModelBase, IFromRaw<Usage>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["input_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -92,7 +108,13 @@ public sealed record class Usage : ModelBase, IFromRaw<Usage>
 
             return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["output_tokens"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["output_tokens"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -110,22 +132,37 @@ public sealed record class Usage : ModelBase, IFromRaw<Usage>
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["server_tool_use"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["server_tool_use"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
     /// If the request used the priority, standard, or batch tier.
     /// </summary>
-    public required ServiceTier? ServiceTier
+    public required ApiEnum<string, ServiceTier>? ServiceTier
     {
         get
         {
             if (!this.Properties.TryGetValue("service_tier", out JsonElement element))
                 return null;
 
-            return JsonSerializer.Deserialize<ServiceTier?>(element, ModelBase.SerializerOptions);
+            return JsonSerializer.Deserialize<ApiEnum<string, ServiceTier>?>(
+                element,
+                ModelBase.SerializerOptions
+            );
         }
-        set { this.Properties["service_tier"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["service_tier"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

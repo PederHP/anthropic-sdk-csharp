@@ -19,7 +19,13 @@ public sealed record class BetaTextBlockParam : ModelBase, IFromRaw<BetaTextBloc
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("text");
         }
-        set { this.Properties["text"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["text"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -31,7 +37,13 @@ public sealed record class BetaTextBlockParam : ModelBase, IFromRaw<BetaTextBloc
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -49,7 +61,13 @@ public sealed record class BetaTextBlockParam : ModelBase, IFromRaw<BetaTextBloc
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["cache_control"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cache_control"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public List<BetaTextCitationParam>? Citations
@@ -64,7 +82,13 @@ public sealed record class BetaTextBlockParam : ModelBase, IFromRaw<BetaTextBloc
                 ModelBase.SerializerOptions
             );
         }
-        set { this.Properties["citations"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["citations"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

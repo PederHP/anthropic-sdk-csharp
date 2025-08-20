@@ -20,7 +20,13 @@ public sealed record class BetaRawMessageDeltaEvent : ModelBase, IFromRaw<BetaRa
             return JsonSerializer.Deserialize<Delta>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("delta");
         }
-        set { this.Properties["delta"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["delta"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -32,7 +38,13 @@ public sealed record class BetaRawMessageDeltaEvent : ModelBase, IFromRaw<BetaRa
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     /// <summary>
@@ -64,7 +76,13 @@ public sealed record class BetaRawMessageDeltaEvent : ModelBase, IFromRaw<BetaRa
                     ModelBase.SerializerOptions
                 ) ?? throw new ArgumentNullException("usage");
         }
-        set { this.Properties["usage"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["usage"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

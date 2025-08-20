@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Beta.Messages.MessageCreateParamsProperties;
@@ -10,41 +11,44 @@ namespace Anthropic.Models.Beta.Messages.MessageCreateParamsProperties;
 /// Anthropic offers different levels of service for your API requests. See [service-tiers](https://docs.anthropic.com/en/api/service-tiers)
 /// for details.
 /// </summary>
-[JsonConverter(typeof(EnumConverter<ServiceTier, string>))]
-public sealed record class ServiceTier(string value) : IEnum<ServiceTier, string>
+[JsonConverter(typeof(ServiceTierConverter))]
+public enum ServiceTier
 {
-    public static readonly ServiceTier Auto = new("auto");
+    Auto,
+    StandardOnly,
+}
 
-    public static readonly ServiceTier StandardOnly = new("standard_only");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class ServiceTierConverter : JsonConverter<ServiceTier>
+{
+    public override ServiceTier Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        Auto,
-        StandardOnly,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "auto" => Value.Auto,
-            "standard_only" => Value.StandardOnly,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "auto" => ServiceTier.Auto,
+            "standard_only" => ServiceTier.StandardOnly,
+            _ => (ServiceTier)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(
+        Utf8JsonWriter writer,
+        ServiceTier value,
+        JsonSerializerOptions options
+    )
     {
-        Known();
-    }
-
-    public static ServiceTier FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                ServiceTier.Auto => "auto",
+                ServiceTier.StandardOnly => "standard_only",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

@@ -24,7 +24,13 @@ public sealed record class Metadata : ModelBase, IFromRaw<Metadata>
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["user_id"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["user_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

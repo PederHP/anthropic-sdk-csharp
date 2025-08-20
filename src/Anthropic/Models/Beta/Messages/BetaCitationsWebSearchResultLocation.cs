@@ -21,7 +21,13 @@ public sealed record class BetaCitationsWebSearchResultLocation
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("cited_text");
         }
-        set { this.Properties["cited_text"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["cited_text"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string EncryptedIndex
@@ -37,7 +43,13 @@ public sealed record class BetaCitationsWebSearchResultLocation
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("encrypted_index");
         }
-        set { this.Properties["encrypted_index"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["encrypted_index"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string? Title
@@ -49,7 +61,13 @@ public sealed record class BetaCitationsWebSearchResultLocation
 
             return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["title"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["title"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement Type
@@ -61,7 +79,13 @@ public sealed record class BetaCitationsWebSearchResultLocation
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public required string URL
@@ -74,7 +98,13 @@ public sealed record class BetaCitationsWebSearchResultLocation
             return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
                 ?? throw new ArgumentNullException("url");
         }
-        set { this.Properties["url"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["url"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()

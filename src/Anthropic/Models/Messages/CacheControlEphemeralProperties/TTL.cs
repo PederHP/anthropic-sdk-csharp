@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Anthropic.Models.Messages.CacheControlEphemeralProperties;
@@ -10,41 +11,40 @@ namespace Anthropic.Models.Messages.CacheControlEphemeralProperties;
 ///
 /// Defaults to `5m`.
 /// </summary>
-[JsonConverter(typeof(EnumConverter<TTL, string>))]
-public sealed record class TTL(string value) : IEnum<TTL, string>
+[JsonConverter(typeof(TTLConverter))]
+public enum TTL
 {
-    public static readonly TTL TTL5m = new("5m");
+    TTL5m,
+    TTL1h,
+}
 
-    public static readonly TTL TTL1h = new("1h");
-
-    readonly string _value = value;
-
-    public enum Value
+sealed class TTLConverter : JsonConverter<TTL>
+{
+    public override TTL Read(
+        ref Utf8JsonReader reader,
+        Type _typeToConvert,
+        JsonSerializerOptions options
+    )
     {
-        TTL5m,
-        TTL1h,
-    }
-
-    public Value Known() =>
-        _value switch
+        return JsonSerializer.Deserialize<string>(ref reader, options) switch
         {
-            "5m" => Value.TTL5m,
-            "1h" => Value.TTL1h,
-            _ => throw new ArgumentOutOfRangeException(nameof(_value)),
+            "5m" => TTL.TTL5m,
+            "1h" => TTL.TTL1h,
+            _ => (TTL)(-1),
         };
-
-    public string Raw()
-    {
-        return _value;
     }
 
-    public void Validate()
+    public override void Write(Utf8JsonWriter writer, TTL value, JsonSerializerOptions options)
     {
-        Known();
-    }
-
-    public static TTL FromRaw(string value)
-    {
-        return new(value);
+        JsonSerializer.Serialize(
+            writer,
+            value switch
+            {
+                TTL.TTL5m => "5m",
+                TTL.TTL1h => "1h",
+                _ => throw new ArgumentOutOfRangeException(nameof(value)),
+            },
+            options
+        );
     }
 }

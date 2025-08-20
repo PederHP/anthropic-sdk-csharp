@@ -24,7 +24,13 @@ public sealed record class InputSchema : ModelBase, IFromRaw<InputSchema>
 
             return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["type"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["type"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public JsonElement? Properties1
@@ -36,7 +42,13 @@ public sealed record class InputSchema : ModelBase, IFromRaw<InputSchema>
 
             return JsonSerializer.Deserialize<JsonElement?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["properties"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["properties"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public List<string>? Required
@@ -48,7 +60,13 @@ public sealed record class InputSchema : ModelBase, IFromRaw<InputSchema>
 
             return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
         }
-        set { this.Properties["required"] = JsonSerializer.SerializeToElement(value); }
+        set
+        {
+            this.Properties["required"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
     }
 
     public override void Validate()
