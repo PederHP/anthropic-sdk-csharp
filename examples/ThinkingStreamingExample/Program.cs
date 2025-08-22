@@ -1,9 +1,7 @@
 ﻿using System;
 using Anthropic;
 using Anthropic.Models.Messages;
-using Anthropic.Models.Messages.ContentBlockVariants;
 using Anthropic.Models.Messages.MessageParamProperties;
-using Anthropic.Models.Messages.ThinkingConfigParamVariants;
 
 // Configured using the ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN and ANTHROPIC_BASE_URL environment variables
 AnthropicClient client = new();
@@ -25,13 +23,13 @@ IAsyncEnumerable<RawMessageStreamEvent> responseUpdates = client.Messages.Create
 
 await foreach (RawMessageStreamEvent rawEvent in responseUpdates)
 {
-    if (rawEvent.TryPickRawContentBlockDeltaEventVariant(out var delta))
+    if (rawEvent.TryPickContentBlockDelta(out var delta))
     {
-        if (delta.Delta.TryPickThinkingDeltaVariant(out var thinkingDelta))
+        if (delta.Delta.TryPickThinking(out var thinkingDelta))
         {
             Console.Write(thinkingDelta.Thinking);
         }
-        else if (delta.Delta.TryPickTextDeltaVariant(out var textDelta))
+        else if (delta.Delta.TryPickText(out var textDelta))
         {
             Console.Write(textDelta.Text);
         }

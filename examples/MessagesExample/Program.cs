@@ -1,8 +1,8 @@
 ﻿using System;
 using Anthropic;
 using Anthropic.Models.Messages;
-using Anthropic.Models.Messages.ContentBlockVariants;
 using Anthropic.Models.Messages.MessageParamProperties;
+using ContentBlockVariants = Anthropic.Models.Messages.ContentBlockVariants;
 
 // Configured using the ANTHROPIC_API_KEY, ANTHROPIC_AUTH_TOKEN and ANTHROPIC_BASE_URL environment variables
 AnthropicClient client = new();
@@ -21,7 +21,9 @@ var response = await client.Messages.Create(parameters);
 
 var message = String.Join(
     "",
-    response.Content.OfType<TextBlockVariant>().Select((textBlock) => textBlock.Value.Text)
+    response
+        .Content.OfType<ContentBlockVariants::TextBlock>()
+        .Select((textBlock) => textBlock.Value.Text)
 );
 
 Console.WriteLine(message);

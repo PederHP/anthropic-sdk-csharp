@@ -23,10 +23,7 @@ IAsyncEnumerable<RawMessageStreamEvent> responseUpdates = client.Messages.Create
 
 await foreach (RawMessageStreamEvent rawEvent in responseUpdates)
 {
-    if (
-        rawEvent.TryPickRawContentBlockDeltaEventVariant(out var delta)
-        && delta.Delta.TryPickTextDeltaVariant(out var text)
-    )
+    if (rawEvent.TryPickContentBlockDelta(out var delta) && delta.Delta.TryPickText(out var text))
     {
         Console.Write(text.Text);
     }
