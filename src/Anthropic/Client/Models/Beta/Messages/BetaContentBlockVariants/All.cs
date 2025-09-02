@@ -113,6 +113,50 @@ public sealed record class BetaCodeExecutionToolResultBlock(
     }
 }
 
+public sealed record class BetaBashCodeExecutionToolResultBlock(
+    Messages::BetaBashCodeExecutionToolResultBlock Value
+)
+    : Messages::BetaContentBlock,
+        IVariant<
+            BetaBashCodeExecutionToolResultBlock,
+            Messages::BetaBashCodeExecutionToolResultBlock
+        >
+{
+    public static BetaBashCodeExecutionToolResultBlock From(
+        Messages::BetaBashCodeExecutionToolResultBlock value
+    )
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}
+
+public sealed record class BetaTextEditorCodeExecutionToolResultBlock(
+    Messages::BetaTextEditorCodeExecutionToolResultBlock Value
+)
+    : Messages::BetaContentBlock,
+        IVariant<
+            BetaTextEditorCodeExecutionToolResultBlock,
+            Messages::BetaTextEditorCodeExecutionToolResultBlock
+        >
+{
+    public static BetaTextEditorCodeExecutionToolResultBlock From(
+        Messages::BetaTextEditorCodeExecutionToolResultBlock value
+    )
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}
+
 public sealed record class BetaMCPToolUseBlock(Messages::BetaMCPToolUseBlock Value)
     : Messages::BetaContentBlock,
         IVariant<BetaMCPToolUseBlock, Messages::BetaMCPToolUseBlock>

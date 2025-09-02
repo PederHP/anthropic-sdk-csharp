@@ -9,6 +9,8 @@ public enum Name
 {
     WebSearch,
     CodeExecution,
+    BashCodeExecution,
+    TextEditorCodeExecution,
 }
 
 sealed class NameConverter : JsonConverter<Name>
@@ -23,6 +25,8 @@ sealed class NameConverter : JsonConverter<Name>
         {
             "web_search" => Name.WebSearch,
             "code_execution" => Name.CodeExecution,
+            "bash_code_execution" => Name.BashCodeExecution,
+            "text_editor_code_execution" => Name.TextEditorCodeExecution,
             _ => (Name)(-1),
         };
     }
@@ -35,6 +39,8 @@ sealed class NameConverter : JsonConverter<Name>
             {
                 Name.WebSearch => "web_search",
                 Name.CodeExecution => "code_execution",
+                Name.BashCodeExecution => "bash_code_execution",
+                Name.TextEditorCodeExecution => "text_editor_code_execution",
                 _ => throw new ArgumentOutOfRangeException(nameof(value)),
             },
             options

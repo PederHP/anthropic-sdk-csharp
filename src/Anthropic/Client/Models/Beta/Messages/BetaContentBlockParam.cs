@@ -50,6 +50,14 @@ public abstract record class BetaContentBlockParam
         BetaCodeExecutionToolResultBlockParam value
     ) => new BetaContentBlockParamVariants::BetaCodeExecutionToolResultBlockParam(value);
 
+    public static implicit operator BetaContentBlockParam(
+        BetaBashCodeExecutionToolResultBlockParam value
+    ) => new BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam(value);
+
+    public static implicit operator BetaContentBlockParam(
+        BetaTextEditorCodeExecutionToolResultBlockParam value
+    ) => new BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam(value);
+
     public static implicit operator BetaContentBlockParam(BetaMCPToolUseBlockParam value) =>
         new BetaContentBlockParamVariants::BetaMCPToolUseBlockParam(value);
 
@@ -134,6 +142,26 @@ public abstract record class BetaContentBlockParam
         return value != null;
     }
 
+    public bool TryPickBashCodeExecutionToolResult(
+        [NotNullWhen(true)] out BetaBashCodeExecutionToolResultBlockParam? value
+    )
+    {
+        value = (
+            this as BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam
+        )?.Value;
+        return value != null;
+    }
+
+    public bool TryPickTextEditorCodeExecutionToolResult(
+        [NotNullWhen(true)] out BetaTextEditorCodeExecutionToolResultBlockParam? value
+    )
+    {
+        value = (
+            this as BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam
+        )?.Value;
+        return value != null;
+    }
+
     public bool TryPickMCPToolUse([NotNullWhen(true)] out BetaMCPToolUseBlockParam? value)
     {
         value = (this as BetaContentBlockParamVariants::BetaMCPToolUseBlockParam)?.Value;
@@ -166,6 +194,8 @@ public abstract record class BetaContentBlockParam
         Action<BetaContentBlockParamVariants::BetaServerToolUseBlockParam> serverToolUse,
         Action<BetaContentBlockParamVariants::BetaWebSearchToolResultBlockParam> webSearchToolResult,
         Action<BetaContentBlockParamVariants::BetaCodeExecutionToolResultBlockParam> codeExecutionToolResult,
+        Action<BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam> bashCodeExecutionToolResult,
+        Action<BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam> textEditorCodeExecutionToolResult,
         Action<BetaContentBlockParamVariants::BetaMCPToolUseBlockParam> mcpToolUse,
         Action<BetaContentBlockParamVariants::BetaRequestMCPToolResultBlockParam> requestMCPToolResult,
         Action<BetaContentBlockParamVariants::BetaContainerUploadBlockParam> containerUpload
@@ -206,6 +236,12 @@ public abstract record class BetaContentBlockParam
             case BetaContentBlockParamVariants::BetaCodeExecutionToolResultBlockParam inner:
                 codeExecutionToolResult(inner);
                 break;
+            case BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam inner:
+                bashCodeExecutionToolResult(inner);
+                break;
+            case BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam inner:
+                textEditorCodeExecutionToolResult(inner);
+                break;
             case BetaContentBlockParamVariants::BetaMCPToolUseBlockParam inner:
                 mcpToolUse(inner);
                 break;
@@ -238,6 +274,14 @@ public abstract record class BetaContentBlockParam
             BetaContentBlockParamVariants::BetaCodeExecutionToolResultBlockParam,
             T
         > codeExecutionToolResult,
+        Func<
+            BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam,
+            T
+        > bashCodeExecutionToolResult,
+        Func<
+            BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam,
+            T
+        > textEditorCodeExecutionToolResult,
         Func<BetaContentBlockParamVariants::BetaMCPToolUseBlockParam, T> mcpToolUse,
         Func<
             BetaContentBlockParamVariants::BetaRequestMCPToolResultBlockParam,
@@ -267,6 +311,10 @@ public abstract record class BetaContentBlockParam
                 webSearchToolResult(inner),
             BetaContentBlockParamVariants::BetaCodeExecutionToolResultBlockParam inner =>
                 codeExecutionToolResult(inner),
+            BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam inner =>
+                bashCodeExecutionToolResult(inner),
+            BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam inner =>
+                textEditorCodeExecutionToolResult(inner),
             BetaContentBlockParamVariants::BetaMCPToolUseBlockParam inner => mcpToolUse(inner),
             BetaContentBlockParamVariants::BetaRequestMCPToolResultBlockParam inner =>
                 requestMCPToolResult(inner),
@@ -563,6 +611,56 @@ sealed class BetaContentBlockParamConverter : JsonConverter<BetaContentBlockPara
 
                 throw new AggregateException(exceptions);
             }
+            case "bash_code_execution_tool_result":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<BetaBashCodeExecutionToolResultBlockParam>(
+                            json,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam(
+                            deserialized
+                        );
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
+            case "text_editor_code_execution_tool_result":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<BetaTextEditorCodeExecutionToolResultBlockParam>(
+                            json,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam(
+                            deserialized
+                        );
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
             case "mcp_tool_use":
             {
                 List<JsonException> exceptions = [];
@@ -670,6 +768,12 @@ sealed class BetaContentBlockParamConverter : JsonConverter<BetaContentBlockPara
             BetaContentBlockParamVariants::BetaCodeExecutionToolResultBlockParam(
                 var codeExecutionToolResult
             ) => codeExecutionToolResult,
+            BetaContentBlockParamVariants::BetaBashCodeExecutionToolResultBlockParam(
+                var bashCodeExecutionToolResult
+            ) => bashCodeExecutionToolResult,
+            BetaContentBlockParamVariants::BetaTextEditorCodeExecutionToolResultBlockParam(
+                var textEditorCodeExecutionToolResult
+            ) => textEditorCodeExecutionToolResult,
             BetaContentBlockParamVariants::BetaMCPToolUseBlockParam(var mcpToolUse) => mcpToolUse,
             BetaContentBlockParamVariants::BetaRequestMCPToolResultBlockParam(
                 var requestMCPToolResult

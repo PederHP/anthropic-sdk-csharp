@@ -28,6 +28,24 @@ public sealed record class ErrorResponse : ModelBase, IFromRaw<ErrorResponse>
         }
     }
 
+    public required string? RequestID
+    {
+        get
+        {
+            if (!this.Properties.TryGetValue("request_id", out JsonElement element))
+                return null;
+
+            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
+        }
+        set
+        {
+            this.Properties["request_id"] = JsonSerializer.SerializeToElement(
+                value,
+                ModelBase.SerializerOptions
+            );
+        }
+    }
+
     public JsonElement Type
     {
         get
@@ -49,6 +67,7 @@ public sealed record class ErrorResponse : ModelBase, IFromRaw<ErrorResponse>
     public override void Validate()
     {
         this.Error.Validate();
+        _ = this.RequestID;
     }
 
     public ErrorResponse()
@@ -67,12 +86,5 @@ public sealed record class ErrorResponse : ModelBase, IFromRaw<ErrorResponse>
     public static ErrorResponse FromRawUnchecked(Dictionary<string, JsonElement> properties)
     {
         return new(properties);
-    }
-
-    [SetsRequiredMembers]
-    public ErrorResponse(ErrorObject error)
-        : this()
-    {
-        this.Error = error;
     }
 }

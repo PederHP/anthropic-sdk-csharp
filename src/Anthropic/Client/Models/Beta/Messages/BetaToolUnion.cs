@@ -24,6 +24,9 @@ public abstract record class BetaToolUnion
     public static implicit operator BetaToolUnion(BetaCodeExecutionTool20250522 value) =>
         new BetaToolUnionVariants::BetaCodeExecutionTool20250522(value);
 
+    public static implicit operator BetaToolUnion(BetaCodeExecutionTool20250825 value) =>
+        new BetaToolUnionVariants::BetaCodeExecutionTool20250825(value);
+
     public static implicit operator BetaToolUnion(BetaToolComputerUse20241022 value) =>
         new BetaToolUnionVariants::BetaToolComputerUse20241022(value);
 
@@ -68,6 +71,14 @@ public abstract record class BetaToolUnion
     )
     {
         value = (this as BetaToolUnionVariants::BetaCodeExecutionTool20250522)?.Value;
+        return value != null;
+    }
+
+    public bool TryPickCodeExecutionTool20250825(
+        [NotNullWhen(true)] out BetaCodeExecutionTool20250825? value
+    )
+    {
+        value = (this as BetaToolUnionVariants::BetaCodeExecutionTool20250825)?.Value;
         return value != null;
     }
 
@@ -124,6 +135,7 @@ public abstract record class BetaToolUnion
         Action<BetaToolUnionVariants::BetaToolBash20241022> bash20241022,
         Action<BetaToolUnionVariants::BetaToolBash20250124> bash20250124,
         Action<BetaToolUnionVariants::BetaCodeExecutionTool20250522> codeExecutionTool20250522,
+        Action<BetaToolUnionVariants::BetaCodeExecutionTool20250825> codeExecutionTool20250825,
         Action<BetaToolUnionVariants::BetaToolComputerUse20241022> computerUse20241022,
         Action<BetaToolUnionVariants::BetaToolComputerUse20250124> computerUse20250124,
         Action<BetaToolUnionVariants::BetaToolTextEditor20241022> textEditor20241022,
@@ -146,6 +158,9 @@ public abstract record class BetaToolUnion
                 break;
             case BetaToolUnionVariants::BetaCodeExecutionTool20250522 inner:
                 codeExecutionTool20250522(inner);
+                break;
+            case BetaToolUnionVariants::BetaCodeExecutionTool20250825 inner:
+                codeExecutionTool20250825(inner);
                 break;
             case BetaToolUnionVariants::BetaToolComputerUse20241022 inner:
                 computerUse20241022(inner);
@@ -178,6 +193,7 @@ public abstract record class BetaToolUnion
         Func<BetaToolUnionVariants::BetaToolBash20241022, T> bash20241022,
         Func<BetaToolUnionVariants::BetaToolBash20250124, T> bash20250124,
         Func<BetaToolUnionVariants::BetaCodeExecutionTool20250522, T> codeExecutionTool20250522,
+        Func<BetaToolUnionVariants::BetaCodeExecutionTool20250825, T> codeExecutionTool20250825,
         Func<BetaToolUnionVariants::BetaToolComputerUse20241022, T> computerUse20241022,
         Func<BetaToolUnionVariants::BetaToolComputerUse20250124, T> computerUse20250124,
         Func<BetaToolUnionVariants::BetaToolTextEditor20241022, T> textEditor20241022,
@@ -193,6 +209,9 @@ public abstract record class BetaToolUnion
             BetaToolUnionVariants::BetaToolBash20241022 inner => bash20241022(inner),
             BetaToolUnionVariants::BetaToolBash20250124 inner => bash20250124(inner),
             BetaToolUnionVariants::BetaCodeExecutionTool20250522 inner => codeExecutionTool20250522(
+                inner
+            ),
+            BetaToolUnionVariants::BetaCodeExecutionTool20250825 inner => codeExecutionTool20250825(
                 inner
             ),
             BetaToolUnionVariants::BetaToolComputerUse20241022 inner => computerUse20241022(inner),
@@ -273,6 +292,22 @@ sealed class BetaToolUnionConverter : JsonConverter<BetaToolUnion>
             if (deserialized != null)
             {
                 return new BetaToolUnionVariants::BetaCodeExecutionTool20250522(deserialized);
+            }
+        }
+        catch (JsonException e)
+        {
+            exceptions.Add(e);
+        }
+
+        try
+        {
+            var deserialized = JsonSerializer.Deserialize<BetaCodeExecutionTool20250825>(
+                ref reader,
+                options
+            );
+            if (deserialized != null)
+            {
+                return new BetaToolUnionVariants::BetaCodeExecutionTool20250825(deserialized);
             }
         }
         catch (JsonException e)
@@ -408,6 +443,8 @@ sealed class BetaToolUnionConverter : JsonConverter<BetaToolUnion>
             BetaToolUnionVariants::BetaToolBash20250124(var bash20250124) => bash20250124,
             BetaToolUnionVariants::BetaCodeExecutionTool20250522(var codeExecutionTool20250522) =>
                 codeExecutionTool20250522,
+            BetaToolUnionVariants::BetaCodeExecutionTool20250825(var codeExecutionTool20250825) =>
+                codeExecutionTool20250825,
             BetaToolUnionVariants::BetaToolComputerUse20241022(var computerUse20241022) =>
                 computerUse20241022,
             BetaToolUnionVariants::BetaToolComputerUse20250124(var computerUse20250124) =>

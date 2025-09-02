@@ -36,6 +36,13 @@ public abstract record class ContentBlock
     public static implicit operator ContentBlock(BetaCodeExecutionToolResultBlock value) =>
         new ContentBlockVariants::BetaCodeExecutionToolResultBlock(value);
 
+    public static implicit operator ContentBlock(BetaBashCodeExecutionToolResultBlock value) =>
+        new ContentBlockVariants::BetaBashCodeExecutionToolResultBlock(value);
+
+    public static implicit operator ContentBlock(
+        BetaTextEditorCodeExecutionToolResultBlock value
+    ) => new ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock(value);
+
     public static implicit operator ContentBlock(BetaMCPToolUseBlock value) =>
         new ContentBlockVariants::BetaMCPToolUseBlock(value);
 
@@ -93,6 +100,22 @@ public abstract record class ContentBlock
         return value != null;
     }
 
+    public bool TryPickBetaBashCodeExecutionToolResult(
+        [NotNullWhen(true)] out BetaBashCodeExecutionToolResultBlock? value
+    )
+    {
+        value = (this as ContentBlockVariants::BetaBashCodeExecutionToolResultBlock)?.Value;
+        return value != null;
+    }
+
+    public bool TryPickBetaTextEditorCodeExecutionToolResult(
+        [NotNullWhen(true)] out BetaTextEditorCodeExecutionToolResultBlock? value
+    )
+    {
+        value = (this as ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock)?.Value;
+        return value != null;
+    }
+
     public bool TryPickBetaMCPToolUse([NotNullWhen(true)] out BetaMCPToolUseBlock? value)
     {
         value = (this as ContentBlockVariants::BetaMCPToolUseBlock)?.Value;
@@ -119,6 +142,8 @@ public abstract record class ContentBlock
         Action<ContentBlockVariants::BetaServerToolUseBlock> betaServerToolUse,
         Action<ContentBlockVariants::BetaWebSearchToolResultBlock> betaWebSearchToolResult,
         Action<ContentBlockVariants::BetaCodeExecutionToolResultBlock> betaCodeExecutionToolResult,
+        Action<ContentBlockVariants::BetaBashCodeExecutionToolResultBlock> betaBashCodeExecutionToolResult,
+        Action<ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock> betaTextEditorCodeExecutionToolResult,
         Action<ContentBlockVariants::BetaMCPToolUseBlock> betaMCPToolUse,
         Action<ContentBlockVariants::BetaMCPToolResultBlock> betaMCPToolResult,
         Action<ContentBlockVariants::BetaContainerUploadBlock> betaContainerUpload
@@ -147,6 +172,12 @@ public abstract record class ContentBlock
             case ContentBlockVariants::BetaCodeExecutionToolResultBlock inner:
                 betaCodeExecutionToolResult(inner);
                 break;
+            case ContentBlockVariants::BetaBashCodeExecutionToolResultBlock inner:
+                betaBashCodeExecutionToolResult(inner);
+                break;
+            case ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock inner:
+                betaTextEditorCodeExecutionToolResult(inner);
+                break;
             case ContentBlockVariants::BetaMCPToolUseBlock inner:
                 betaMCPToolUse(inner);
                 break;
@@ -169,6 +200,14 @@ public abstract record class ContentBlock
         Func<ContentBlockVariants::BetaServerToolUseBlock, T> betaServerToolUse,
         Func<ContentBlockVariants::BetaWebSearchToolResultBlock, T> betaWebSearchToolResult,
         Func<ContentBlockVariants::BetaCodeExecutionToolResultBlock, T> betaCodeExecutionToolResult,
+        Func<
+            ContentBlockVariants::BetaBashCodeExecutionToolResultBlock,
+            T
+        > betaBashCodeExecutionToolResult,
+        Func<
+            ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock,
+            T
+        > betaTextEditorCodeExecutionToolResult,
         Func<ContentBlockVariants::BetaMCPToolUseBlock, T> betaMCPToolUse,
         Func<ContentBlockVariants::BetaMCPToolResultBlock, T> betaMCPToolResult,
         Func<ContentBlockVariants::BetaContainerUploadBlock, T> betaContainerUpload
@@ -186,6 +225,10 @@ public abstract record class ContentBlock
             ),
             ContentBlockVariants::BetaCodeExecutionToolResultBlock inner =>
                 betaCodeExecutionToolResult(inner),
+            ContentBlockVariants::BetaBashCodeExecutionToolResultBlock inner =>
+                betaBashCodeExecutionToolResult(inner),
+            ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock inner =>
+                betaTextEditorCodeExecutionToolResult(inner),
             ContentBlockVariants::BetaMCPToolUseBlock inner => betaMCPToolUse(inner),
             ContentBlockVariants::BetaMCPToolResultBlock inner => betaMCPToolResult(inner),
             ContentBlockVariants::BetaContainerUploadBlock inner => betaContainerUpload(inner),
@@ -364,6 +407,56 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
 
                 throw new AggregateException(exceptions);
             }
+            case "bash_code_execution_tool_result":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<BetaBashCodeExecutionToolResultBlock>(
+                            json,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new ContentBlockVariants::BetaBashCodeExecutionToolResultBlock(
+                            deserialized
+                        );
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
+            case "text_editor_code_execution_tool_result":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<BetaTextEditorCodeExecutionToolResultBlock>(
+                            json,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock(
+                            deserialized
+                        );
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
             case "mcp_tool_use":
             {
                 List<JsonException> exceptions = [];
@@ -457,6 +550,12 @@ sealed class ContentBlockConverter : JsonConverter<ContentBlock>
             ContentBlockVariants::BetaCodeExecutionToolResultBlock(
                 var betaCodeExecutionToolResult
             ) => betaCodeExecutionToolResult,
+            ContentBlockVariants::BetaBashCodeExecutionToolResultBlock(
+                var betaBashCodeExecutionToolResult
+            ) => betaBashCodeExecutionToolResult,
+            ContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock(
+                var betaTextEditorCodeExecutionToolResult
+            ) => betaTextEditorCodeExecutionToolResult,
             ContentBlockVariants::BetaMCPToolUseBlock(var betaMCPToolUse) => betaMCPToolUse,
             ContentBlockVariants::BetaMCPToolResultBlock(var betaMCPToolResult) =>
                 betaMCPToolResult,

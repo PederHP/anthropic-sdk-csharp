@@ -207,6 +207,50 @@ public sealed record class BetaCodeExecutionToolResultBlockParam(
     }
 }
 
+public sealed record class BetaBashCodeExecutionToolResultBlockParam(
+    Messages::BetaBashCodeExecutionToolResultBlockParam Value
+)
+    : Messages::BetaContentBlockParam,
+        IVariant<
+            BetaBashCodeExecutionToolResultBlockParam,
+            Messages::BetaBashCodeExecutionToolResultBlockParam
+        >
+{
+    public static BetaBashCodeExecutionToolResultBlockParam From(
+        Messages::BetaBashCodeExecutionToolResultBlockParam value
+    )
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}
+
+public sealed record class BetaTextEditorCodeExecutionToolResultBlockParam(
+    Messages::BetaTextEditorCodeExecutionToolResultBlockParam Value
+)
+    : Messages::BetaContentBlockParam,
+        IVariant<
+            BetaTextEditorCodeExecutionToolResultBlockParam,
+            Messages::BetaTextEditorCodeExecutionToolResultBlockParam
+        >
+{
+    public static BetaTextEditorCodeExecutionToolResultBlockParam From(
+        Messages::BetaTextEditorCodeExecutionToolResultBlockParam value
+    )
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}
+
 public sealed record class BetaMCPToolUseBlockParam(Messages::BetaMCPToolUseBlockParam Value)
     : Messages::BetaContentBlockParam,
         IVariant<BetaMCPToolUseBlockParam, Messages::BetaMCPToolUseBlockParam>

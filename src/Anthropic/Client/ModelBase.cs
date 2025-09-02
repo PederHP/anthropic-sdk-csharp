@@ -3,6 +3,7 @@ using System.Text.Json;
 using Anthropic.Client.Models.Beta;
 using Anthropic.Client.Models.Beta.Messages;
 using Anthropic.Client.Models.Beta.Messages.BetaServerToolUseBlockProperties;
+using Anthropic.Client.Models.Beta.Messages.BetaTextEditorCodeExecutionViewResultBlockProperties;
 using Anthropic.Client.Models.Messages.Base64ImageSourceProperties;
 using Anthropic.Client.Models.Messages.Batches.MessageBatchProperties;
 using Anthropic.Client.Models.Messages.CacheControlEphemeralProperties;
@@ -11,10 +12,15 @@ using Anthropic.Client.Models.Messages.ToolProperties;
 using Anthropic.Client.Models.Messages.UsageProperties;
 using Anthropic.Client.Models.Messages.WebSearchToolRequestErrorProperties;
 using BetaBase64ImageSourceProperties = Anthropic.Client.Models.Beta.Messages.BetaBase64ImageSourceProperties;
+using BetaBashCodeExecutionToolResultErrorParamProperties = Anthropic.Client.Models.Beta.Messages.BetaBashCodeExecutionToolResultErrorParamProperties;
+using BetaBashCodeExecutionToolResultErrorProperties = Anthropic.Client.Models.Beta.Messages.BetaBashCodeExecutionToolResultErrorProperties;
 using BetaCacheControlEphemeralProperties = Anthropic.Client.Models.Beta.Messages.BetaCacheControlEphemeralProperties;
 using BetaMessageBatchProperties = Anthropic.Client.Models.Beta.Messages.Batches.BetaMessageBatchProperties;
 using BetaMessageParamProperties = Anthropic.Client.Models.Beta.Messages.BetaMessageParamProperties;
 using BetaServerToolUseBlockParamProperties = Anthropic.Client.Models.Beta.Messages.BetaServerToolUseBlockParamProperties;
+using BetaTextEditorCodeExecutionToolResultErrorParamProperties = Anthropic.Client.Models.Beta.Messages.BetaTextEditorCodeExecutionToolResultErrorParamProperties;
+using BetaTextEditorCodeExecutionToolResultErrorProperties = Anthropic.Client.Models.Beta.Messages.BetaTextEditorCodeExecutionToolResultErrorProperties;
+using BetaTextEditorCodeExecutionViewResultBlockParamProperties = Anthropic.Client.Models.Beta.Messages.BetaTextEditorCodeExecutionViewResultBlockParamProperties;
 using BetaToolProperties = Anthropic.Client.Models.Beta.Messages.BetaToolProperties;
 using BetaUsageProperties = Anthropic.Client.Models.Beta.Messages.BetaUsageProperties;
 using DeletedFileProperties = Anthropic.Client.Models.Beta.Files.DeletedFileProperties;
@@ -47,12 +53,33 @@ public abstract record class ModelBase
             new ApiEnumConverter<string, ParamsProperties::ServiceTier>(),
             new ApiEnumConverter<string, AnthropicBeta>(),
             new ApiEnumConverter<string, BetaBase64ImageSourceProperties::MediaType>(),
+            new ApiEnumConverter<
+                string,
+                BetaBashCodeExecutionToolResultErrorProperties::ErrorCode
+            >(),
+            new ApiEnumConverter<
+                string,
+                BetaBashCodeExecutionToolResultErrorParamProperties::ErrorCode
+            >(),
             new ApiEnumConverter<string, BetaCacheControlEphemeralProperties::TTL>(),
             new ApiEnumConverter<string, BetaCodeExecutionToolResultErrorCode>(),
             new ApiEnumConverter<string, BetaMessageParamProperties::Role>(),
             new ApiEnumConverter<string, Name>(),
             new ApiEnumConverter<string, BetaServerToolUseBlockParamProperties::Name>(),
             new ApiEnumConverter<string, BetaStopReason>(),
+            new ApiEnumConverter<
+                string,
+                BetaTextEditorCodeExecutionToolResultErrorProperties::ErrorCode
+            >(),
+            new ApiEnumConverter<
+                string,
+                BetaTextEditorCodeExecutionToolResultErrorParamProperties::ErrorCode
+            >(),
+            new ApiEnumConverter<string, FileType>(),
+            new ApiEnumConverter<
+                string,
+                BetaTextEditorCodeExecutionViewResultBlockParamProperties::FileType
+            >(),
             new ApiEnumConverter<string, BetaToolProperties::Type>(),
             new ApiEnumConverter<string, BetaUsageProperties::ServiceTier>(),
             new ApiEnumConverter<string, BetaWebSearchToolResultErrorCode>(),

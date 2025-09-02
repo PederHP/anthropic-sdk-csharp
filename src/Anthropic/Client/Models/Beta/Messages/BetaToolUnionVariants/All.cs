@@ -64,6 +64,23 @@ public sealed record class BetaCodeExecutionTool20250522(
     }
 }
 
+public sealed record class BetaCodeExecutionTool20250825(
+    Messages::BetaCodeExecutionTool20250825 Value
+)
+    : Messages::BetaToolUnion,
+        IVariant<BetaCodeExecutionTool20250825, Messages::BetaCodeExecutionTool20250825>
+{
+    public static BetaCodeExecutionTool20250825 From(Messages::BetaCodeExecutionTool20250825 value)
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}
+
 public sealed record class BetaToolComputerUse20241022(Messages::BetaToolComputerUse20241022 Value)
     : Messages::BetaToolUnion,
         IVariant<BetaToolComputerUse20241022, Messages::BetaToolComputerUse20241022>

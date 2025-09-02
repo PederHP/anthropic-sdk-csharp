@@ -36,6 +36,13 @@ public abstract record class BetaContentBlock
     public static implicit operator BetaContentBlock(BetaCodeExecutionToolResultBlock value) =>
         new BetaContentBlockVariants::BetaCodeExecutionToolResultBlock(value);
 
+    public static implicit operator BetaContentBlock(BetaBashCodeExecutionToolResultBlock value) =>
+        new BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock(value);
+
+    public static implicit operator BetaContentBlock(
+        BetaTextEditorCodeExecutionToolResultBlock value
+    ) => new BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock(value);
+
     public static implicit operator BetaContentBlock(BetaMCPToolUseBlock value) =>
         new BetaContentBlockVariants::BetaMCPToolUseBlock(value);
 
@@ -91,6 +98,24 @@ public abstract record class BetaContentBlock
         return value != null;
     }
 
+    public bool TryPickBashCodeExecutionToolResult(
+        [NotNullWhen(true)] out BetaBashCodeExecutionToolResultBlock? value
+    )
+    {
+        value = (this as BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock)?.Value;
+        return value != null;
+    }
+
+    public bool TryPickTextEditorCodeExecutionToolResult(
+        [NotNullWhen(true)] out BetaTextEditorCodeExecutionToolResultBlock? value
+    )
+    {
+        value = (
+            this as BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock
+        )?.Value;
+        return value != null;
+    }
+
     public bool TryPickMCPToolUse([NotNullWhen(true)] out BetaMCPToolUseBlock? value)
     {
         value = (this as BetaContentBlockVariants::BetaMCPToolUseBlock)?.Value;
@@ -117,6 +142,8 @@ public abstract record class BetaContentBlock
         Action<BetaContentBlockVariants::BetaServerToolUseBlock> serverToolUse,
         Action<BetaContentBlockVariants::BetaWebSearchToolResultBlock> webSearchToolResult,
         Action<BetaContentBlockVariants::BetaCodeExecutionToolResultBlock> codeExecutionToolResult,
+        Action<BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock> bashCodeExecutionToolResult,
+        Action<BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock> textEditorCodeExecutionToolResult,
         Action<BetaContentBlockVariants::BetaMCPToolUseBlock> mcpToolUse,
         Action<BetaContentBlockVariants::BetaMCPToolResultBlock> mcpToolResult,
         Action<BetaContentBlockVariants::BetaContainerUploadBlock> containerUpload
@@ -145,6 +172,12 @@ public abstract record class BetaContentBlock
             case BetaContentBlockVariants::BetaCodeExecutionToolResultBlock inner:
                 codeExecutionToolResult(inner);
                 break;
+            case BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock inner:
+                bashCodeExecutionToolResult(inner);
+                break;
+            case BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock inner:
+                textEditorCodeExecutionToolResult(inner);
+                break;
             case BetaContentBlockVariants::BetaMCPToolUseBlock inner:
                 mcpToolUse(inner);
                 break;
@@ -167,6 +200,14 @@ public abstract record class BetaContentBlock
         Func<BetaContentBlockVariants::BetaServerToolUseBlock, T> serverToolUse,
         Func<BetaContentBlockVariants::BetaWebSearchToolResultBlock, T> webSearchToolResult,
         Func<BetaContentBlockVariants::BetaCodeExecutionToolResultBlock, T> codeExecutionToolResult,
+        Func<
+            BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock,
+            T
+        > bashCodeExecutionToolResult,
+        Func<
+            BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock,
+            T
+        > textEditorCodeExecutionToolResult,
         Func<BetaContentBlockVariants::BetaMCPToolUseBlock, T> mcpToolUse,
         Func<BetaContentBlockVariants::BetaMCPToolResultBlock, T> mcpToolResult,
         Func<BetaContentBlockVariants::BetaContainerUploadBlock, T> containerUpload
@@ -184,6 +225,10 @@ public abstract record class BetaContentBlock
             ),
             BetaContentBlockVariants::BetaCodeExecutionToolResultBlock inner =>
                 codeExecutionToolResult(inner),
+            BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock inner =>
+                bashCodeExecutionToolResult(inner),
+            BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock inner =>
+                textEditorCodeExecutionToolResult(inner),
             BetaContentBlockVariants::BetaMCPToolUseBlock inner => mcpToolUse(inner),
             BetaContentBlockVariants::BetaMCPToolResultBlock inner => mcpToolResult(inner),
             BetaContentBlockVariants::BetaContainerUploadBlock inner => containerUpload(inner),
@@ -366,6 +411,56 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
 
                 throw new AggregateException(exceptions);
             }
+            case "bash_code_execution_tool_result":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<BetaBashCodeExecutionToolResultBlock>(
+                            json,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock(
+                            deserialized
+                        );
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
+            case "text_editor_code_execution_tool_result":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized =
+                        JsonSerializer.Deserialize<BetaTextEditorCodeExecutionToolResultBlock>(
+                            json,
+                            options
+                        );
+                    if (deserialized != null)
+                    {
+                        return new BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock(
+                            deserialized
+                        );
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
             case "mcp_tool_use":
             {
                 List<JsonException> exceptions = [];
@@ -458,6 +553,12 @@ sealed class BetaContentBlockConverter : JsonConverter<BetaContentBlock>
             BetaContentBlockVariants::BetaCodeExecutionToolResultBlock(
                 var codeExecutionToolResult
             ) => codeExecutionToolResult,
+            BetaContentBlockVariants::BetaBashCodeExecutionToolResultBlock(
+                var bashCodeExecutionToolResult
+            ) => bashCodeExecutionToolResult,
+            BetaContentBlockVariants::BetaTextEditorCodeExecutionToolResultBlock(
+                var textEditorCodeExecutionToolResult
+            ) => textEditorCodeExecutionToolResult,
             BetaContentBlockVariants::BetaMCPToolUseBlock(var mcpToolUse) => mcpToolUse,
             BetaContentBlockVariants::BetaMCPToolResultBlock(var mcpToolResult) => mcpToolResult,
             BetaContentBlockVariants::BetaContainerUploadBlock(var containerUpload) =>
