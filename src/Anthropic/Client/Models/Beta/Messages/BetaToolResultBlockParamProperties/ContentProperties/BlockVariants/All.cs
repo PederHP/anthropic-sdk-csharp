@@ -46,3 +46,18 @@ public sealed record class BetaSearchResultBlockParam(Messages::BetaSearchResult
         this.Value.Validate();
     }
 }
+
+public sealed record class BetaRequestDocumentBlock(Messages::BetaRequestDocumentBlock Value)
+    : Block,
+        IVariant<BetaRequestDocumentBlock, Messages::BetaRequestDocumentBlock>
+{
+    public static BetaRequestDocumentBlock From(Messages::BetaRequestDocumentBlock value)
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}

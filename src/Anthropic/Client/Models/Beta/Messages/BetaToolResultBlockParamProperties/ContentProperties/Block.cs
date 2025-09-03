@@ -21,6 +21,9 @@ public abstract record class Block
     public static implicit operator Block(BetaSearchResultBlockParam value) =>
         new BlockVariants::BetaSearchResultBlockParam(value);
 
+    public static implicit operator Block(BetaRequestDocumentBlock value) =>
+        new BlockVariants::BetaRequestDocumentBlock(value);
+
     public bool TryPickBetaTextBlockParam([NotNullWhen(true)] out BetaTextBlockParam? value)
     {
         value = (this as BlockVariants::BetaTextBlockParam)?.Value;
@@ -41,10 +44,17 @@ public abstract record class Block
         return value != null;
     }
 
+    public bool TryPickBetaRequestDocument([NotNullWhen(true)] out BetaRequestDocumentBlock? value)
+    {
+        value = (this as BlockVariants::BetaRequestDocumentBlock)?.Value;
+        return value != null;
+    }
+
     public void Switch(
         Action<BlockVariants::BetaTextBlockParam> betaTextBlockParam,
         Action<BlockVariants::BetaImageBlockParam> betaImageBlockParam,
-        Action<BlockVariants::BetaSearchResultBlockParam> betaSearchResultBlockParam
+        Action<BlockVariants::BetaSearchResultBlockParam> betaSearchResultBlockParam,
+        Action<BlockVariants::BetaRequestDocumentBlock> betaRequestDocument
     )
     {
         switch (this)
@@ -58,6 +68,9 @@ public abstract record class Block
             case BlockVariants::BetaSearchResultBlockParam inner:
                 betaSearchResultBlockParam(inner);
                 break;
+            case BlockVariants::BetaRequestDocumentBlock inner:
+                betaRequestDocument(inner);
+                break;
             default:
                 throw new InvalidOperationException();
         }
@@ -66,7 +79,8 @@ public abstract record class Block
     public T Match<T>(
         Func<BlockVariants::BetaTextBlockParam, T> betaTextBlockParam,
         Func<BlockVariants::BetaImageBlockParam, T> betaImageBlockParam,
-        Func<BlockVariants::BetaSearchResultBlockParam, T> betaSearchResultBlockParam
+        Func<BlockVariants::BetaSearchResultBlockParam, T> betaSearchResultBlockParam,
+        Func<BlockVariants::BetaRequestDocumentBlock, T> betaRequestDocument
     )
     {
         return this switch
@@ -74,6 +88,7 @@ public abstract record class Block
             BlockVariants::BetaTextBlockParam inner => betaTextBlockParam(inner),
             BlockVariants::BetaImageBlockParam inner => betaImageBlockParam(inner),
             BlockVariants::BetaSearchResultBlockParam inner => betaSearchResultBlockParam(inner),
+            BlockVariants::BetaRequestDocumentBlock inner => betaRequestDocument(inner),
             _ => throw new InvalidOperationException(),
         };
     }
@@ -168,6 +183,28 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 throw new AggregateException(exceptions);
             }
+            case "document":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<BetaRequestDocumentBlock>(
+                        json,
+                        options
+                    );
+                    if (deserialized != null)
+                    {
+                        return new BlockVariants::BetaRequestDocumentBlock(deserialized);
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
             default:
             {
                 throw new Exception();
@@ -183,6 +220,7 @@ sealed class BlockConverter : JsonConverter<Block>
             BlockVariants::BetaImageBlockParam(var betaImageBlockParam) => betaImageBlockParam,
             BlockVariants::BetaSearchResultBlockParam(var betaSearchResultBlockParam) =>
                 betaSearchResultBlockParam,
+            BlockVariants::BetaRequestDocumentBlock(var betaRequestDocument) => betaRequestDocument,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

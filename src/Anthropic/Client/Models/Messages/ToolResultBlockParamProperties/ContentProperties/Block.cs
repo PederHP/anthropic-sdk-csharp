@@ -21,6 +21,9 @@ public abstract record class Block
     public static implicit operator Block(SearchResultBlockParam value) =>
         new BlockVariants::SearchResultBlockParam(value);
 
+    public static implicit operator Block(DocumentBlockParam value) =>
+        new BlockVariants::DocumentBlockParam(value);
+
     public bool TryPickTextBlockParam([NotNullWhen(true)] out TextBlockParam? value)
     {
         value = (this as BlockVariants::TextBlockParam)?.Value;
@@ -39,10 +42,17 @@ public abstract record class Block
         return value != null;
     }
 
+    public bool TryPickDocumentBlockParam([NotNullWhen(true)] out DocumentBlockParam? value)
+    {
+        value = (this as BlockVariants::DocumentBlockParam)?.Value;
+        return value != null;
+    }
+
     public void Switch(
         Action<BlockVariants::TextBlockParam> textBlockParam,
         Action<BlockVariants::ImageBlockParam> imageBlockParam,
-        Action<BlockVariants::SearchResultBlockParam> searchResultBlockParam
+        Action<BlockVariants::SearchResultBlockParam> searchResultBlockParam,
+        Action<BlockVariants::DocumentBlockParam> documentBlockParam
     )
     {
         switch (this)
@@ -56,6 +66,9 @@ public abstract record class Block
             case BlockVariants::SearchResultBlockParam inner:
                 searchResultBlockParam(inner);
                 break;
+            case BlockVariants::DocumentBlockParam inner:
+                documentBlockParam(inner);
+                break;
             default:
                 throw new InvalidOperationException();
         }
@@ -64,7 +77,8 @@ public abstract record class Block
     public T Match<T>(
         Func<BlockVariants::TextBlockParam, T> textBlockParam,
         Func<BlockVariants::ImageBlockParam, T> imageBlockParam,
-        Func<BlockVariants::SearchResultBlockParam, T> searchResultBlockParam
+        Func<BlockVariants::SearchResultBlockParam, T> searchResultBlockParam,
+        Func<BlockVariants::DocumentBlockParam, T> documentBlockParam
     )
     {
         return this switch
@@ -72,6 +86,7 @@ public abstract record class Block
             BlockVariants::TextBlockParam inner => textBlockParam(inner),
             BlockVariants::ImageBlockParam inner => imageBlockParam(inner),
             BlockVariants::SearchResultBlockParam inner => searchResultBlockParam(inner),
+            BlockVariants::DocumentBlockParam inner => documentBlockParam(inner),
             _ => throw new InvalidOperationException(),
         };
     }
@@ -160,6 +175,28 @@ sealed class BlockConverter : JsonConverter<Block>
 
                 throw new AggregateException(exceptions);
             }
+            case "document":
+            {
+                List<JsonException> exceptions = [];
+
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<DocumentBlockParam>(
+                        json,
+                        options
+                    );
+                    if (deserialized != null)
+                    {
+                        return new BlockVariants::DocumentBlockParam(deserialized);
+                    }
+                }
+                catch (JsonException e)
+                {
+                    exceptions.Add(e);
+                }
+
+                throw new AggregateException(exceptions);
+            }
             default:
             {
                 throw new Exception();
@@ -175,6 +212,7 @@ sealed class BlockConverter : JsonConverter<Block>
             BlockVariants::ImageBlockParam(var imageBlockParam) => imageBlockParam,
             BlockVariants::SearchResultBlockParam(var searchResultBlockParam) =>
                 searchResultBlockParam,
+            BlockVariants::DocumentBlockParam(var documentBlockParam) => documentBlockParam,
             _ => throw new ArgumentOutOfRangeException(nameof(value)),
         };
         JsonSerializer.Serialize(writer, variant, options);

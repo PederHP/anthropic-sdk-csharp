@@ -46,3 +46,18 @@ public sealed record class SearchResultBlockParam(Messages::SearchResultBlockPar
         this.Value.Validate();
     }
 }
+
+public sealed record class DocumentBlockParam(Messages::DocumentBlockParam Value)
+    : Block,
+        IVariant<DocumentBlockParam, Messages::DocumentBlockParam>
+{
+    public static DocumentBlockParam From(Messages::DocumentBlockParam value)
+    {
+        return new(value);
+    }
+
+    public override void Validate()
+    {
+        this.Value.Validate();
+    }
+}
