@@ -21,7 +21,7 @@ public class AnthropicClient : IAnthropicClient
         get { return _threadLocalRandom.Value!; }
     }
 
-    readonly ClientOptions _options;
+    protected readonly ClientOptions _options;
 
     public HttpClient HttpClient
     {
@@ -65,7 +65,7 @@ public class AnthropicClient : IAnthropicClient
         init { this._options.AuthToken = value; }
     }
 
-    public IAnthropicClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
+    public virtual IAnthropicClient WithOptions(Func<ClientOptions, ClientOptions> modifier)
     {
         return new AnthropicClient(modifier(this._options));
     }
