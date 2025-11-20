@@ -1,10 +1,10 @@
-using Anthropic;
-using Anthropic.Models.Beta.Messages;
-using Anthropic.Services;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Anthropic;
+using Anthropic.Models.Beta.Messages;
+using Anthropic.Services;
 
 #pragma warning disable MEAI001 // [Experimental] APIs in Microsoft.Extensions.AI
 #pragma warning disable IDE0130 // Namespace does not match folder structure
@@ -13,8 +13,11 @@ namespace Microsoft.Extensions.AI.Tests;
 
 public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTestsBase
 {
-    protected override IChatClient CreateChatClient(AnthropicClient client, string? modelId = null, int? defaultMaxOutputTokens = null) =>
-        client.Beta.AsIChatClient(modelId, defaultMaxOutputTokens);
+    protected override IChatClient CreateChatClient(
+        AnthropicClient client,
+        string? modelId = null,
+        int? defaultMaxOutputTokens = null
+    ) => client.Beta.AsIChatClient(modelId, defaultMaxOutputTokens);
 
     [Fact]
     public void AsIChatClient_ReturnsValidChatClient()
@@ -37,7 +40,10 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
     public void AsIChatClient_ThrowsOnNonPositiveDefaultMaxTokens(int defaultMaxTokens)
     {
         var client = new AnthropicClient { APIKey = "test-key" }.Beta;
-        Assert.Throws<ArgumentOutOfRangeException>("defaultMaxOutputTokens", () => client.AsIChatClient(defaultMaxOutputTokens: defaultMaxTokens));
+        Assert.Throws<ArgumentOutOfRangeException>(
+            "defaultMaxOutputTokens",
+            () => client.AsIChatClient(defaultMaxOutputTokens: defaultMaxTokens)
+        );
     }
 
     [Fact]
@@ -88,7 +94,8 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 5
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
@@ -138,13 +145,17 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 15
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
         ChatOptions options = new()
         {
-            Tools = [new HostedMcpServerTool("my-mcp-server", new Uri("https://mcp.example.com/server"))]
+            Tools =
+            [
+                new HostedMcpServerTool("my-mcp-server", new Uri("https://mcp.example.com/server")),
+            ],
         };
 
         ChatResponse response = await chatClient.GetResponseAsync("Use the MCP server", options);
@@ -199,16 +210,20 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 18
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
         ChatOptions options = new()
         {
-            Tools = [new HostedMcpServerTool("my-mcp-server",  new Uri("https://mcp.example.com/server"))
-            {
-                AllowedTools = ["tool1", "tool2", "tool3"]
-            }]
+            Tools =
+            [
+                new HostedMcpServerTool("my-mcp-server", new Uri("https://mcp.example.com/server"))
+                {
+                    AllowedTools = ["tool1", "tool2", "tool3"],
+                },
+            ],
         };
 
         ChatResponse response = await chatClient.GetResponseAsync("Use specific tools", options);
@@ -266,7 +281,8 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 20
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
@@ -275,8 +291,11 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
             Tools =
             [
                 new HostedMcpServerTool("server1", new Uri("https://server1.example.com")),
-                new HostedMcpServerTool("server2", new Uri("https://server2.example.com")) { AllowedTools = ["tool_a", "tool_b"] }
-            ]
+                new HostedMcpServerTool("server2", new Uri("https://server2.example.com"))
+                {
+                    AllowedTools = ["tool_a", "tool_b"],
+                },
+            ],
         };
 
         ChatResponse response = await chatClient.GetResponseAsync("Use multiple servers", options);
@@ -329,7 +348,8 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 30
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
@@ -339,12 +359,16 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
         Assert.NotNull(textContent.RawRepresentation);
         Assert.IsType<BetaTextBlock>(textContent.RawRepresentation);
 
-        TextReasoningContent thinkingContent = Assert.IsType<TextReasoningContent>(response.Messages[0].Contents[1]);
+        TextReasoningContent thinkingContent = Assert.IsType<TextReasoningContent>(
+            response.Messages[0].Contents[1]
+        );
         Assert.NotNull(thinkingContent);
         Assert.NotNull(thinkingContent.RawRepresentation);
         Assert.IsType<BetaThinkingBlock>(thinkingContent.RawRepresentation);
 
-        FunctionCallContent toolCall = Assert.IsType<FunctionCallContent>(response.Messages[0].Contents[2]);
+        FunctionCallContent toolCall = Assert.IsType<FunctionCallContent>(
+            response.Messages[0].Contents[2]
+        );
         Assert.NotNull(toolCall);
         Assert.NotNull(toolCall.RawRepresentation);
         Assert.IsType<BetaToolUseBlock>(toolCall.RawRepresentation);
@@ -388,12 +412,15 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 15
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
         ChatResponse response = await chatClient.GetResponseAsync("Use MCP tool");
 
-        McpServerToolCallContent mcpToolCall = Assert.IsType<McpServerToolCallContent>(response.Messages[0].Contents[0]);
+        McpServerToolCallContent mcpToolCall = Assert.IsType<McpServerToolCallContent>(
+            response.Messages[0].Contents[0]
+        );
         Assert.NotNull(mcpToolCall);
         Assert.Equal("mcp_call_123", mcpToolCall.CallId);
         Assert.Equal("search", mcpToolCall.ToolName);
@@ -442,12 +469,15 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 15
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
         ChatResponse response = await chatClient.GetResponseAsync("Test");
 
-        McpServerToolResultContent mcpResult = Assert.IsType<McpServerToolResultContent>(response.Messages[0].Contents[0]);
+        McpServerToolResultContent mcpResult = Assert.IsType<McpServerToolResultContent>(
+            response.Messages[0].Contents[0]
+        );
         Assert.NotNull(mcpResult);
         Assert.Equal("mcp_call_456", mcpResult.CallId);
         Assert.NotNull(mcpResult.Output);
@@ -502,27 +532,34 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 15
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-sonnet-4-5-20250929");
 
         ChatOptions options = new()
         {
-            ResponseFormat = ChatResponseFormat.ForJsonSchema(JsonElement.Parse("""
-            {
-                "type": "object",
-                "properties": {
-                    "name": { "type": "string" },
-                    "age": { "type": "integer" }
-                },
-                "required": ["name", "age"]
-            }
-            """), "person_info")
+            ResponseFormat = ChatResponseFormat.ForJsonSchema(
+                JsonElement.Parse(
+                    """
+                    {
+                        "type": "object",
+                        "properties": {
+                            "name": { "type": "string" },
+                            "age": { "type": "integer" }
+                        },
+                        "required": ["name", "age"]
+                    }
+                    """
+                ),
+                "person_info"
+            ),
         };
 
         ChatResponse response = await chatClient.GetResponseAsync(
             "Tell me about Albert Einstein. Respond with his name and age at death.",
-            options);
+            options
+        );
 
         Assert.NotNull(response);
         TextContent textContent = Assert.IsType<TextContent>(response.Messages[0].Contents[0]);
@@ -586,35 +623,42 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 25
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-sonnet-4-5-20250929");
 
         ChatOptions options = new()
         {
-            ResponseFormat = ChatResponseFormat.ForJsonSchema(JsonElement.Parse("""
-            {
-                "type": "object",
-                "properties": {
-                    "title": { "type": "string" },
-                    "author": {
+            ResponseFormat = ChatResponseFormat.ForJsonSchema(
+                JsonElement.Parse(
+                    """
+                    {
                         "type": "object",
                         "properties": {
-                            "name": { "type": "string" },
-                            "birth_year": { "type": "integer" }
+                            "title": { "type": "string" },
+                            "author": {
+                                "type": "object",
+                                "properties": {
+                                    "name": { "type": "string" },
+                                    "birth_year": { "type": "integer" }
+                                },
+                                "required": ["name", "birth_year"]
+                            },
+                            "published_year": { "type": "integer" }
                         },
-                        "required": ["name", "birth_year"]
-                    },
-                    "published_year": { "type": "integer" }
-                },
-                "required": ["title", "author", "published_year"]
-            }
-            """), "book_info")
+                        "required": ["title", "author", "published_year"]
+                    }
+                    """
+                ),
+                "book_info"
+            ),
         };
 
         ChatResponse response = await chatClient.GetResponseAsync(
             "Tell me about the book '1984' by George Orwell.",
-            options);
+            options
+        );
 
         Assert.NotNull(response);
         TextContent textContent = Assert.IsType<TextContent>(response.Messages[0].Contents[0]);
@@ -680,37 +724,44 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 40
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-sonnet-4-5-20250929");
 
         ChatOptions options = new()
         {
-            ResponseFormat = ChatResponseFormat.ForJsonSchema(JsonElement.Parse("""
-            {
-                "type": "object",
-                "properties": {
-                    "fruits": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "name": { "type": "string" },
-                                "color": { "type": "string" },
-                                "is_citrus": { "type": "boolean" }
-                            },
-                            "required": ["name", "color", "is_citrus"]
-                        }
+            ResponseFormat = ChatResponseFormat.ForJsonSchema(
+                JsonElement.Parse(
+                    """
+                    {
+                        "type": "object",
+                        "properties": {
+                            "fruits": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": { "type": "string" },
+                                        "color": { "type": "string" },
+                                        "is_citrus": { "type": "boolean" }
+                                    },
+                                    "required": ["name", "color", "is_citrus"]
+                                }
+                            }
+                        },
+                        "required": ["fruits"]
                     }
-                },
-                "required": ["fruits"]
-            }
-            """), "fruit_list")
+                    """
+                ),
+                "fruit_list"
+            ),
         };
 
         ChatResponse response = await chatClient.GetResponseAsync(
             "List 3 common fruits: apple, orange, and banana.",
-            options);
+            options
+        );
 
         Assert.NotNull(response);
         TextContent textContent = Assert.IsType<TextContent>(response.Messages[0].Contents[0]);
@@ -781,7 +832,8 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 10
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
@@ -796,12 +848,12 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
         {
             Name = "custom_tool",
             Description = "Custom tool",
-            InputSchema = new InputSchema(new Dictionary<string, JsonElement>())
+            InputSchema = new InputSchema(new Dictionary<string, JsonElement>()),
         };
-        
+
         ChatOptions options = new()
         {
-            Tools = [webSearchTool.AsAITool(), codeExecTool.AsAITool(), customTool.AsAITool()]
+            Tools = [webSearchTool.AsAITool(), codeExecTool.AsAITool(), customTool.AsAITool()],
         };
 
         ChatResponse response = await chatClient.GetResponseAsync("Use multiple tools", options);
@@ -843,17 +895,20 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 5
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
         ChatResponse response = await chatClient.GetResponseAsync("Test MCP error");
 
-        McpServerToolResultContent mcpResult = Assert.IsType<McpServerToolResultContent>(response.Messages[0].Contents[0]);
+        McpServerToolResultContent mcpResult = Assert.IsType<McpServerToolResultContent>(
+            response.Messages[0].Contents[0]
+        );
         Assert.NotNull(mcpResult);
         Assert.Equal("mcp_call_error_1", mcpResult.CallId);
         Assert.NotNull(mcpResult.Output);
         Assert.Single(mcpResult.Output);
-        
+
         ErrorContent errorContent = Assert.IsType<ErrorContent>(mcpResult.Output[0]);
         Assert.Equal("Connection timeout", errorContent.Message);
     }
@@ -895,19 +950,20 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
                     "output_tokens": 5
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
         ChatResponse response = await chatClient.GetResponseAsync("Test code execution error");
 
-        CodeInterpreterToolResultContent codeResult = Assert.IsType<CodeInterpreterToolResultContent>(response.Messages[0].Contents[0]);
+        CodeInterpreterToolResultContent codeResult =
+            Assert.IsType<CodeInterpreterToolResultContent>(response.Messages[0].Contents[0]);
         Assert.NotNull(codeResult);
         Assert.Equal("code_exec_error_1", codeResult.CallId);
         Assert.NotNull(codeResult.Outputs);
         Assert.Single(codeResult.Outputs);
-        
+
         ErrorContent errorContent = Assert.IsType<ErrorContent>(codeResult.Outputs[0]);
         Assert.Equal("ExecutionTimeExceeded", errorContent.ErrorCode);
     }
 }
-

@@ -1,6 +1,3 @@
-using Anthropic;
-using Anthropic.Core;
-using Anthropic.Models.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +6,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Anthropic;
+using Anthropic.Core;
+using Anthropic.Models.Messages;
 
 #pragma warning disable IDE0130 // Namespace does not match folder structure
 
@@ -19,11 +19,11 @@ public static class AnthropicClientExtensions
     /// <summary>Gets an <see cref="IChatClient"/> for use with this <see cref="IAnthropicClient"/>.</summary>
     /// <param name="client">The client.</param>
     /// <param name="defaultModelId">
-    /// The default ID of the model to use. 
+    /// The default ID of the model to use.
     /// If <see langword="null"/>, it must be provided per request via <see cref="ChatOptions.ModelId"/>.
     /// </param>
     /// <param name="defaultMaxOutputTokens">
-    /// The default maximum number of tokens to generate in a response. 
+    /// The default maximum number of tokens to generate in a response.
     /// This may be overridden with <see cref="ChatOptions.MaxOutputTokens"/>.
     /// If no value is provided for this parameter or in <see cref="ChatOptions"/>, a default maximum will be used.
     /// </param>
@@ -32,7 +32,8 @@ public static class AnthropicClientExtensions
     public static IChatClient AsIChatClient(
         this IAnthropicClient client,
         string? defaultModelId = null,
-        int? defaultMaxOutputTokens = null)
+        int? defaultMaxOutputTokens = null
+    )
     {
         if (client is null)
         {
@@ -41,7 +42,10 @@ public static class AnthropicClientExtensions
 
         if (defaultMaxOutputTokens is <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(defaultMaxOutputTokens), "Default max tokens must be greater than zero.");
+            throw new ArgumentOutOfRangeException(
+                nameof(defaultMaxOutputTokens),
+                "Default max tokens must be greater than zero."
+            );
         }
 
         return new AnthropicChatClient(client, defaultModelId, defaultMaxOutputTokens);
@@ -77,9 +81,10 @@ public static class AnthropicClientExtensions
     }
 
     private sealed class AnthropicChatClient(
-        IAnthropicClient anthropicClient, 
+        IAnthropicClient anthropicClient,
         string? defaultModelId,
-        int? defaultMaxTokens) : IChatClient
+        int? defaultMaxTokens
+    ) : IChatClient
     {
         private const int DefaultMaxTokens = 1024;
 
@@ -124,17 +129,30 @@ public static class AnthropicClientExtensions
 
         /// <inheritdoc />
         public async Task<ChatResponse> GetResponseAsync(
-            IEnumerable<ChatMessage> messages, ChatOptions? options = null, CancellationToken cancellationToken = default)
+            IEnumerable<ChatMessage> messages,
+            ChatOptions? options = null,
+            CancellationToken cancellationToken = default
+        )
         {
             if (messages is null)
             {
                 throw new ArgumentNullException(nameof(messages));
             }
 
-            List<MessageParam> messageParams = CreateMessageParams(messages, out List<TextBlockParam>? systemMessages);
-            MessageCreateParams createParams = GetMessageCreateParams(messageParams, systemMessages, options);
+            List<MessageParam> messageParams = CreateMessageParams(
+                messages,
+                out List<TextBlockParam>? systemMessages
+            );
+            MessageCreateParams createParams = GetMessageCreateParams(
+                messageParams,
+                systemMessages,
+                options
+            );
 
-            var createResult = await _anthropicClient.Messages.Create(createParams, cancellationToken);
+            var createResult = await _anthropicClient.Messages.Create(
+                createParams,
+                cancellationToken
+            );
 
             ChatMessage m = new(ChatRole.Assistant, [.. createResult.Content.Select(ToAIContent)])
             {
@@ -155,23 +173,37 @@ public static class AnthropicClientExtensions
 
         /// <inheritdoc />
         public async IAsyncEnumerable<ChatResponseUpdate> GetStreamingResponseAsync(
-            IEnumerable<ChatMessage> messages, ChatOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            IEnumerable<ChatMessage> messages,
+            ChatOptions? options = null,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default
+        )
         {
             if (messages is null)
             {
                 throw new ArgumentNullException(nameof(messages));
             }
 
-            List<MessageParam> messageParams = CreateMessageParams(messages, out List<TextBlockParam>? systemMessages);
-            MessageCreateParams createParams = GetMessageCreateParams(messageParams, systemMessages, options);
-            
+            List<MessageParam> messageParams = CreateMessageParams(
+                messages,
+                out List<TextBlockParam>? systemMessages
+            );
+            MessageCreateParams createParams = GetMessageCreateParams(
+                messageParams,
+                systemMessages,
+                options
+            );
+
             string? messageId = null;
             string? modelID = null;
             UsageDetails? usageDetails = null;
             ChatFinishReason? finishReason = null;
             Dictionary<long, StreamingFunctionData>? streamingFunctions = null;
 
-            await foreach (var createResult in _anthropicClient.Messages.CreateStreaming(createParams, cancellationToken).WithCancellation(cancellationToken))
+            await foreach (
+                var createResult in _anthropicClient
+                    .Messages.CreateStreaming(createParams, cancellationToken)
+                    .WithCancellation(cancellationToken)
+            )
             {
                 List<AIContent> contents = [];
 
@@ -191,8 +223,14 @@ public static class AnthropicClientExtensions
                         if (rawMessageStart.Message.Usage is { } usage)
                         {
                             UsageDetails current = ToUsageDetails(usage);
-                            if (usageDetails is null) usageDetails = current;
-                            else usageDetails.Add(current);
+                            if (usageDetails is null)
+                            {
+                                usageDetails = current;
+                            }
+                            else
+                            {
+                                usageDetails.Add(current);
+                            }
                         }
                         break;
 
@@ -201,8 +239,14 @@ public static class AnthropicClientExtensions
                         if (rawMessageDelta.Usage is { } deltaUsage)
                         {
                             UsageDetails current = ToUsageDetails(deltaUsage);
-                            if (usageDetails is null) usageDetails = current;
-                            else usageDetails.Add(current);
+                            if (usageDetails is null)
+                            {
+                                usageDetails = current;
+                            }
+                            else
+                            {
+                                usageDetails.Add(current);
+                            }
                         }
                         break;
 
@@ -210,26 +254,29 @@ public static class AnthropicClientExtensions
                         switch (contentBlockStart.ContentBlock.Value)
                         {
                             case TextBlock text:
-                                contents.Add(new TextContent(text.Text)
-                                {
-                                    RawRepresentation = text,
-                                });
+                                contents.Add(
+                                    new TextContent(text.Text) { RawRepresentation = text }
+                                );
                                 break;
 
                             case ThinkingBlock thinking:
-                                contents.Add(new TextReasoningContent(thinking.Thinking) 
-                                {
-                                    ProtectedData = thinking.Signature,
-                                    RawRepresentation = thinking,
-                                });
+                                contents.Add(
+                                    new TextReasoningContent(thinking.Thinking)
+                                    {
+                                        ProtectedData = thinking.Signature,
+                                        RawRepresentation = thinking,
+                                    }
+                                );
                                 break;
 
                             case RedactedThinkingBlock redactedThinking:
-                                contents.Add(new TextReasoningContent(string.Empty) 
-                                {
-                                    ProtectedData = redactedThinking.Data,
-                                    RawRepresentation = redactedThinking,
-                                });
+                                contents.Add(
+                                    new TextReasoningContent(string.Empty)
+                                    {
+                                        ProtectedData = redactedThinking.Data,
+                                        RawRepresentation = redactedThinking,
+                                    }
+                                );
                                 break;
 
                             case ToolUseBlock toolUse:
@@ -247,33 +294,44 @@ public static class AnthropicClientExtensions
                         switch (contentBlockDelta.Delta.Value)
                         {
                             case TextDelta textDelta:
-                                contents.Add(new TextContent(textDelta.Text)
-                                {
-                                    RawRepresentation = textDelta,
-                                });
+                                contents.Add(
+                                    new TextContent(textDelta.Text)
+                                    {
+                                        RawRepresentation = textDelta,
+                                    }
+                                );
                                 break;
 
                             case InputJSONDelta inputDelta:
-                                if (streamingFunctions is not null &&
-                                    streamingFunctions.TryGetValue(contentBlockDelta.Index, out StreamingFunctionData? functionData))
+                                if (
+                                    streamingFunctions is not null
+                                    && streamingFunctions.TryGetValue(
+                                        contentBlockDelta.Index,
+                                        out StreamingFunctionData? functionData
+                                    )
+                                )
                                 {
                                     functionData.Arguments.Append(inputDelta.PartialJSON);
                                 }
                                 break;
-                            
+
                             case ThinkingDelta thinkingDelta:
-                                contents.Add(new TextReasoningContent(thinkingDelta.Thinking)
-                                {
-                                    RawRepresentation = thinkingDelta,
-                                });
+                                contents.Add(
+                                    new TextReasoningContent(thinkingDelta.Thinking)
+                                    {
+                                        RawRepresentation = thinkingDelta,
+                                    }
+                                );
                                 break;
-                            
+
                             case SignatureDelta signatureDelta:
-                                contents.Add(new TextReasoningContent(null) 
-                                {
-                                    ProtectedData = signatureDelta.Signature,
-                                    RawRepresentation = signatureDelta,
-                                });
+                                contents.Add(
+                                    new TextReasoningContent(null)
+                                    {
+                                        ProtectedData = signatureDelta.Signature,
+                                        RawRepresentation = signatureDelta,
+                                    }
+                                );
                                 break;
                         }
                         break;
@@ -283,8 +341,18 @@ public static class AnthropicClientExtensions
                         {
                             foreach (var sf in streamingFunctions)
                             {
-                                contents.Add(FunctionCallContent.CreateFromParsedArguments(sf.Value.Arguments.ToString(), sf.Value.CallId, sf.Value.Name,
-                                    json => JsonSerializer.Deserialize<Dictionary<string, object?>>(json, AIJsonUtilities.DefaultOptions)));
+                                contents.Add(
+                                    FunctionCallContent.CreateFromParsedArguments(
+                                        sf.Value.Arguments.ToString(),
+                                        sf.Value.CallId,
+                                        sf.Value.Name,
+                                        json =>
+                                            JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                                                json,
+                                                AIJsonUtilities.DefaultOptions
+                                            )
+                                    )
+                                );
                             }
                         }
                         break;
@@ -314,7 +382,10 @@ public static class AnthropicClientExtensions
             }
         }
 
-        private static List<MessageParam> CreateMessageParams(IEnumerable<ChatMessage> messages, out List<TextBlockParam>? systemMessages)
+        private static List<MessageParam> CreateMessageParams(
+            IEnumerable<ChatMessage> messages,
+            out List<TextBlockParam>? systemMessages
+        )
         {
             List<MessageParam> messageParams = [];
             systemMessages = null;
@@ -361,71 +432,124 @@ public static class AnthropicClientExtensions
                             break;
 
                         case TextReasoningContent trc when !string.IsNullOrEmpty(trc.Text):
-                            contents.Add(new ThinkingBlockParam()
-                            {
-                                Thinking = trc.Text,
-                                Signature = trc.ProtectedData ?? string.Empty,
-                            });
+                            contents.Add(
+                                new ThinkingBlockParam()
+                                {
+                                    Thinking = trc.Text,
+                                    Signature = trc.ProtectedData ?? string.Empty,
+                                }
+                            );
                             break;
 
                         case TextReasoningContent trc when !string.IsNullOrEmpty(trc.ProtectedData):
-                            contents.Add(new RedactedThinkingBlockParam()
-                            {
-                                Data = trc.ProtectedData!,
-                            });
+                            contents.Add(
+                                new RedactedThinkingBlockParam() { Data = trc.ProtectedData! }
+                            );
                             break;
 
                         case DataContent dc when dc.HasTopLevelMediaType("image"):
-                            contents.Add(new ImageBlockParam()
-                            {
-                                Source = new(new Base64ImageSource() { Data = dc.Base64Data.ToString(), MediaType = dc.MediaType })
-                            });
+                            contents.Add(
+                                new ImageBlockParam()
+                                {
+                                    Source = new(
+                                        new Base64ImageSource()
+                                        {
+                                            Data = dc.Base64Data.ToString(),
+                                            MediaType = dc.MediaType,
+                                        }
+                                    ),
+                                }
+                            );
                             break;
 
-                        case DataContent dc when string.Equals(dc.MediaType, "application/pdf", StringComparison.OrdinalIgnoreCase):
-                            contents.Add(new DocumentBlockParam()
-                            {
-                                Source = new(new Base64PDFSource() { Data = dc.Base64Data.ToString() }),
-                            });
+                        case DataContent dc
+                            when string.Equals(
+                                dc.MediaType,
+                                "application/pdf",
+                                StringComparison.OrdinalIgnoreCase
+                            ):
+                            contents.Add(
+                                new DocumentBlockParam()
+                                {
+                                    Source = new(
+                                        new Base64PDFSource() { Data = dc.Base64Data.ToString() }
+                                    ),
+                                }
+                            );
                             break;
 
                         case DataContent dc when dc.HasTopLevelMediaType("text"):
-                            contents.Add(new DocumentBlockParam()
-                            {
-                                Source = new(new PlainTextSource() { Data = Encoding.UTF8.GetString(dc.Data.ToArray()) }),
-                            });
+                            contents.Add(
+                                new DocumentBlockParam()
+                                {
+                                    Source = new(
+                                        new PlainTextSource()
+                                        {
+                                            Data = Encoding.UTF8.GetString(dc.Data.ToArray()),
+                                        }
+                                    ),
+                                }
+                            );
                             break;
 
                         case UriContent uc when uc.HasTopLevelMediaType("image"):
-                            contents.Add(new ImageBlockParam()
-                            {
-                                Source = new(new URLImageSource() { URL = uc.Uri.AbsoluteUri }),
-                            });
+                            contents.Add(
+                                new ImageBlockParam()
+                                {
+                                    Source = new(new URLImageSource() { URL = uc.Uri.AbsoluteUri }),
+                                }
+                            );
                             break;
 
-                        case UriContent uc when string.Equals(uc.MediaType, "application/pdf", StringComparison.OrdinalIgnoreCase):
-                            contents.Add(new DocumentBlockParam()
-                            {
-                                Source = new(new URLPDFSource() { URL = uc.Uri.AbsoluteUri }),
-                            });
+                        case UriContent uc
+                            when string.Equals(
+                                uc.MediaType,
+                                "application/pdf",
+                                StringComparison.OrdinalIgnoreCase
+                            ):
+                            contents.Add(
+                                new DocumentBlockParam()
+                                {
+                                    Source = new(new URLPDFSource() { URL = uc.Uri.AbsoluteUri }),
+                                }
+                            );
                             break;
 
                         case FunctionCallContent fcc:
-                            contents.Add(new ToolUseBlockParam()
-                            {
-                                ID = fcc.CallId,
-                                Name = fcc.Name,
-                                Input = fcc.Arguments?.ToDictionary(e => e.Key, e => e.Value is JsonElement je ? je : JsonSerializer.SerializeToElement(e.Value, AIJsonUtilities.DefaultOptions)) ?? [],
-                            });
+                            contents.Add(
+                                new ToolUseBlockParam()
+                                {
+                                    ID = fcc.CallId,
+                                    Name = fcc.Name,
+                                    Input =
+                                        fcc.Arguments?.ToDictionary(
+                                            e => e.Key,
+                                            e =>
+                                                e.Value is JsonElement je
+                                                    ? je
+                                                    : JsonSerializer.SerializeToElement(
+                                                        e.Value,
+                                                        AIJsonUtilities.DefaultOptions
+                                                    )
+                                        ) ?? [],
+                                }
+                            );
                             break;
 
                         case FunctionResultContent frc:
-                            contents.Add(new ToolResultBlockParam()
-                            {
-                                ToolUseID = frc.CallId,
-                                IsError = frc.Exception is not null,
-                                Content = new(JsonSerializer.Serialize(frc.Result, AIJsonUtilities.DefaultOptions)),
-                            });
+                            contents.Add(
+                                new ToolResultBlockParam()
+                                {
+                                    ToolUseID = frc.CallId,
+                                    IsError = frc.Exception is not null,
+                                    Content = new(
+                                        JsonSerializer.Serialize(
+                                            frc.Result,
+                                            AIJsonUtilities.DefaultOptions
+                                        )
+                                    ),
+                                }
+                            );
                             break;
                     }
                 }
@@ -435,11 +559,13 @@ public static class AnthropicClientExtensions
                     continue;
                 }
 
-                messageParams.Add(new()
-                {
-                    Role = message.Role == ChatRole.Assistant ? Role.Assistant : Role.User,
-                    Content = contents,
-                });
+                messageParams.Add(
+                    new()
+                    {
+                        Role = message.Role == ChatRole.Assistant ? Role.Assistant : Role.User,
+                        Content = contents,
+                    }
+                );
             }
 
             if (messageParams.Count == 0)
@@ -450,15 +576,23 @@ public static class AnthropicClientExtensions
             return messageParams;
         }
 
-        private MessageCreateParams GetMessageCreateParams(List<MessageParam> messages, List<TextBlockParam>? systemMessages, ChatOptions? options)
+        private MessageCreateParams GetMessageCreateParams(
+            List<MessageParam> messages,
+            List<TextBlockParam>? systemMessages,
+            ChatOptions? options
+        )
         {
             // Get the initial MessageCreateParams, either with a raw representation provided by the options
             // or with only the required properties set.
-            MessageCreateParams? createParams = options?.RawRepresentationFactory?.Invoke(this) as MessageCreateParams;
+            MessageCreateParams? createParams =
+                options?.RawRepresentationFactory?.Invoke(this) as MessageCreateParams;
             if (createParams is not null)
             {
                 // Merge any messages preconfigured on the params with the ones provided to the IChatClient.
-                createParams = createParams with { Messages = [.. createParams.Messages, .. messages] };
+                createParams = createParams with
+                {
+                    Messages = [.. createParams.Messages, .. messages],
+                };
             }
             else
             {
@@ -466,7 +600,12 @@ public static class AnthropicClientExtensions
                 {
                     MaxTokens = options?.MaxOutputTokens ?? _defaultMaxTokens,
                     Messages = messages,
-                    Model = options?.ModelId ?? _defaultModelId ?? throw new InvalidOperationException("Model ID must be specified either in ChatOptions or as the default for the client."),
+                    Model =
+                        options?.ModelId
+                        ?? _defaultModelId
+                        ?? throw new InvalidOperationException(
+                            "Model ID must be specified either in ChatOptions or as the default for the client."
+                        ),
                 };
             }
 
@@ -480,9 +619,15 @@ public static class AnthropicClientExtensions
 
                 if (options.StopSequences is { Count: > 0 } stopSequences)
                 {
-                    createParams = createParams.StopSequences is { } existingSequences ?
-                        createParams with { StopSequences = [.. existingSequences, .. stopSequences] } :
-                        createParams with { StopSequences = [.. stopSequences] };
+                    createParams = createParams.StopSequences is { } existingSequences
+                        ? createParams with
+                        {
+                            StopSequences = [.. existingSequences, .. stopSequences],
+                        }
+                        : createParams with
+                        {
+                            StopSequences = [.. stopSequences],
+                        };
                 }
 
                 if (createParams.Temperature is null && options.Temperature is { } temperature)
@@ -517,7 +662,13 @@ public static class AnthropicClientExtensions
                                 JsonElement inputSchema = af.JsonSchema;
                                 if (inputSchema.ValueKind is JsonValueKind.Object)
                                 {
-                                    if (inputSchema.TryGetProperty("properties", out JsonElement propsElement) && propsElement.ValueKind is JsonValueKind.Object)
+                                    if (
+                                        inputSchema.TryGetProperty(
+                                            "properties",
+                                            out JsonElement propsElement
+                                        )
+                                        && propsElement.ValueKind is JsonValueKind.Object
+                                    )
                                     {
                                         foreach (JsonProperty p in propsElement.EnumerateObject())
                                         {
@@ -525,24 +676,36 @@ public static class AnthropicClientExtensions
                                         }
                                     }
 
-                                    if (inputSchema.TryGetProperty("required", out JsonElement reqElement) && reqElement.ValueKind is JsonValueKind.Array)
+                                    if (
+                                        inputSchema.TryGetProperty(
+                                            "required",
+                                            out JsonElement reqElement
+                                        )
+                                        && reqElement.ValueKind is JsonValueKind.Array
+                                    )
                                     {
                                         foreach (JsonElement r in reqElement.EnumerateArray())
                                         {
-                                            if (r.ValueKind is JsonValueKind.String && r.GetString() is { } s && !string.IsNullOrWhiteSpace(s))
+                                            if (
+                                                r.ValueKind is JsonValueKind.String
+                                                && r.GetString() is { } s
+                                                && !string.IsNullOrWhiteSpace(s)
+                                            )
                                             {
                                                 required.Add(s);
                                             }
                                         }
                                     }
                                 }
-                                
-                                (createdTools ??= []).Add(new Tool()
-                                {
-                                    Name = af.Name,
-                                    Description = af.Description,
-                                    InputSchema = new(properties) { Required = required },
-                                });
+
+                                (createdTools ??= []).Add(
+                                    new Tool()
+                                    {
+                                        Name = af.Name,
+                                        Description = af.Description,
+                                        InputSchema = new(properties) { Required = required },
+                                    }
+                                );
                                 break;
 
                             case HostedWebSearchTool:
@@ -560,10 +723,18 @@ public static class AnthropicClientExtensions
                 if (createParams.ToolChoice is null && options.ToolMode is { } toolMode)
                 {
                     ToolChoice? toolChoice =
-                        toolMode is AutoChatToolMode ? new ToolChoiceAuto() { DisableParallelToolUse = !options.AllowMultipleToolCalls } :
-                        toolMode is NoneChatToolMode ? new ToolChoiceNone() :
-                        toolMode is RequiredChatToolMode ? new ToolChoiceAny() { DisableParallelToolUse = !options.AllowMultipleToolCalls } :
-                        (ToolChoice?)null;
+                        toolMode is AutoChatToolMode
+                            ? new ToolChoiceAuto()
+                            {
+                                DisableParallelToolUse = !options.AllowMultipleToolCalls,
+                            }
+                        : toolMode is NoneChatToolMode ? new ToolChoiceNone()
+                        : toolMode is RequiredChatToolMode
+                            ? new ToolChoiceAny()
+                            {
+                                DisableParallelToolUse = !options.AllowMultipleToolCalls,
+                            }
+                        : (ToolChoice?)null;
                     if (toolChoice is not null)
                     {
                         createParams = createParams with { ToolChoice = toolChoice };
@@ -592,28 +763,48 @@ public static class AnthropicClientExtensions
         }
 
         private static UsageDetails ToUsageDetails(Usage usage) =>
-            ToUsageDetails(usage.InputTokens, usage.OutputTokens, usage.CacheCreationInputTokens, usage.CacheReadInputTokens);
+            ToUsageDetails(
+                usage.InputTokens,
+                usage.OutputTokens,
+                usage.CacheCreationInputTokens,
+                usage.CacheReadInputTokens
+            );
 
         private static UsageDetails ToUsageDetails(MessageDeltaUsage usage) =>
-            ToUsageDetails(usage.InputTokens, usage.OutputTokens, usage.CacheCreationInputTokens, usage.CacheReadInputTokens);
+            ToUsageDetails(
+                usage.InputTokens,
+                usage.OutputTokens,
+                usage.CacheCreationInputTokens,
+                usage.CacheReadInputTokens
+            );
 
-        private static UsageDetails ToUsageDetails(long? inputTokens, long? outputTokens, long? cacheCreationInputTokens, long? cacheReadInputTokens)
+        private static UsageDetails ToUsageDetails(
+            long? inputTokens,
+            long? outputTokens,
+            long? cacheCreationInputTokens,
+            long? cacheReadInputTokens
+        )
         {
             UsageDetails usageDetails = new()
             {
                 InputTokenCount = inputTokens,
                 OutputTokenCount = outputTokens,
-                TotalTokenCount = (inputTokens is not null || outputTokens is not null) ? (inputTokens ?? 0) + (outputTokens ?? 0) : null,
+                TotalTokenCount =
+                    (inputTokens is not null || outputTokens is not null)
+                        ? (inputTokens ?? 0) + (outputTokens ?? 0)
+                        : null,
             };
 
             if (cacheCreationInputTokens is not null)
             {
-                (usageDetails.AdditionalCounts ??= [])[nameof(Usage.CacheCreationInputTokens)] = cacheCreationInputTokens.Value;
+                (usageDetails.AdditionalCounts ??= [])[nameof(Usage.CacheCreationInputTokens)] =
+                    cacheCreationInputTokens.Value;
             }
 
             if (cacheReadInputTokens is not null)
             {
-                (usageDetails.AdditionalCounts ??= [])[nameof(Usage.CacheReadInputTokens)] = cacheReadInputTokens.Value;
+                (usageDetails.AdditionalCounts ??= [])[nameof(Usage.CacheReadInputTokens)] =
+                    cacheReadInputTokens.Value;
             }
 
             return usageDetails;
@@ -634,14 +825,14 @@ public static class AnthropicClientExtensions
             switch (block.Value)
             {
                 case TextBlock text:
-                    TextContent tc = new(text.Text)
-                    {
-                        RawRepresentation = text,
-                    };
+                    TextContent tc = new(text.Text) { RawRepresentation = text };
 
                     if (text.Citations is { Count: > 0 })
                     {
-                        tc.Annotations = [.. text.Citations.Select(ToAIAnnotation).OfType<AIAnnotation>()];
+                        tc.Annotations =
+                        [
+                            .. text.Citations.Select(ToAIAnnotation).OfType<AIAnnotation>(),
+                        ];
                     }
 
                     return tc;
@@ -664,18 +855,19 @@ public static class AnthropicClientExtensions
                     return new FunctionCallContent(
                         toolUse.ID,
                         toolUse.Name,
-                        toolUse.Properties.TryGetValue("input", out JsonElement element) ?
-                            JsonSerializer.Deserialize<Dictionary<string, object?>>(element, AIJsonUtilities.DefaultOptions) :
-                            null)
+                        toolUse.Properties.TryGetValue("input", out JsonElement element)
+                            ? JsonSerializer.Deserialize<Dictionary<string, object?>>(
+                                element,
+                                AIJsonUtilities.DefaultOptions
+                            )
+                            : null
+                    )
                     {
                         RawRepresentation = toolUse,
                     };
 
                 default:
-                    return new AIContent()
-                    {
-                        RawRepresentation = block.Value,
-                    };
+                    return new AIContent() { RawRepresentation = block.Value };
             }
         }
 
@@ -690,11 +882,23 @@ public static class AnthropicClientExtensions
 
             if (citation.TryPickCitationsWebSearchResultLocation(out var webSearchLocation))
             {
-                annotation.Url = Uri.TryCreate(webSearchLocation.URL, UriKind.Absolute, out Uri? url) ? url : null;
+                annotation.Url = Uri.TryCreate(
+                    webSearchLocation.URL,
+                    UriKind.Absolute,
+                    out Uri? url
+                )
+                    ? url
+                    : null;
             }
             else if (citation.TryPickCitationsSearchResultLocation(out var searchLocation))
             {
-                annotation.Url = Uri.TryCreate(searchLocation.Source, UriKind.Absolute, out Uri? url) ? url : null;
+                annotation.Url = Uri.TryCreate(
+                    searchLocation.Source,
+                    UriKind.Absolute,
+                    out Uri? url
+                )
+                    ? url
+                    : null;
             }
 
             return annotation;
@@ -715,7 +919,8 @@ public static class AnthropicClientExtensions
         public override string Name => tool.Value?.GetType().Name ?? base.Name;
 
         public override object? GetService(System.Type serviceType, object? serviceKey = null) =>
-            serviceKey is null && serviceType?.IsInstanceOfType(tool) is true ? tool : 
-            base.GetService(serviceType!, serviceKey);
+            serviceKey is null && serviceType?.IsInstanceOfType(tool) is true
+                ? tool
+                : base.GetService(serviceType!, serviceKey);
     }
 }

@@ -9,8 +9,11 @@ namespace Microsoft.Extensions.AI.Tests;
 
 public class AnthropicClientExtensionsTests : AnthropicClientExtensionsTestsBase
 {
-    protected override IChatClient CreateChatClient(AnthropicClient client, string? modelId = null, int? defaultMaxOutputTokens = null) =>
-        client.AsIChatClient(modelId, defaultMaxOutputTokens);
+    protected override IChatClient CreateChatClient(
+        AnthropicClient client,
+        string? modelId = null,
+        int? defaultMaxOutputTokens = null
+    ) => client.AsIChatClient(modelId, defaultMaxOutputTokens);
 
     [Fact]
     public void AsIChatClient_ReturnsValidChatClient()
@@ -33,7 +36,10 @@ public class AnthropicClientExtensionsTests : AnthropicClientExtensionsTestsBase
     public void AsIChatClient_ThrowsOnNonPositiveDefaultMaxTokens(int defaultMaxTokens)
     {
         AnthropicClient client = new() { APIKey = "test-key" };
-        Assert.Throws<ArgumentOutOfRangeException>("defaultMaxOutputTokens", () => client.AsIChatClient(defaultMaxOutputTokens: defaultMaxTokens));
+        Assert.Throws<ArgumentOutOfRangeException>(
+            "defaultMaxOutputTokens",
+            () => client.AsIChatClient(defaultMaxOutputTokens: defaultMaxTokens)
+        );
     }
 
     [Fact]
@@ -85,7 +91,8 @@ public class AnthropicClientExtensionsTests : AnthropicClientExtensionsTestsBase
                     "output_tokens": 5
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
@@ -139,7 +146,8 @@ public class AnthropicClientExtensionsTests : AnthropicClientExtensionsTestsBase
                     "output_tokens": 30
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
@@ -202,19 +210,14 @@ public class AnthropicClientExtensionsTests : AnthropicClientExtensionsTestsBase
                     "output_tokens": 8
                 }
             }
-            """);
+            """
+        );
 
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
-        ToolUnion toolUnion = new WebSearchTool20250305()
-        {
-            AllowedDomains = ["github.com"],
-        };
+        ToolUnion toolUnion = new WebSearchTool20250305() { AllowedDomains = ["github.com"] };
 
-        ChatOptions options = new()
-        {
-            Tools = [toolUnion.AsAITool()]
-        };
+        ChatOptions options = new() { Tools = [toolUnion.AsAITool()] };
 
         ChatResponse response = await chatClient.GetResponseAsync("Search the web", options);
         Assert.NotNull(response);
