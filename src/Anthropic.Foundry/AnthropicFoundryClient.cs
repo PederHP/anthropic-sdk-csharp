@@ -1,10 +1,9 @@
-using Anthropic;
-using Anthropic.Core;
 #if NETSTANDARD2_0
 global using ValueTask = System.Threading.Tasks.Task;
+using Anthropic.Core;
+#else
+using Anthropic.Core;
 #endif
-
-
 
 namespace Anthropic.Foundry;
 
