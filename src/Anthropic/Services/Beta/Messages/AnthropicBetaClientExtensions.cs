@@ -382,10 +382,13 @@ public static class AnthropicBetaClientExtensions
                                         sf.Value.CallId,
                                         sf.Value.Name,
                                         json =>
-                                            (Dictionary<string, object?>?)JsonSerializer.Deserialize(
-                                                json,
-                                                AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(Dictionary<string, object?>))
-                                            )
+                                            (Dictionary<string, object?>?)
+                                                JsonSerializer.Deserialize(
+                                                    json,
+                                                    AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                                        typeof(Dictionary<string, object?>)
+                                                    )
+                                                )
                                     )
                                 );
                             }
@@ -581,7 +584,9 @@ public static class AnthropicBetaClientExtensions
                                                     ? je
                                                     : JsonSerializer.SerializeToElement(
                                                         e.Value,
-                                                        AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(object))
+                                                        AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                                            typeof(object)
+                                                        )
                                                     )
                                         ) ?? [],
                                 }
@@ -597,7 +602,9 @@ public static class AnthropicBetaClientExtensions
                                     Content = new(
                                         JsonSerializer.Serialize(
                                             frc.Result,
-                                            AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(object))
+                                            AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                                typeof(object)
+                                            )
                                         )
                                     ),
                                 }
@@ -982,10 +989,13 @@ public static class AnthropicBetaClientExtensions
                         toolUse.ID,
                         toolUse.Name,
                         toolUse.RawData.TryGetValue("input", out JsonElement element)
-                            ? (Dictionary<string, object?>?)JsonSerializer.Deserialize(
-                                element,
-                                AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(Dictionary<string, object?>))
-                            )
+                            ? (Dictionary<string, object?>?)
+                                JsonSerializer.Deserialize(
+                                    element,
+                                    AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                        typeof(Dictionary<string, object?>)
+                                    )
+                                )
                             : null
                     )
                     {
@@ -1023,108 +1033,108 @@ public static class AnthropicBetaClientExtensions
                     };
 
                 case BetaCodeExecutionToolResultBlock ce:
+                {
+                    CodeInterpreterToolResultContent c = new()
                     {
-                        CodeInterpreterToolResultContent c = new()
-                        {
-                            CallId = ce.ToolUseID,
-                            RawRepresentation = ce,
-                        };
+                        CallId = ce.ToolUseID,
+                        RawRepresentation = ce,
+                    };
 
-                        if (ce.Content.TryPickError(out var ceError))
+                    if (ce.Content.TryPickError(out var ceError))
+                    {
+                        (c.Outputs ??= []).Add(
+                            new ErrorContent(null)
+                            {
+                                ErrorCode = ceError.ErrorCode.Value().ToString(),
+                            }
+                        );
+                    }
+
+                    if (ce.Content.TryPickResultBlock(out var ceOutput))
+                    {
+                        if (!string.IsNullOrWhiteSpace(ceOutput.Stdout))
+                        {
+                            (c.Outputs ??= []).Add(new TextContent(ceOutput.Stdout));
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(ceOutput.Stderr) || ceOutput.ReturnCode != 0)
                         {
                             (c.Outputs ??= []).Add(
-                                new ErrorContent(null)
+                                new ErrorContent(ceOutput.Stderr)
                                 {
-                                    ErrorCode = ceError.ErrorCode.Value().ToString(),
+                                    ErrorCode = ceOutput.ReturnCode.ToString(
+                                        CultureInfo.InvariantCulture
+                                    ),
                                 }
                             );
                         }
 
-                        if (ce.Content.TryPickResultBlock(out var ceOutput))
+                        if (ceOutput.Content is { Count: > 0 })
                         {
-                            if (!string.IsNullOrWhiteSpace(ceOutput.Stdout))
-                            {
-                                (c.Outputs ??= []).Add(new TextContent(ceOutput.Stdout));
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(ceOutput.Stderr) || ceOutput.ReturnCode != 0)
+                            foreach (var ceOutputContent in ceOutput.Content)
                             {
                                 (c.Outputs ??= []).Add(
-                                    new ErrorContent(ceOutput.Stderr)
-                                    {
-                                        ErrorCode = ceOutput.ReturnCode.ToString(
-                                            CultureInfo.InvariantCulture
-                                        ),
-                                    }
+                                    new HostedFileContent(ceOutputContent.FileID)
                                 );
                             }
-
-                            if (ceOutput.Content is { Count: > 0 })
-                            {
-                                foreach (var ceOutputContent in ceOutput.Content)
-                                {
-                                    (c.Outputs ??= []).Add(
-                                        new HostedFileContent(ceOutputContent.FileID)
-                                    );
-                                }
-                            }
                         }
-
-                        return c;
                     }
+
+                    return c;
+                }
 
                 case BetaBashCodeExecutionToolResultBlock ce:
-                    // This is the same as BetaCodeExecutionToolResultBlock but with a different type names.
-                    // Keep both of them in sync.
+                // This is the same as BetaCodeExecutionToolResultBlock but with a different type names.
+                // Keep both of them in sync.
+                {
+                    CodeInterpreterToolResultContent c = new()
                     {
-                        CodeInterpreterToolResultContent c = new()
-                        {
-                            CallId = ce.ToolUseID,
-                            RawRepresentation = ce,
-                        };
+                        CallId = ce.ToolUseID,
+                        RawRepresentation = ce,
+                    };
 
-                        if (ce.Content.TryPickBetaBashCodeExecutionToolResultError(out var ceError))
+                    if (ce.Content.TryPickBetaBashCodeExecutionToolResultError(out var ceError))
+                    {
+                        (c.Outputs ??= []).Add(
+                            new ErrorContent(null)
+                            {
+                                ErrorCode = ceError.ErrorCode.Value().ToString(),
+                            }
+                        );
+                    }
+
+                    if (ce.Content.TryPickBetaBashCodeExecutionResultBlock(out var ceOutput))
+                    {
+                        if (!string.IsNullOrWhiteSpace(ceOutput.Stdout))
+                        {
+                            (c.Outputs ??= []).Add(new TextContent(ceOutput.Stdout));
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(ceOutput.Stderr) || ceOutput.ReturnCode != 0)
                         {
                             (c.Outputs ??= []).Add(
-                                new ErrorContent(null)
+                                new ErrorContent(ceOutput.Stderr)
                                 {
-                                    ErrorCode = ceError.ErrorCode.Value().ToString(),
+                                    ErrorCode = ceOutput.ReturnCode.ToString(
+                                        CultureInfo.InvariantCulture
+                                    ),
                                 }
                             );
                         }
 
-                        if (ce.Content.TryPickBetaBashCodeExecutionResultBlock(out var ceOutput))
+                        if (ceOutput.Content is { Count: > 0 })
                         {
-                            if (!string.IsNullOrWhiteSpace(ceOutput.Stdout))
-                            {
-                                (c.Outputs ??= []).Add(new TextContent(ceOutput.Stdout));
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(ceOutput.Stderr) || ceOutput.ReturnCode != 0)
+                            foreach (var ceOutputContent in ceOutput.Content)
                             {
                                 (c.Outputs ??= []).Add(
-                                    new ErrorContent(ceOutput.Stderr)
-                                    {
-                                        ErrorCode = ceOutput.ReturnCode.ToString(
-                                            CultureInfo.InvariantCulture
-                                        ),
-                                    }
+                                    new HostedFileContent(ceOutputContent.FileID)
                                 );
                             }
-
-                            if (ceOutput.Content is { Count: > 0 })
-                            {
-                                foreach (var ceOutputContent in ceOutput.Content)
-                                {
-                                    (c.Outputs ??= []).Add(
-                                        new HostedFileContent(ceOutputContent.FileID)
-                                    );
-                                }
-                            }
                         }
-
-                        return c;
                     }
+
+                    return c;
+                }
 
                 default:
                     return new AIContent() { RawRepresentation = block.Value };

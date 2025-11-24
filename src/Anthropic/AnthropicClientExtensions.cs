@@ -347,10 +347,13 @@ public static class AnthropicClientExtensions
                                         sf.Value.CallId,
                                         sf.Value.Name,
                                         json =>
-                                            (Dictionary<string, object?>?)JsonSerializer.Deserialize(
-                                                json,
-                                                AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(Dictionary<string, object?>))
-                                            )
+                                            (Dictionary<string, object?>?)
+                                                JsonSerializer.Deserialize(
+                                                    json,
+                                                    AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                                        typeof(Dictionary<string, object?>)
+                                                    )
+                                                )
                                     )
                                 );
                             }
@@ -529,7 +532,9 @@ public static class AnthropicClientExtensions
                                                     ? je
                                                     : JsonSerializer.SerializeToElement(
                                                         e.Value,
-                                                        AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(object))
+                                                        AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                                            typeof(object)
+                                                        )
                                                     )
                                         ) ?? [],
                                 }
@@ -545,7 +550,9 @@ public static class AnthropicClientExtensions
                                     Content = new(
                                         JsonSerializer.Serialize(
                                             frc.Result,
-                                            AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(object))
+                                            AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                                typeof(object)
+                                            )
                                         )
                                     ),
                                 }
@@ -856,10 +863,13 @@ public static class AnthropicClientExtensions
                         toolUse.ID,
                         toolUse.Name,
                         toolUse.RawData.TryGetValue("input", out JsonElement element)
-                            ? (Dictionary<string, object?>?)JsonSerializer.Deserialize(
-                                element,
-                                AIJsonUtilities.DefaultOptions.GetTypeInfo(typeof(Dictionary<string, object?>))
-                            )
+                            ? (Dictionary<string, object?>?)
+                                JsonSerializer.Deserialize(
+                                    element,
+                                    AIJsonUtilities.DefaultOptions.GetTypeInfo(
+                                        typeof(Dictionary<string, object?>)
+                                    )
+                                )
                             : null
                     )
                     {
