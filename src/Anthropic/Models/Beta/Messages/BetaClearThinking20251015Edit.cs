@@ -279,7 +279,7 @@ sealed class KeepConverter : JsonConverter<Keep>
 }
 
 [JsonConverter(typeof(Converter))]
-public class UnionMember2
+public record class UnionMember2
 {
     public JsonElement Json { get; private init; }
 
@@ -295,10 +295,25 @@ public class UnionMember2
 
     public void Validate()
     {
-        if (JsonElement.DeepEquals(this.Json, new UnionMember2().Json))
+        if (this != new UnionMember2())
         {
             throw new AnthropicInvalidDataException("Invalid value given for 'UnionMember2'");
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return 0;
+    }
+
+    public virtual bool Equals(UnionMember2? other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+
+        return JsonElement.DeepEquals(this.Json, other.Json);
     }
 
     class Converter : JsonConverter<UnionMember2>
