@@ -39,26 +39,8 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public required long MaxTokens
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("max_tokens", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'max_tokens' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "max_tokens",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawBodyData["max_tokens"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawBodyData, "max_tokens"); }
+        init { ModelBase.Set(this._rawBodyData, "max_tokens", value); }
     }
 
     /// <summary>
@@ -114,30 +96,8 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public required IReadOnlyList<MessageParam> Messages
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("messages", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'messages' cannot be null",
-                    new System::ArgumentOutOfRangeException("messages", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<MessageParam>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'messages' cannot be null",
-                    new System::ArgumentNullException("messages")
-                );
-        }
-        init
-        {
-            this._rawBodyData["messages"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<MessageParam>>(this.RawBodyData, "messages"); }
+        init { ModelBase.Set(this._rawBodyData, "messages", value); }
     }
 
     /// <summary>
@@ -146,30 +106,8 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public required ApiEnum<string, Model> Model
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("model", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'model' cannot be null",
-                    new System::ArgumentOutOfRangeException("model", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Model>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'model' cannot be null",
-                    new System::ArgumentNullException("model")
-                );
-        }
-        init
-        {
-            this._rawBodyData["model"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Model>>(this.RawBodyData, "model"); }
+        init { ModelBase.Set(this._rawBodyData, "model", value); }
     }
 
     /// <summary>
@@ -177,13 +115,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public Metadata? Metadata
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("metadata", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Metadata?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Metadata>(this.RawBodyData, "metadata"); }
         init
         {
             if (value == null)
@@ -191,10 +123,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["metadata"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "metadata", value);
         }
     }
 
@@ -209,12 +138,9 @@ public sealed record class MessageCreateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("service_tier", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, ServiceTier>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, ServiceTier>>(
+                this.RawBodyData,
+                "service_tier"
             );
         }
         init
@@ -224,10 +150,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["service_tier"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "service_tier", value);
         }
     }
 
@@ -245,13 +168,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public IReadOnlyList<string>? StopSequences
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("stop_sequences", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawBodyData, "stop_sequences"); }
         init
         {
             if (value == null)
@@ -259,10 +176,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["stop_sequences"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "stop_sequences", value);
         }
     }
 
@@ -274,13 +188,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public SystemModel? System
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("system", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<SystemModel?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<SystemModel>(this.RawBodyData, "system"); }
         init
         {
             if (value == null)
@@ -288,10 +196,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["system"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "system", value);
         }
     }
 
@@ -307,13 +212,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public double? Temperature
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("temperature", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawBodyData, "temperature"); }
         init
         {
             if (value == null)
@@ -321,10 +220,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["temperature"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "temperature", value);
         }
     }
 
@@ -342,13 +238,7 @@ public sealed record class MessageCreateParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("thinking", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ThinkingConfigParam?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<ThinkingConfigParam>(this.RawBodyData, "thinking");
         }
         init
         {
@@ -357,10 +247,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["thinking"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "thinking", value);
         }
     }
 
@@ -370,13 +257,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public ToolChoice? ToolChoice
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("tool_choice", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ToolChoice?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<ToolChoice>(this.RawBodyData, "tool_choice"); }
         init
         {
             if (value == null)
@@ -384,10 +265,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["tool_choice"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "tool_choice", value);
         }
     }
 
@@ -440,16 +318,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public IReadOnlyList<ToolUnion>? Tools
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("tools", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ToolUnion>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<ToolUnion>>(this.RawBodyData, "tools"); }
         init
         {
             if (value == null)
@@ -457,10 +326,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["tools"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "tools", value);
         }
     }
 
@@ -474,13 +340,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public long? TopK
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("top_k", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawBodyData, "top_k"); }
         init
         {
             if (value == null)
@@ -488,10 +348,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["top_k"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "top_k", value);
         }
     }
 
@@ -507,13 +364,7 @@ public sealed record class MessageCreateParams : ParamsBase
     /// </summary>
     public double? TopP
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("top_p", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<double?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<double>(this.RawBodyData, "top_p"); }
         init
         {
             if (value == null)
@@ -521,10 +372,7 @@ public sealed record class MessageCreateParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["top_p"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "top_p", value);
         }
     }
 

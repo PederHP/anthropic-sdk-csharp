@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -19,44 +18,14 @@ public sealed record class WebSearchTool20250305 : ModelBase
     /// </summary>
     public JsonElement Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'name' cannot be null",
-                    new ArgumentOutOfRangeException("name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "name"); }
+        init { ModelBase.Set(this._rawData, "name", value); }
     }
 
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -65,20 +34,8 @@ public sealed record class WebSearchTool20250305 : ModelBase
     /// </summary>
     public IReadOnlyList<string>? AllowedDomains
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("allowed_domains", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["allowed_domains"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "allowed_domains"); }
+        init { ModelBase.Set(this._rawData, "allowed_domains", value); }
     }
 
     /// <summary>
@@ -86,20 +43,8 @@ public sealed record class WebSearchTool20250305 : ModelBase
     /// </summary>
     public IReadOnlyList<string>? BlockedDomains
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("blocked_domains", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["blocked_domains"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "blocked_domains"); }
+        init { ModelBase.Set(this._rawData, "blocked_domains", value); }
     }
 
     /// <summary>
@@ -109,21 +54,9 @@ public sealed record class WebSearchTool20250305 : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("cache_control", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<CacheControlEphemeral?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<CacheControlEphemeral>(this.RawData, "cache_control");
         }
-        init
-        {
-            this._rawData["cache_control"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "cache_control", value); }
     }
 
     /// <summary>
@@ -131,20 +64,8 @@ public sealed record class WebSearchTool20250305 : ModelBase
     /// </summary>
     public long? MaxUses
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("max_uses", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["max_uses"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "max_uses"); }
+        init { ModelBase.Set(this._rawData, "max_uses", value); }
     }
 
     /// <summary>
@@ -152,20 +73,8 @@ public sealed record class WebSearchTool20250305 : ModelBase
     /// </summary>
     public UserLocation? UserLocation
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("user_location", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<UserLocation?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["user_location"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<UserLocation>(this.RawData, "user_location"); }
+        init { ModelBase.Set(this._rawData, "user_location", value); }
     }
 
     public override void Validate()
@@ -240,23 +149,8 @@ public sealed record class UserLocation : ModelBase
 {
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -264,20 +158,8 @@ public sealed record class UserLocation : ModelBase
     /// </summary>
     public string? City
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("city", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["city"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "city"); }
+        init { ModelBase.Set(this._rawData, "city", value); }
     }
 
     /// <summary>
@@ -286,20 +168,8 @@ public sealed record class UserLocation : ModelBase
     /// </summary>
     public string? Country
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("country", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["country"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "country"); }
+        init { ModelBase.Set(this._rawData, "country", value); }
     }
 
     /// <summary>
@@ -307,20 +177,8 @@ public sealed record class UserLocation : ModelBase
     /// </summary>
     public string? Region
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("region", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["region"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "region"); }
+        init { ModelBase.Set(this._rawData, "region", value); }
     }
 
     /// <summary>
@@ -328,20 +186,8 @@ public sealed record class UserLocation : ModelBase
     /// </summary>
     public string? Timezone
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("timezone", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["timezone"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "timezone"); }
+        init { ModelBase.Set(this._rawData, "timezone", value); }
     }
 
     public override void Validate()

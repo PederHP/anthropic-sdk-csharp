@@ -84,7 +84,7 @@ public class BatchServiceTest
                             Stream = true,
                             System = new(
                                 [
-                                    new Models.Beta.Messages.BetaTextBlockParam()
+                                    new Messages::BetaTextBlockParam()
                                     {
                                         Text = "Today's date is 2024-06-01.",
                                         CacheControl = new() { TTL = Messages::TTL.TTL5m },

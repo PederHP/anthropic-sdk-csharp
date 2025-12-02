@@ -31,12 +31,9 @@ public sealed record class BatchCancelParams : ParamsBase
     {
         get
         {
-            if (!this._rawHeaderData.TryGetValue("anthropic-beta", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, AnthropicBeta>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, AnthropicBeta>>>(
+                this.RawHeaderData,
+                "anthropic-beta"
             );
         }
         init
@@ -46,10 +43,7 @@ public sealed record class BatchCancelParams : ParamsBase
                 return;
             }
 
-            this._rawHeaderData["anthropic-beta"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawHeaderData, "anthropic-beta", value);
         }
     }
 

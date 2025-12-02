@@ -84,28 +84,9 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("messages", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'messages' cannot be null",
-                    new System::ArgumentOutOfRangeException("messages", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<List<BetaMessageParam>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'messages' cannot be null",
-                    new System::ArgumentNullException("messages")
-                );
+            return ModelBase.GetNotNullClass<List<BetaMessageParam>>(this.RawBodyData, "messages");
         }
-        init
-        {
-            this._rawBodyData["messages"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "messages", value); }
     }
 
     /// <summary>
@@ -116,28 +97,12 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("model", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'model' cannot be null",
-                    new System::ArgumentOutOfRangeException("model", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Messages::Model>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'model' cannot be null",
-                    new System::ArgumentNullException("model")
-                );
-        }
-        init
-        {
-            this._rawBodyData["model"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, Messages::Model>>(
+                this.RawBodyData,
+                "model"
             );
         }
+        init { ModelBase.Set(this._rawBodyData, "model", value); }
     }
 
     /// <summary>
@@ -150,21 +115,12 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("context_management", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaContextManagementConfig?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaContextManagementConfig>(
+                this.RawBodyData,
+                "context_management"
             );
         }
-        init
-        {
-            this._rawBodyData["context_management"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "context_management", value); }
     }
 
     /// <summary>
@@ -174,12 +130,9 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("mcp_servers", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<BetaRequestMCPServerURLDefinition>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<BetaRequestMCPServerURLDefinition>>(
+                this.RawBodyData,
+                "mcp_servers"
             );
         }
         init
@@ -189,10 +142,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["mcp_servers"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "mcp_servers", value);
         }
     }
 
@@ -204,13 +154,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("output_config", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaOutputConfig?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<BetaOutputConfig>(this.RawBodyData, "output_config");
         }
         init
         {
@@ -219,10 +163,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["output_config"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "output_config", value);
         }
     }
 
@@ -233,21 +174,12 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("output_format", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaJSONOutputFormat?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaJSONOutputFormat>(
+                this.RawBodyData,
+                "output_format"
             );
         }
-        init
-        {
-            this._rawBodyData["output_format"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawBodyData, "output_format", value); }
     }
 
     /// <summary>
@@ -258,13 +190,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
     /// </summary>
     public System1? System
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("system", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<System1?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<System1>(this.RawBodyData, "system"); }
         init
         {
             if (value == null)
@@ -272,10 +198,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["system"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "system", value);
         }
     }
 
@@ -293,12 +216,9 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawBodyData.TryGetValue("thinking", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaThinkingConfigParam?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaThinkingConfigParam>(
+                this.RawBodyData,
+                "thinking"
             );
         }
         init
@@ -308,10 +228,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["thinking"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "thinking", value);
         }
     }
 
@@ -321,16 +238,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
     /// </summary>
     public BetaToolChoice? ToolChoice
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("tool_choice", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaToolChoice?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BetaToolChoice>(this.RawBodyData, "tool_choice"); }
         init
         {
             if (value == null)
@@ -338,10 +246,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["tool_choice"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "tool_choice", value);
         }
     }
 
@@ -394,13 +299,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
     /// </summary>
     public IReadOnlyList<Tool>? Tools
     {
-        get
-        {
-            if (!this._rawBodyData.TryGetValue("tools", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Tool>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<Tool>>(this.RawBodyData, "tools"); }
         init
         {
             if (value == null)
@@ -408,10 +307,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawBodyData["tools"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawBodyData, "tools", value);
         }
     }
 
@@ -422,12 +318,9 @@ public sealed record class MessageCountTokensParams : ParamsBase
     {
         get
         {
-            if (!this._rawHeaderData.TryGetValue("anthropic-beta", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, AnthropicBeta>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, AnthropicBeta>>>(
+                this.RawHeaderData,
+                "anthropic-beta"
             );
         }
         init
@@ -437,10 +330,7 @@ public sealed record class MessageCountTokensParams : ParamsBase
                 return;
             }
 
-            this._rawHeaderData["anthropic-beta"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawHeaderData, "anthropic-beta", value);
         }
     }
 

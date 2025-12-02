@@ -15,51 +15,14 @@ public sealed record class BetaToolResultBlockParam : ModelBase
 {
     public required string ToolUseID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("tool_use_id", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'tool_use_id' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "tool_use_id",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new AnthropicInvalidDataException(
-                    "'tool_use_id' cannot be null",
-                    new System::ArgumentNullException("tool_use_id")
-                );
-        }
-        init
-        {
-            this._rawData["tool_use_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "tool_use_id"); }
+        init { ModelBase.Set(this._rawData, "tool_use_id", value); }
     }
 
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -69,33 +32,21 @@ public sealed record class BetaToolResultBlockParam : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("cache_control", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaCacheControlEphemeral?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaCacheControlEphemeral>(
+                this.RawData,
+                "cache_control"
             );
         }
-        init
-        {
-            this._rawData["cache_control"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "cache_control", value); }
     }
 
     public BetaToolResultBlockParamContent? Content
     {
         get
         {
-            if (!this._rawData.TryGetValue("content", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaToolResultBlockParamContent?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaToolResultBlockParamContent>(
+                this.RawData,
+                "content"
             );
         }
         init
@@ -105,22 +56,13 @@ public sealed record class BetaToolResultBlockParam : ModelBase
                 return;
             }
 
-            this._rawData["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "content", value);
         }
     }
 
     public bool? IsError
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("is_error", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "is_error"); }
         init
         {
             if (value == null)
@@ -128,10 +70,7 @@ public sealed record class BetaToolResultBlockParam : ModelBase
                 return;
             }
 
-            this._rawData["is_error"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "is_error", value);
         }
     }
 

@@ -14,48 +14,14 @@ public sealed record class CitationsDelta : ModelBase
 {
     public required Citation Citation
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("citation", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'citation' cannot be null",
-                    new System::ArgumentOutOfRangeException("citation", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Citation>(element, ModelBase.SerializerOptions)
-                ?? throw new AnthropicInvalidDataException(
-                    "'citation' cannot be null",
-                    new System::ArgumentNullException("citation")
-                );
-        }
-        init
-        {
-            this._rawData["citation"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Citation>(this.RawData, "citation"); }
+        init { ModelBase.Set(this._rawData, "citation", value); }
     }
 
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     public override void Validate()

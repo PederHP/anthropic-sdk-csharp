@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Anthropic.Core;
-using Anthropic.Exceptions;
 
 namespace Anthropic.Models.Messages;
 
@@ -17,26 +15,8 @@ public sealed record class ServerToolUsage : ModelBase
     /// </summary>
     public required long WebSearchRequests
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("web_search_requests", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'web_search_requests' cannot be null",
-                    new ArgumentOutOfRangeException(
-                        "web_search_requests",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["web_search_requests"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "web_search_requests"); }
+        init { ModelBase.Set(this._rawData, "web_search_requests", value); }
     }
 
     public override void Validate()

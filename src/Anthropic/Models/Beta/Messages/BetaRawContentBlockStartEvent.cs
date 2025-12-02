@@ -19,72 +19,20 @@ public sealed record class BetaRawContentBlockStartEvent : ModelBase
     /// </summary>
     public required ContentBlock ContentBlock
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("content_block", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'content_block' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "content_block",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<ContentBlock>(element, ModelBase.SerializerOptions)
-                ?? throw new AnthropicInvalidDataException(
-                    "'content_block' cannot be null",
-                    new System::ArgumentNullException("content_block")
-                );
-        }
-        init
-        {
-            this._rawData["content_block"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ContentBlock>(this.RawData, "content_block"); }
+        init { ModelBase.Set(this._rawData, "content_block", value); }
     }
 
     public required long Index
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("index", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'index' cannot be null",
-                    new System::ArgumentOutOfRangeException("index", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["index"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "index"); }
+        init { ModelBase.Set(this._rawData, "index", value); }
     }
 
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     public override void Validate()

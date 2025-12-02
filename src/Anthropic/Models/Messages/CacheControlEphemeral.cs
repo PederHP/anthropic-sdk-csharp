@@ -14,23 +14,8 @@ public sealed record class CacheControlEphemeral : ModelBase
 {
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -42,16 +27,7 @@ public sealed record class CacheControlEphemeral : ModelBase
     /// </summary>
     public ApiEnum<string, TTL>? TTL
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("ttl", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, TTL>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<ApiEnum<string, TTL>>(this.RawData, "ttl"); }
         init
         {
             if (value == null)
@@ -59,10 +35,7 @@ public sealed record class CacheControlEphemeral : ModelBase
                 return;
             }
 
-            this._rawData["ttl"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "ttl", value);
         }
     }
 

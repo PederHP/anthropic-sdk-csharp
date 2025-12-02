@@ -19,13 +19,7 @@ public sealed record class BetaContextManagementConfig : ModelBase
     /// </summary>
     public IReadOnlyList<Edit>? Edits
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("edits", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Edit>?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<List<Edit>>(this.RawData, "edits"); }
         init
         {
             if (value == null)
@@ -33,10 +27,7 @@ public sealed record class BetaContextManagementConfig : ModelBase
                 return;
             }
 
-            this._rawData["edits"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "edits", value);
         }
     }
 

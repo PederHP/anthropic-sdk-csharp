@@ -17,23 +17,8 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
 {
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -44,21 +29,12 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("clear_at_least", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaInputTokensClearAtLeast?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaInputTokensClearAtLeast>(
+                this.RawData,
+                "clear_at_least"
             );
         }
-        init
-        {
-            this._rawData["clear_at_least"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "clear_at_least", value); }
     }
 
     /// <summary>
@@ -68,21 +44,9 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("clear_tool_inputs", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ClearToolInputs?>(
-                element,
-                ModelBase.SerializerOptions
-            );
+            return ModelBase.GetNullableClass<ClearToolInputs>(this.RawData, "clear_tool_inputs");
         }
-        init
-        {
-            this._rawData["clear_tool_inputs"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "clear_tool_inputs", value); }
     }
 
     /// <summary>
@@ -90,20 +54,8 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
     /// </summary>
     public IReadOnlyList<string>? ExcludeTools
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("exclude_tools", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<string>?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["exclude_tools"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<string>>(this.RawData, "exclude_tools"); }
+        init { ModelBase.Set(this._rawData, "exclude_tools", value); }
     }
 
     /// <summary>
@@ -111,16 +63,7 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
     /// </summary>
     public BetaToolUsesKeep? Keep
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("keep", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaToolUsesKeep?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<BetaToolUsesKeep>(this.RawData, "keep"); }
         init
         {
             if (value == null)
@@ -128,10 +71,7 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
                 return;
             }
 
-            this._rawData["keep"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "keep", value);
         }
     }
 
@@ -140,13 +80,7 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
     /// </summary>
     public Trigger? Trigger
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("trigger", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Trigger?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Trigger>(this.RawData, "trigger"); }
         init
         {
             if (value == null)
@@ -154,10 +88,7 @@ public sealed record class BetaClearToolUses20250919Edit : ModelBase
                 return;
             }
 
-            this._rawData["trigger"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "trigger", value);
         }
     }
 

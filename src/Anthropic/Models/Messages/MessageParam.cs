@@ -15,58 +15,14 @@ public sealed record class MessageParam : ModelBase
 {
     public required MessageParamContent Content
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("content", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'content' cannot be null",
-                    new System::ArgumentOutOfRangeException("content", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<MessageParamContent>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'content' cannot be null",
-                    new System::ArgumentNullException("content")
-                );
-        }
-        init
-        {
-            this._rawData["content"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<MessageParamContent>(this.RawData, "content"); }
+        init { ModelBase.Set(this._rawData, "content", value); }
     }
 
     public required ApiEnum<string, Role> Role
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("role", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'role' cannot be null",
-                    new System::ArgumentOutOfRangeException("role", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, Role>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'role' cannot be null",
-                    new System::ArgumentNullException("role")
-                );
-        }
-        init
-        {
-            this._rawData["role"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<ApiEnum<string, Role>>(this.RawData, "role"); }
+        init { ModelBase.Set(this._rawData, "role", value); }
     }
 
     public override void Validate()

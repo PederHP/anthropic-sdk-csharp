@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -22,23 +21,8 @@ public sealed record class BetaMemoryTool20250818DeleteCommand : ModelBase
     /// </summary>
     public JsonElement Command
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("command", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'command' cannot be null",
-                    new ArgumentOutOfRangeException("command", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["command"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "command"); }
+        init { ModelBase.Set(this._rawData, "command", value); }
     }
 
     /// <summary>
@@ -46,27 +30,8 @@ public sealed record class BetaMemoryTool20250818DeleteCommand : ModelBase
     /// </summary>
     public required string Path
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("path", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'path' cannot be null",
-                    new ArgumentOutOfRangeException("path", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new AnthropicInvalidDataException(
-                    "'path' cannot be null",
-                    new ArgumentNullException("path")
-                );
-        }
-        init
-        {
-            this._rawData["path"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "path"); }
+        init { ModelBase.Set(this._rawData, "path", value); }
     }
 
     public override void Validate()

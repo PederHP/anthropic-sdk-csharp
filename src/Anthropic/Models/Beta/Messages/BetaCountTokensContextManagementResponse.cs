@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Anthropic.Core;
-using Anthropic.Exceptions;
 
 namespace Anthropic.Models.Beta.Messages;
 
@@ -22,26 +20,8 @@ public sealed record class BetaCountTokensContextManagementResponse : ModelBase
     /// </summary>
     public required long OriginalInputTokens
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("original_input_tokens", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'original_input_tokens' cannot be null",
-                    new ArgumentOutOfRangeException(
-                        "original_input_tokens",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<long>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["original_input_tokens"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<long>(this.RawData, "original_input_tokens"); }
+        init { ModelBase.Set(this._rawData, "original_input_tokens", value); }
     }
 
     public override void Validate()

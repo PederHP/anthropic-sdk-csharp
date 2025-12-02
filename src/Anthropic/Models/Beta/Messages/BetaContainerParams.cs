@@ -18,20 +18,8 @@ public sealed record class BetaContainerParams : ModelBase
     /// </summary>
     public string? ID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("id", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "id"); }
+        init { ModelBase.Set(this._rawData, "id", value); }
     }
 
     /// <summary>
@@ -39,23 +27,8 @@ public sealed record class BetaContainerParams : ModelBase
     /// </summary>
     public IReadOnlyList<BetaSkillParams>? Skills
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("skills", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<BetaSkillParams>?>(
-                element,
-                ModelBase.SerializerOptions
-            );
-        }
-        init
-        {
-            this._rawData["skills"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<List<BetaSkillParams>>(this.RawData, "skills"); }
+        init { ModelBase.Set(this._rawData, "skills", value); }
     }
 
     public override void Validate()

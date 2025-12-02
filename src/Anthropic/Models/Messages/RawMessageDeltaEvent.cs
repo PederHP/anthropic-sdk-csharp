@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,48 +13,14 @@ public sealed record class RawMessageDeltaEvent : ModelBase
 {
     public required Delta Delta
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("delta", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'delta' cannot be null",
-                    new ArgumentOutOfRangeException("delta", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<Delta>(element, ModelBase.SerializerOptions)
-                ?? throw new AnthropicInvalidDataException(
-                    "'delta' cannot be null",
-                    new ArgumentNullException("delta")
-                );
-        }
-        init
-        {
-            this._rawData["delta"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<Delta>(this.RawData, "delta"); }
+        init { ModelBase.Set(this._rawData, "delta", value); }
     }
 
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -77,30 +42,8 @@ public sealed record class RawMessageDeltaEvent : ModelBase
     /// </summary>
     public required MessageDeltaUsage Usage
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("usage", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'usage' cannot be null",
-                    new ArgumentOutOfRangeException("usage", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<MessageDeltaUsage>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'usage' cannot be null",
-                    new ArgumentNullException("usage")
-                );
-        }
-        init
-        {
-            this._rawData["usage"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<MessageDeltaUsage>(this.RawData, "usage"); }
+        init { ModelBase.Set(this._rawData, "usage", value); }
     }
 
     public override void Validate()
@@ -160,39 +103,18 @@ public sealed record class Delta : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("stop_reason", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<ApiEnum<string, StopReason>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<ApiEnum<string, StopReason>>(
+                this.RawData,
+                "stop_reason"
             );
         }
-        init
-        {
-            this._rawData["stop_reason"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "stop_reason", value); }
     }
 
     public required string? StopSequence
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("stop_sequence", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["stop_sequence"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "stop_sequence"); }
+        init { ModelBase.Set(this._rawData, "stop_sequence", value); }
     }
 
     public override void Validate()

@@ -16,23 +16,8 @@ public sealed record class BetaClearThinking20251015Edit : ModelBase
 {
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -41,13 +26,7 @@ public sealed record class BetaClearThinking20251015Edit : ModelBase
     /// </summary>
     public Keep? Keep
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("keep", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<Keep?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<Keep>(this.RawData, "keep"); }
         init
         {
             if (value == null)
@@ -55,10 +34,7 @@ public sealed record class BetaClearThinking20251015Edit : ModelBase
                 return;
             }
 
-            this._rawData["keep"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "keep", value);
         }
     }
 

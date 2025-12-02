@@ -19,33 +19,8 @@ public sealed record class BetaContextManagementResponse : ModelBase
     /// </summary>
     public required IReadOnlyList<AppliedEdit> AppliedEdits
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("applied_edits", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'applied_edits' cannot be null",
-                    new System::ArgumentOutOfRangeException(
-                        "applied_edits",
-                        "Missing required argument"
-                    )
-                );
-
-            return JsonSerializer.Deserialize<List<AppliedEdit>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'applied_edits' cannot be null",
-                    new System::ArgumentNullException("applied_edits")
-                );
-        }
-        init
-        {
-            this._rawData["applied_edits"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<List<AppliedEdit>>(this.RawData, "applied_edits"); }
+        init { ModelBase.Set(this._rawData, "applied_edits", value); }
     }
 
     public override void Validate()

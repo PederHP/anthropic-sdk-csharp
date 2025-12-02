@@ -20,27 +20,8 @@ public sealed record class BetaSkillParams : ModelBase
     /// </summary>
     public required string SkillID
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("skill_id", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'skill_id' cannot be null",
-                    new System::ArgumentOutOfRangeException("skill_id", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<string>(element, ModelBase.SerializerOptions)
-                ?? throw new AnthropicInvalidDataException(
-                    "'skill_id' cannot be null",
-                    new System::ArgumentNullException("skill_id")
-                );
-        }
-        init
-        {
-            this._rawData["skill_id"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullClass<string>(this.RawData, "skill_id"); }
+        init { ModelBase.Set(this._rawData, "skill_id", value); }
     }
 
     /// <summary>
@@ -50,28 +31,12 @@ public sealed record class BetaSkillParams : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<ApiEnum<string, BetaSkillParamsType>>(
-                    element,
-                    ModelBase.SerializerOptions
-                )
-                ?? throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentNullException("type")
-                );
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNotNullClass<ApiEnum<string, BetaSkillParamsType>>(
+                this.RawData,
+                "type"
             );
         }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     /// <summary>
@@ -79,13 +44,7 @@ public sealed record class BetaSkillParams : ModelBase
     /// </summary>
     public string? Version
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("version", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<string?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableClass<string>(this.RawData, "version"); }
         init
         {
             if (value == null)
@@ -93,10 +52,7 @@ public sealed record class BetaSkillParams : ModelBase
                 return;
             }
 
-            this._rawData["version"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "version", value);
         }
     }
 

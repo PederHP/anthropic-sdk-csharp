@@ -21,56 +21,23 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
     /// </summary>
     public JsonElement Name
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("name", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'name' cannot be null",
-                    new System::ArgumentOutOfRangeException("name", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["name"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "name"); }
+        init { ModelBase.Set(this._rawData, "name", value); }
     }
 
     public JsonElement Type
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("type", out JsonElement element))
-                throw new AnthropicInvalidDataException(
-                    "'type' cannot be null",
-                    new System::ArgumentOutOfRangeException("type", "Missing required argument")
-                );
-
-            return JsonSerializer.Deserialize<JsonElement>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["type"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNotNullStruct<JsonElement>(this.RawData, "type"); }
+        init { ModelBase.Set(this._rawData, "type", value); }
     }
 
     public IReadOnlyList<ApiEnum<string, AllowedCaller13>>? AllowedCallers
     {
         get
         {
-            if (!this._rawData.TryGetValue("allowed_callers", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<ApiEnum<string, AllowedCaller13>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<ApiEnum<string, AllowedCaller13>>>(
+                this.RawData,
+                "allowed_callers"
             );
         }
         init
@@ -80,10 +47,7 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
                 return;
             }
 
-            this._rawData["allowed_callers"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "allowed_callers", value);
         }
     }
 
@@ -94,21 +58,12 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("cache_control", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<BetaCacheControlEphemeral?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<BetaCacheControlEphemeral>(
+                this.RawData,
+                "cache_control"
             );
         }
-        init
-        {
-            this._rawData["cache_control"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        init { ModelBase.Set(this._rawData, "cache_control", value); }
     }
 
     /// <summary>
@@ -117,13 +72,7 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
     /// </summary>
     public bool? DeferLoading
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("defer_loading", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "defer_loading"); }
         init
         {
             if (value == null)
@@ -131,10 +80,7 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
                 return;
             }
 
-            this._rawData["defer_loading"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "defer_loading", value);
         }
     }
 
@@ -142,12 +88,9 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
     {
         get
         {
-            if (!this._rawData.TryGetValue("input_examples", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>?>(
-                element,
-                ModelBase.SerializerOptions
+            return ModelBase.GetNullableClass<List<Dictionary<string, JsonElement>>>(
+                this.RawData,
+                "input_examples"
             );
         }
         init
@@ -157,10 +100,7 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
                 return;
             }
 
-            this._rawData["input_examples"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "input_examples", value);
         }
     }
 
@@ -170,31 +110,13 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
     /// </summary>
     public long? MaxCharacters
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("max_characters", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<long?>(element, ModelBase.SerializerOptions);
-        }
-        init
-        {
-            this._rawData["max_characters"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
-        }
+        get { return ModelBase.GetNullableStruct<long>(this.RawData, "max_characters"); }
+        init { ModelBase.Set(this._rawData, "max_characters", value); }
     }
 
     public bool? Strict
     {
-        get
-        {
-            if (!this._rawData.TryGetValue("strict", out JsonElement element))
-                return null;
-
-            return JsonSerializer.Deserialize<bool?>(element, ModelBase.SerializerOptions);
-        }
+        get { return ModelBase.GetNullableStruct<bool>(this.RawData, "strict"); }
         init
         {
             if (value == null)
@@ -202,10 +124,7 @@ public sealed record class BetaToolTextEditor20250728 : ModelBase
                 return;
             }
 
-            this._rawData["strict"] = JsonSerializer.SerializeToElement(
-                value,
-                ModelBase.SerializerOptions
-            );
+            ModelBase.Set(this._rawData, "strict", value);
         }
     }
 
