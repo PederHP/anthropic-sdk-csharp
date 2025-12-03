@@ -41,6 +41,12 @@ public sealed record class BatchCreateParams : ParamsBase
 
     public BatchCreateParams() { }
 
+    public BatchCreateParams(BatchCreateParams batchCreateParams)
+        : base(batchCreateParams)
+    {
+        this._rawBodyData = [.. batchCreateParams._rawBodyData];
+    }
+
     public BatchCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,
@@ -140,6 +146,9 @@ public sealed record class Request : ModelBase
     }
 
     public Request() { }
+
+    public Request(Request request)
+        : base(request) { }
 
     public Request(IReadOnlyDictionary<string, JsonElement> rawData)
     {
@@ -567,6 +576,9 @@ public sealed record class Params : ModelBase
     }
 
     public Params() { }
+
+    public Params(Params params1)
+        : base(params1) { }
 
     public Params(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -58,6 +58,11 @@ public sealed record class BetaToolSearchToolResultError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"tool_search_tool_result_error\"");
     }
 
+    public BetaToolSearchToolResultError(
+        BetaToolSearchToolResultError betaToolSearchToolResultError
+    )
+        : base(betaToolSearchToolResultError) { }
+
     public BetaToolSearchToolResultError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

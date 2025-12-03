@@ -36,6 +36,11 @@ public sealed record class BetaRequestMCPServerToolConfiguration : ModelBase
 
     public BetaRequestMCPServerToolConfiguration() { }
 
+    public BetaRequestMCPServerToolConfiguration(
+        BetaRequestMCPServerToolConfiguration betaRequestMCPServerToolConfiguration
+    )
+        : base(betaRequestMCPServerToolConfiguration) { }
+
     public BetaRequestMCPServerToolConfiguration(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

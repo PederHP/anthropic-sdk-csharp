@@ -54,6 +54,9 @@ public sealed record class ImageBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"image\"");
     }
 
+    public ImageBlockParam(ImageBlockParam imageBlockParam)
+        : base(imageBlockParam) { }
+
     public ImageBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

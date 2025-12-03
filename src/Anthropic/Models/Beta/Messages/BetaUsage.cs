@@ -104,6 +104,9 @@ public sealed record class BetaUsage : ModelBase
 
     public BetaUsage() { }
 
+    public BetaUsage(BetaUsage betaUsage)
+        : base(betaUsage) { }
+
     public BetaUsage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

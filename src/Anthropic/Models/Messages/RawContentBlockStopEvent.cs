@@ -43,6 +43,9 @@ public sealed record class RawContentBlockStopEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"content_block_stop\"");
     }
 
+    public RawContentBlockStopEvent(RawContentBlockStopEvent rawContentBlockStopEvent)
+        : base(rawContentBlockStopEvent) { }
+
     public RawContentBlockStopEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

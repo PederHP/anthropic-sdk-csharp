@@ -43,6 +43,9 @@ public sealed record class APIErrorObject : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"api_error\"");
     }
 
+    public APIErrorObject(APIErrorObject apiErrorObject)
+        : base(apiErrorObject) { }
+
     public APIErrorObject(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

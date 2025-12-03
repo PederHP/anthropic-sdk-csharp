@@ -132,6 +132,11 @@ public sealed record class BetaToolSearchToolRegex20251119 : ModelBase
         this.Name = JsonSerializer.Deserialize<JsonElement>("\"tool_search_tool_regex\"");
     }
 
+    public BetaToolSearchToolRegex20251119(
+        BetaToolSearchToolRegex20251119 betaToolSearchToolRegex20251119
+    )
+        : base(betaToolSearchToolRegex20251119) { }
+
     public BetaToolSearchToolRegex20251119(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

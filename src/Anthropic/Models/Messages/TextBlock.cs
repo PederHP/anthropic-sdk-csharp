@@ -55,6 +55,9 @@ public sealed record class TextBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"text\"");
     }
 
+    public TextBlock(TextBlock textBlock)
+        : base(textBlock) { }
+
     public TextBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

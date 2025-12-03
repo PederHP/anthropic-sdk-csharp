@@ -81,6 +81,11 @@ public sealed record class BetaTextEditorCodeExecutionStrReplaceResultBlock : Mo
     }
 
     public BetaTextEditorCodeExecutionStrReplaceResultBlock(
+        BetaTextEditorCodeExecutionStrReplaceResultBlock betaTextEditorCodeExecutionStrReplaceResultBlock
+    )
+        : base(betaTextEditorCodeExecutionStrReplaceResultBlock) { }
+
+    public BetaTextEditorCodeExecutionStrReplaceResultBlock(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

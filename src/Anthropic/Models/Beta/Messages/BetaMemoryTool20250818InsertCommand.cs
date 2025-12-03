@@ -74,6 +74,11 @@ public sealed record class BetaMemoryTool20250818InsertCommand : ModelBase
         this.Command = JsonSerializer.Deserialize<JsonElement>("\"insert\"");
     }
 
+    public BetaMemoryTool20250818InsertCommand(
+        BetaMemoryTool20250818InsertCommand betaMemoryTool20250818InsertCommand
+    )
+        : base(betaMemoryTool20250818InsertCommand) { }
+
     public BetaMemoryTool20250818InsertCommand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

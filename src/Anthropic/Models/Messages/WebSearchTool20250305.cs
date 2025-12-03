@@ -111,6 +111,9 @@ public sealed record class WebSearchTool20250305 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_20250305\"");
     }
 
+    public WebSearchTool20250305(WebSearchTool20250305 webSearchTool20250305)
+        : base(webSearchTool20250305) { }
+
     public WebSearchTool20250305(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -215,6 +218,9 @@ public sealed record class UserLocation : ModelBase
     {
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"approximate\"");
     }
+
+    public UserLocation(UserLocation userLocation)
+        : base(userLocation) { }
 
     public UserLocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {

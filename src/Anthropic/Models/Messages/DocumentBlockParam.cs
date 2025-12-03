@@ -78,6 +78,9 @@ public sealed record class DocumentBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"document\"");
     }
 
+    public DocumentBlockParam(DocumentBlockParam documentBlockParam)
+        : base(documentBlockParam) { }
+
     public DocumentBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

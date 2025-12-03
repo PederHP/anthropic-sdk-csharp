@@ -36,6 +36,9 @@ public sealed record class MessageBatchExpiredResult : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"expired\"");
     }
 
+    public MessageBatchExpiredResult(MessageBatchExpiredResult messageBatchExpiredResult)
+        : base(messageBatchExpiredResult) { }
+
     public MessageBatchExpiredResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

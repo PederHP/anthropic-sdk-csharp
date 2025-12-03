@@ -43,6 +43,9 @@ public sealed record class BillingError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"billing_error\"");
     }
 
+    public BillingError(BillingError billingError)
+        : base(billingError) { }
+
     public BillingError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

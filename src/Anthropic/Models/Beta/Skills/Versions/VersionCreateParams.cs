@@ -60,6 +60,12 @@ public sealed record class VersionCreateParams : ParamsBase
 
     public VersionCreateParams() { }
 
+    public VersionCreateParams(VersionCreateParams versionCreateParams)
+        : base(versionCreateParams)
+    {
+        this._rawBodyData = [.. versionCreateParams._rawBodyData];
+    }
+
     public VersionCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

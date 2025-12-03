@@ -50,6 +50,9 @@ public sealed record class RawContentBlockDeltaEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"content_block_delta\"");
     }
 
+    public RawContentBlockDeltaEvent(RawContentBlockDeltaEvent rawContentBlockDeltaEvent)
+        : base(rawContentBlockDeltaEvent) { }
+
     public RawContentBlockDeltaEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

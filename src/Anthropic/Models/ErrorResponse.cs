@@ -47,6 +47,9 @@ public sealed record class ErrorResponse : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"error\"");
     }
 
+    public ErrorResponse(ErrorResponse errorResponse)
+        : base(errorResponse) { }
+
     public ErrorResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

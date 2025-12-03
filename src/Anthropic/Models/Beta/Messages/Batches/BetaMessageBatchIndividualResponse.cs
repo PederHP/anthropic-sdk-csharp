@@ -53,6 +53,11 @@ public sealed record class BetaMessageBatchIndividualResponse : ModelBase
 
     public BetaMessageBatchIndividualResponse() { }
 
+    public BetaMessageBatchIndividualResponse(
+        BetaMessageBatchIndividualResponse betaMessageBatchIndividualResponse
+    )
+        : base(betaMessageBatchIndividualResponse) { }
+
     public BetaMessageBatchIndividualResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -38,6 +38,9 @@ public sealed record class URLPDFSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"url\"");
     }
 
+    public URLPDFSource(URLPDFSource urlpdfSource)
+        : base(urlpdfSource) { }
+
     public URLPDFSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

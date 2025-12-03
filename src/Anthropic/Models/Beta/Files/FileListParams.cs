@@ -94,6 +94,9 @@ public sealed record class FileListParams : ParamsBase
 
     public FileListParams() { }
 
+    public FileListParams(FileListParams fileListParams)
+        : base(fileListParams) { }
+
     public FileListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -24,6 +24,9 @@ public sealed record class BetaCitationConfig : ModelBase
 
     public BetaCitationConfig() { }
 
+    public BetaCitationConfig(BetaCitationConfig betaCitationConfig)
+        : base(betaCitationConfig) { }
+
     public BetaCitationConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

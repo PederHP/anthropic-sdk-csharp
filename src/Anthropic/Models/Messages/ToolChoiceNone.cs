@@ -34,6 +34,9 @@ public sealed record class ToolChoiceNone : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"none\"");
     }
 
+    public ToolChoiceNone(ToolChoiceNone toolChoiceNone)
+        : base(toolChoiceNone) { }
+
     public ToolChoiceNone(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

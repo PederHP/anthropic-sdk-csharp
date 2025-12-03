@@ -45,6 +45,11 @@ public sealed record class BetaRedactedThinkingBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"redacted_thinking\"");
     }
 
+    public BetaRedactedThinkingBlockParam(
+        BetaRedactedThinkingBlockParam betaRedactedThinkingBlockParam
+    )
+        : base(betaRedactedThinkingBlockParam) { }
+
     public BetaRedactedThinkingBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

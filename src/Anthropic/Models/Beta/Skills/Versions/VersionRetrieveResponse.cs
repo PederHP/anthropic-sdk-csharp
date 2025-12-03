@@ -109,6 +109,9 @@ public sealed record class VersionRetrieveResponse : ModelBase
 
     public VersionRetrieveResponse() { }
 
+    public VersionRetrieveResponse(VersionRetrieveResponse versionRetrieveResponse)
+        : base(versionRetrieveResponse) { }
+
     public VersionRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

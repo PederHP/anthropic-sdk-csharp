@@ -43,6 +43,9 @@ public sealed record class BetaToolUsesTrigger : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"tool_uses\"");
     }
 
+    public BetaToolUsesTrigger(BetaToolUsesTrigger betaToolUsesTrigger)
+        : base(betaToolUsesTrigger) { }
+
     public BetaToolUsesTrigger(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

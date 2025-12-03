@@ -64,6 +64,9 @@ public sealed record class BetaDocumentBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"document\"");
     }
 
+    public BetaDocumentBlock(BetaDocumentBlock betaDocumentBlock)
+        : base(betaDocumentBlock) { }
+
     public BetaDocumentBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

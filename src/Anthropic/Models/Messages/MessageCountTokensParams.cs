@@ -235,6 +235,12 @@ public sealed record class MessageCountTokensParams : ParamsBase
 
     public MessageCountTokensParams() { }
 
+    public MessageCountTokensParams(MessageCountTokensParams messageCountTokensParams)
+        : base(messageCountTokensParams)
+    {
+        this._rawBodyData = [.. messageCountTokensParams._rawBodyData];
+    }
+
     public MessageCountTokensParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

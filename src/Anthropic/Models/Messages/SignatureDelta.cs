@@ -43,6 +43,9 @@ public sealed record class SignatureDelta : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"signature_delta\"");
     }
 
+    public SignatureDelta(SignatureDelta signatureDelta)
+        : base(signatureDelta) { }
+
     public SignatureDelta(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

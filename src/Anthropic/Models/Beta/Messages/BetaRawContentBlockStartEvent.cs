@@ -56,6 +56,11 @@ public sealed record class BetaRawContentBlockStartEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"content_block_start\"");
     }
 
+    public BetaRawContentBlockStartEvent(
+        BetaRawContentBlockStartEvent betaRawContentBlockStartEvent
+    )
+        : base(betaRawContentBlockStartEvent) { }
+
     public BetaRawContentBlockStartEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

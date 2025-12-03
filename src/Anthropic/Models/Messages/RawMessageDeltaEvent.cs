@@ -67,6 +67,9 @@ public sealed record class RawMessageDeltaEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message_delta\"");
     }
 
+    public RawMessageDeltaEvent(RawMessageDeltaEvent rawMessageDeltaEvent)
+        : base(rawMessageDeltaEvent) { }
+
     public RawMessageDeltaEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -128,6 +131,9 @@ public sealed record class Delta : ModelBase
     }
 
     public Delta() { }
+
+    public Delta(Delta delta)
+        : base(delta) { }
 
     public Delta(IReadOnlyDictionary<string, JsonElement> rawData)
     {

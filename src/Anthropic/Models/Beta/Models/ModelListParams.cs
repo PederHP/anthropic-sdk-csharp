@@ -96,6 +96,9 @@ public sealed record class ModelListParams : ParamsBase
 
     public ModelListParams() { }
 
+    public ModelListParams(ModelListParams modelListParams)
+        : base(modelListParams) { }
+
     public ModelListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

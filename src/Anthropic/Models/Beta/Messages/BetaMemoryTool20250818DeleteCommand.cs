@@ -54,6 +54,11 @@ public sealed record class BetaMemoryTool20250818DeleteCommand : ModelBase
         this.Command = JsonSerializer.Deserialize<JsonElement>("\"delete\"");
     }
 
+    public BetaMemoryTool20250818DeleteCommand(
+        BetaMemoryTool20250818DeleteCommand betaMemoryTool20250818DeleteCommand
+    )
+        : base(betaMemoryTool20250818DeleteCommand) { }
+
     public BetaMemoryTool20250818DeleteCommand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

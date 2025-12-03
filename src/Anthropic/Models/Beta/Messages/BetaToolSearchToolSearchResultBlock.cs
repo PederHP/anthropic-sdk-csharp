@@ -57,6 +57,11 @@ public sealed record class BetaToolSearchToolSearchResultBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"tool_search_tool_search_result\"");
     }
 
+    public BetaToolSearchToolSearchResultBlock(
+        BetaToolSearchToolSearchResultBlock betaToolSearchToolSearchResultBlock
+    )
+        : base(betaToolSearchToolSearchResultBlock) { }
+
     public BetaToolSearchToolSearchResultBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

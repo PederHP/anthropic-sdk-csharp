@@ -55,6 +55,9 @@ public sealed record class BetaToolChoiceAny : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"any\"");
     }
 
+    public BetaToolChoiceAny(BetaToolChoiceAny betaToolChoiceAny)
+        : base(betaToolChoiceAny) { }
+
     public BetaToolChoiceAny(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

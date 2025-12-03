@@ -54,6 +54,9 @@ public sealed record class DeletedFile : ModelBase
 
     public DeletedFile() { }
 
+    public DeletedFile(DeletedFile deletedFile)
+        : base(deletedFile) { }
+
     public DeletedFile(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

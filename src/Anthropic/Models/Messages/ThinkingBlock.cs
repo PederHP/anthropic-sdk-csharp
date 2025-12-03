@@ -50,6 +50,9 @@ public sealed record class ThinkingBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"thinking\"");
     }
 
+    public ThinkingBlock(ThinkingBlock thinkingBlock)
+        : base(thinkingBlock) { }
+
     public ThinkingBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

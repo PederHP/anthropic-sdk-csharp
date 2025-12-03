@@ -58,6 +58,11 @@ public sealed record class BetaToolSearchToolSearchResultBlockParam : ModelBase
     }
 
     public BetaToolSearchToolSearchResultBlockParam(
+        BetaToolSearchToolSearchResultBlockParam betaToolSearchToolSearchResultBlockParam
+    )
+        : base(betaToolSearchToolSearchResultBlockParam) { }
+
+    public BetaToolSearchToolSearchResultBlockParam(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

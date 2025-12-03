@@ -50,6 +50,9 @@ public sealed record class BetaThinkingBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"thinking\"");
     }
 
+    public BetaThinkingBlock(BetaThinkingBlock betaThinkingBlock)
+        : base(betaThinkingBlock) { }
+
     public BetaThinkingBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

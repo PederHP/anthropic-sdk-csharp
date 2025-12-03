@@ -74,6 +74,11 @@ public sealed record class BetaMemoryTool20250818StrReplaceCommand : ModelBase
         this.Command = JsonSerializer.Deserialize<JsonElement>("\"str_replace\"");
     }
 
+    public BetaMemoryTool20250818StrReplaceCommand(
+        BetaMemoryTool20250818StrReplaceCommand betaMemoryTool20250818StrReplaceCommand
+    )
+        : base(betaMemoryTool20250818StrReplaceCommand) { }
+
     public BetaMemoryTool20250818StrReplaceCommand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

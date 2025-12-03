@@ -66,6 +66,11 @@ public sealed record class BetaWebSearchResultBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_result\"");
     }
 
+    public BetaWebSearchResultBlockParam(
+        BetaWebSearchResultBlockParam betaWebSearchResultBlockParam
+    )
+        : base(betaWebSearchResultBlockParam) { }
+
     public BetaWebSearchResultBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

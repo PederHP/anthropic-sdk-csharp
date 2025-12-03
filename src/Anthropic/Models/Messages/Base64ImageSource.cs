@@ -57,6 +57,9 @@ public sealed record class Base64ImageSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"base64\"");
     }
 
+    public Base64ImageSource(Base64ImageSource base64ImageSource)
+        : base(base64ImageSource) { }
+
     public Base64ImageSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

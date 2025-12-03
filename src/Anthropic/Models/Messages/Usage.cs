@@ -98,6 +98,9 @@ public sealed record class Usage : ModelBase
 
     public Usage() { }
 
+    public Usage(Usage usage)
+        : base(usage) { }
+
     public Usage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

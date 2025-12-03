@@ -43,6 +43,9 @@ public sealed record class OverloadedError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"overloaded_error\"");
     }
 
+    public OverloadedError(OverloadedError overloadedError)
+        : base(overloadedError) { }
+
     public OverloadedError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

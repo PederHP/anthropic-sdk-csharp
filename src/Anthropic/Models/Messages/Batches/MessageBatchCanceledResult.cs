@@ -38,6 +38,9 @@ public sealed record class MessageBatchCanceledResult : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"canceled\"");
     }
 
+    public MessageBatchCanceledResult(MessageBatchCanceledResult messageBatchCanceledResult)
+        : base(messageBatchCanceledResult) { }
+
     public MessageBatchCanceledResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

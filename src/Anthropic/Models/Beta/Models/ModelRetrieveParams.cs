@@ -43,6 +43,9 @@ public sealed record class ModelRetrieveParams : ParamsBase
 
     public ModelRetrieveParams() { }
 
+    public ModelRetrieveParams(ModelRetrieveParams modelRetrieveParams)
+        : base(modelRetrieveParams) { }
+
     public ModelRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -70,6 +70,9 @@ public sealed record class MessageDeltaUsage : ModelBase
 
     public MessageDeltaUsage() { }
 
+    public MessageDeltaUsage(MessageDeltaUsage messageDeltaUsage)
+        : base(messageDeltaUsage) { }
+
     public MessageDeltaUsage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

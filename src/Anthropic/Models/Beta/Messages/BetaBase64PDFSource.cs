@@ -59,6 +59,9 @@ public sealed record class BetaBase64PDFSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"base64\"");
     }
 
+    public BetaBase64PDFSource(BetaBase64PDFSource betaBase64PDFSource)
+        : base(betaBase64PDFSource) { }
+
     public BetaBase64PDFSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

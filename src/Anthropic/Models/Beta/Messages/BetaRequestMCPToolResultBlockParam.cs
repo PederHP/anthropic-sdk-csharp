@@ -102,6 +102,11 @@ public sealed record class BetaRequestMCPToolResultBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"mcp_tool_result\"");
     }
 
+    public BetaRequestMCPToolResultBlockParam(
+        BetaRequestMCPToolResultBlockParam betaRequestMCPToolResultBlockParam
+    )
+        : base(betaRequestMCPToolResultBlockParam) { }
+
     public BetaRequestMCPToolResultBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -75,6 +75,9 @@ public sealed record class MessageBatchRequestCounts : ModelBase
 
     public MessageBatchRequestCounts() { }
 
+    public MessageBatchRequestCounts(MessageBatchRequestCounts messageBatchRequestCounts)
+        : base(messageBatchRequestCounts) { }
+
     public MessageBatchRequestCounts(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

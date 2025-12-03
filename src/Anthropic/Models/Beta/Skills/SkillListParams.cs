@@ -83,6 +83,9 @@ public sealed record class SkillListParams : ParamsBase
 
     public SkillListParams() { }
 
+    public SkillListParams(SkillListParams skillListParams)
+        : base(skillListParams) { }
+
     public SkillListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

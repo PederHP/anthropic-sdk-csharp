@@ -52,6 +52,9 @@ public sealed record class BetaJSONOutputFormat : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"json_schema\"");
     }
 
+    public BetaJSONOutputFormat(BetaJSONOutputFormat betaJSONOutputFormat)
+        : base(betaJSONOutputFormat) { }
+
     public BetaJSONOutputFormat(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

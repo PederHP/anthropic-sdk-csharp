@@ -78,6 +78,9 @@ public sealed record class BetaCitationPageLocation : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"page_location\"");
     }
 
+    public BetaCitationPageLocation(BetaCitationPageLocation betaCitationPageLocation)
+        : base(betaCitationPageLocation) { }
+
     public BetaCitationPageLocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

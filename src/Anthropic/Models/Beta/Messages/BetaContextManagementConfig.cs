@@ -42,6 +42,9 @@ public sealed record class BetaContextManagementConfig : ModelBase
 
     public BetaContextManagementConfig() { }
 
+    public BetaContextManagementConfig(BetaContextManagementConfig betaContextManagementConfig)
+        : base(betaContextManagementConfig) { }
+
     public BetaContextManagementConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

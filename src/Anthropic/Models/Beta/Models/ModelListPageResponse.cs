@@ -57,6 +57,9 @@ public sealed record class ModelListPageResponse : ModelBase
 
     public ModelListPageResponse() { }
 
+    public ModelListPageResponse(ModelListPageResponse modelListPageResponse)
+        : base(modelListPageResponse) { }
+
     public ModelListPageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

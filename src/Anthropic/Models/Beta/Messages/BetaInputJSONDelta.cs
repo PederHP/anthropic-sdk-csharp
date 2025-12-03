@@ -43,6 +43,9 @@ public sealed record class BetaInputJSONDelta : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"input_json_delta\"");
     }
 
+    public BetaInputJSONDelta(BetaInputJSONDelta betaInputJSONDelta)
+        : base(betaInputJSONDelta) { }
+
     public BetaInputJSONDelta(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -41,6 +41,9 @@ public sealed record class SkillDeleteResponse : ModelBase
 
     public SkillDeleteResponse() { }
 
+    public SkillDeleteResponse(SkillDeleteResponse skillDeleteResponse)
+        : base(skillDeleteResponse) { }
+
     public SkillDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

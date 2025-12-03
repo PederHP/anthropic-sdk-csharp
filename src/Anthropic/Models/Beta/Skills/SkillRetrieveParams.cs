@@ -41,6 +41,9 @@ public sealed record class SkillRetrieveParams : ParamsBase
 
     public SkillRetrieveParams() { }
 
+    public SkillRetrieveParams(SkillRetrieveParams skillRetrieveParams)
+        : base(skillRetrieveParams) { }
+
     public SkillRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -38,6 +38,9 @@ public sealed record class BetaFileDocumentSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"file\"");
     }
 
+    public BetaFileDocumentSource(BetaFileDocumentSource betaFileDocumentSource)
+        : base(betaFileDocumentSource) { }
+
     public BetaFileDocumentSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

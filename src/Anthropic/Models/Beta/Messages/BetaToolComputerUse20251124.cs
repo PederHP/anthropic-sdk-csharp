@@ -202,6 +202,9 @@ public sealed record class BetaToolComputerUse20251124 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"computer_20251124\"");
     }
 
+    public BetaToolComputerUse20251124(BetaToolComputerUse20251124 betaToolComputerUse20251124)
+        : base(betaToolComputerUse20251124) { }
+
     public BetaToolComputerUse20251124(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

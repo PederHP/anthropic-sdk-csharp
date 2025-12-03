@@ -59,6 +59,9 @@ public sealed record class BetaCacheControlEphemeral : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"ephemeral\"");
     }
 
+    public BetaCacheControlEphemeral(BetaCacheControlEphemeral betaCacheControlEphemeral)
+        : base(betaCacheControlEphemeral) { }
+
     public BetaCacheControlEphemeral(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

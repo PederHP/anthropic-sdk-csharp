@@ -73,6 +73,9 @@ public sealed record class BetaMessageDeltaUsage : ModelBase
 
     public BetaMessageDeltaUsage() { }
 
+    public BetaMessageDeltaUsage(BetaMessageDeltaUsage betaMessageDeltaUsage)
+        : base(betaMessageDeltaUsage) { }
+
     public BetaMessageDeltaUsage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

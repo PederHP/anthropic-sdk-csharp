@@ -71,6 +71,9 @@ public sealed record class CitationPageLocationParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"page_location\"");
     }
 
+    public CitationPageLocationParam(CitationPageLocationParam citationPageLocationParam)
+        : base(citationPageLocationParam) { }
+
     public CitationPageLocationParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

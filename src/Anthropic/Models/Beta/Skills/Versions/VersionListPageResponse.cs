@@ -56,6 +56,9 @@ public sealed record class VersionListPageResponse : ModelBase
 
     public VersionListPageResponse() { }
 
+    public VersionListPageResponse(VersionListPageResponse versionListPageResponse)
+        : base(versionListPageResponse) { }
+
     public VersionListPageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -192,6 +195,9 @@ public sealed record class Data : ModelBase
     }
 
     public Data() { }
+
+    public Data(global::Anthropic.Models.Beta.Skills.Versions.Data data)
+        : base(data) { }
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {

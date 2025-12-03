@@ -43,6 +43,9 @@ public sealed record class BetaToolReferenceBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"tool_reference\"");
     }
 
+    public BetaToolReferenceBlock(BetaToolReferenceBlock betaToolReferenceBlock)
+        : base(betaToolReferenceBlock) { }
+
     public BetaToolReferenceBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

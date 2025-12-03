@@ -39,6 +39,9 @@ public sealed record class BetaDirectCaller : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"direct\"");
     }
 
+    public BetaDirectCaller(BetaDirectCaller betaDirectCaller)
+        : base(betaDirectCaller) { }
+
     public BetaDirectCaller(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

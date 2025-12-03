@@ -43,6 +43,9 @@ public sealed record class BetaThinkingTurns : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"thinking_turns\"");
     }
 
+    public BetaThinkingTurns(BetaThinkingTurns betaThinkingTurns)
+        : base(betaThinkingTurns) { }
+
     public BetaThinkingTurns(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

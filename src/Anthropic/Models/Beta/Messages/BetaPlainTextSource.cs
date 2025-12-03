@@ -54,6 +54,9 @@ public sealed record class BetaPlainTextSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"text\"");
     }
 
+    public BetaPlainTextSource(BetaPlainTextSource betaPlainTextSource)
+        : base(betaPlainTextSource) { }
+
     public BetaPlainTextSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -44,6 +44,9 @@ public sealed record class BetaMessageTokensCount : ModelBase
 
     public BetaMessageTokensCount() { }
 
+    public BetaMessageTokensCount(BetaMessageTokensCount betaMessageTokensCount)
+        : base(betaMessageTokensCount) { }
+
     public BetaMessageTokensCount(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

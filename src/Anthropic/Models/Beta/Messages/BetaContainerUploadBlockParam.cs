@@ -65,6 +65,11 @@ public sealed record class BetaContainerUploadBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"container_upload\"");
     }
 
+    public BetaContainerUploadBlockParam(
+        BetaContainerUploadBlockParam betaContainerUploadBlockParam
+    )
+        : base(betaContainerUploadBlockParam) { }
+
     public BetaContainerUploadBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

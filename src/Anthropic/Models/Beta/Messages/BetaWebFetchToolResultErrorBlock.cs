@@ -54,6 +54,11 @@ public sealed record class BetaWebFetchToolResultErrorBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_fetch_tool_result_error\"");
     }
 
+    public BetaWebFetchToolResultErrorBlock(
+        BetaWebFetchToolResultErrorBlock betaWebFetchToolResultErrorBlock
+    )
+        : base(betaWebFetchToolResultErrorBlock) { }
+
     public BetaWebFetchToolResultErrorBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -53,6 +53,9 @@ public sealed record class ThinkingConfigEnabled : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"enabled\"");
     }
 
+    public ThinkingConfigEnabled(ThinkingConfigEnabled thinkingConfigEnabled)
+        : base(thinkingConfigEnabled) { }
+
     public ThinkingConfigEnabled(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -73,6 +73,9 @@ public sealed record class BatchListParams : ParamsBase
 
     public BatchListParams() { }
 
+    public BatchListParams(BatchListParams batchListParams)
+        : base(batchListParams) { }
+
     public BatchListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

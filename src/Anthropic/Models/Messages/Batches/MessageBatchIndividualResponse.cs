@@ -50,6 +50,11 @@ public sealed record class MessageBatchIndividualResponse : ModelBase
 
     public MessageBatchIndividualResponse() { }
 
+    public MessageBatchIndividualResponse(
+        MessageBatchIndividualResponse messageBatchIndividualResponse
+    )
+        : base(messageBatchIndividualResponse) { }
+
     public MessageBatchIndividualResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

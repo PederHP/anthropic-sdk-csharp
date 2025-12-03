@@ -43,6 +43,9 @@ public sealed record class BetaPermissionError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"permission_error\"");
     }
 
+    public BetaPermissionError(BetaPermissionError betaPermissionError)
+        : base(betaPermissionError) { }
+
     public BetaPermissionError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

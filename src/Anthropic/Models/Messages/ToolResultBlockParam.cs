@@ -91,6 +91,9 @@ public sealed record class ToolResultBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"tool_result\"");
     }
 
+    public ToolResultBlockParam(ToolResultBlockParam toolResultBlockParam)
+        : base(toolResultBlockParam) { }
+
     public ToolResultBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

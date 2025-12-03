@@ -43,6 +43,9 @@ public sealed record class RawMessageStartEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message_start\"");
     }
 
+    public RawMessageStartEvent(RawMessageStartEvent rawMessageStartEvent)
+        : base(rawMessageStartEvent) { }
+
     public RawMessageStartEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

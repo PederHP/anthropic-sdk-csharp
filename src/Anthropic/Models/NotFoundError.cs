@@ -43,6 +43,9 @@ public sealed record class NotFoundError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"not_found_error\"");
     }
 
+    public NotFoundError(NotFoundError notFoundError)
+        : base(notFoundError) { }
+
     public NotFoundError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -43,6 +43,9 @@ public sealed record class RedactedThinkingBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"redacted_thinking\"");
     }
 
+    public RedactedThinkingBlock(RedactedThinkingBlock redactedThinkingBlock)
+        : base(redactedThinkingBlock) { }
+
     public RedactedThinkingBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

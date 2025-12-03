@@ -57,6 +57,11 @@ public sealed record class BetaBashCodeExecutionToolResultError : ModelBase
         );
     }
 
+    public BetaBashCodeExecutionToolResultError(
+        BetaBashCodeExecutionToolResultError betaBashCodeExecutionToolResultError
+    )
+        : base(betaBashCodeExecutionToolResultError) { }
+
     public BetaBashCodeExecutionToolResultError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

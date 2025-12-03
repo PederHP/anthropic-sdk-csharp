@@ -53,6 +53,11 @@ public sealed record class BetaTextEditorCodeExecutionCreateResultBlock : ModelB
     }
 
     public BetaTextEditorCodeExecutionCreateResultBlock(
+        BetaTextEditorCodeExecutionCreateResultBlock betaTextEditorCodeExecutionCreateResultBlock
+    )
+        : base(betaTextEditorCodeExecutionCreateResultBlock) { }
+
+    public BetaTextEditorCodeExecutionCreateResultBlock(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

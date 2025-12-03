@@ -28,6 +28,9 @@ public sealed record class MessageTokensCount : ModelBase
 
     public MessageTokensCount() { }
 
+    public MessageTokensCount(MessageTokensCount messageTokensCount)
+        : base(messageTokensCount) { }
+
     public MessageTokensCount(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

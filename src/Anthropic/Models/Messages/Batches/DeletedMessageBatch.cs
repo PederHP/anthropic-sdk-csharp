@@ -51,6 +51,9 @@ public sealed record class DeletedMessageBatch : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message_batch_deleted\"");
     }
 
+    public DeletedMessageBatch(DeletedMessageBatch deletedMessageBatch)
+        : base(deletedMessageBatch) { }
+
     public DeletedMessageBatch(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

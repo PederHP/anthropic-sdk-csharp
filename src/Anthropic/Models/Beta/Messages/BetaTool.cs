@@ -172,6 +172,9 @@ public sealed record class BetaTool : ModelBase
 
     public BetaTool() { }
 
+    public BetaTool(BetaTool betaTool)
+        : base(betaTool) { }
+
     public BetaTool(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -252,6 +255,9 @@ public sealed record class InputSchema : ModelBase
     {
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"object\"");
     }
+
+    public InputSchema(InputSchema inputSchema)
+        : base(inputSchema) { }
 
     public InputSchema(IReadOnlyDictionary<string, JsonElement> rawData)
     {

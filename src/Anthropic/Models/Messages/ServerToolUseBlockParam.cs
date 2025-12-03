@@ -85,6 +85,9 @@ public sealed record class ServerToolUseBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"server_tool_use\"");
     }
 
+    public ServerToolUseBlockParam(ServerToolUseBlockParam serverToolUseBlockParam)
+        : base(serverToolUseBlockParam) { }
+
     public ServerToolUseBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

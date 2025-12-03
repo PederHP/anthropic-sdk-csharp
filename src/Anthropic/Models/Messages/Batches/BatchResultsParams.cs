@@ -23,6 +23,9 @@ public sealed record class BatchResultsParams : ParamsBase
 
     public BatchResultsParams() { }
 
+    public BatchResultsParams(BatchResultsParams batchResultsParams)
+        : base(batchResultsParams) { }
+
     public BatchResultsParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

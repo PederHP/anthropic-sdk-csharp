@@ -70,6 +70,11 @@ public sealed record class BetaCitationWebSearchResultLocationParam : ModelBase
     }
 
     public BetaCitationWebSearchResultLocationParam(
+        BetaCitationWebSearchResultLocationParam betaCitationWebSearchResultLocationParam
+    )
+        : base(betaCitationWebSearchResultLocationParam) { }
+
+    public BetaCitationWebSearchResultLocationParam(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

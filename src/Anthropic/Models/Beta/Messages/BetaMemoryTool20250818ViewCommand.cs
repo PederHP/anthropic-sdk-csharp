@@ -72,6 +72,11 @@ public sealed record class BetaMemoryTool20250818ViewCommand : ModelBase
         this.Command = JsonSerializer.Deserialize<JsonElement>("\"view\"");
     }
 
+    public BetaMemoryTool20250818ViewCommand(
+        BetaMemoryTool20250818ViewCommand betaMemoryTool20250818ViewCommand
+    )
+        : base(betaMemoryTool20250818ViewCommand) { }
+
     public BetaMemoryTool20250818ViewCommand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -69,6 +69,11 @@ public sealed record class CitationWebSearchResultLocationParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_result_location\"");
     }
 
+    public CitationWebSearchResultLocationParam(
+        CitationWebSearchResultLocationParam citationWebSearchResultLocationParam
+    )
+        : base(citationWebSearchResultLocationParam) { }
+
     public CitationWebSearchResultLocationParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

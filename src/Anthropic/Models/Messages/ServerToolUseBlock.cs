@@ -72,6 +72,9 @@ public sealed record class ServerToolUseBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"server_tool_use\"");
     }
 
+    public ServerToolUseBlock(ServerToolUseBlock serverToolUseBlock)
+        : base(serverToolUseBlock) { }
+
     public ServerToolUseBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

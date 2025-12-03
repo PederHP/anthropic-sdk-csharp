@@ -38,6 +38,11 @@ public sealed record class BetaMessageBatchExpiredResult : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"expired\"");
     }
 
+    public BetaMessageBatchExpiredResult(
+        BetaMessageBatchExpiredResult betaMessageBatchExpiredResult
+    )
+        : base(betaMessageBatchExpiredResult) { }
+
     public BetaMessageBatchExpiredResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

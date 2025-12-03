@@ -38,6 +38,9 @@ public sealed record class URLImageSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"url\"");
     }
 
+    public URLImageSource(URLImageSource urlImageSource)
+        : base(urlImageSource) { }
+
     public URLImageSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

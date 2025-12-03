@@ -73,6 +73,11 @@ public sealed record class BetaCitationCharLocationParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"char_location\"");
     }
 
+    public BetaCitationCharLocationParam(
+        BetaCitationCharLocationParam betaCitationCharLocationParam
+    )
+        : base(betaCitationCharLocationParam) { }
+
     public BetaCitationCharLocationParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

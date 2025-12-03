@@ -55,6 +55,9 @@ public sealed record class ToolChoiceAuto : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"auto\"");
     }
 
+    public ToolChoiceAuto(ToolChoiceAuto toolChoiceAuto)
+        : base(toolChoiceAuto) { }
+
     public ToolChoiceAuto(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -45,6 +45,9 @@ public sealed record class ContentBlockSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"content\"");
     }
 
+    public ContentBlockSource(ContentBlockSource contentBlockSource)
+        : base(contentBlockSource) { }
+
     public ContentBlockSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

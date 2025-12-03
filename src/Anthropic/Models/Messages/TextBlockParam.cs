@@ -64,6 +64,9 @@ public sealed record class TextBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"text\"");
     }
 
+    public TextBlockParam(TextBlockParam textBlockParam)
+        : base(textBlockParam) { }
+
     public TextBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

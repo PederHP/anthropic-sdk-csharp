@@ -81,6 +81,9 @@ public sealed record class ToolTextEditor20250728 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"text_editor_20250728\"");
     }
 
+    public ToolTextEditor20250728(ToolTextEditor20250728 toolTextEditor20250728)
+        : base(toolTextEditor20250728) { }
+
     public ToolTextEditor20250728(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

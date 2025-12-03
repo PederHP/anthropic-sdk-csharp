@@ -38,6 +38,9 @@ public sealed record class BetaURLImageSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"url\"");
     }
 
+    public BetaURLImageSource(BetaURLImageSource betaURLImageSource)
+        : base(betaURLImageSource) { }
+
     public BetaURLImageSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -64,6 +64,11 @@ public sealed record class BetaClearToolUses20250919EditResponse : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"clear_tool_uses_20250919\"");
     }
 
+    public BetaClearToolUses20250919EditResponse(
+        BetaClearToolUses20250919EditResponse betaClearToolUses20250919EditResponse
+    )
+        : base(betaClearToolUses20250919EditResponse) { }
+
     public BetaClearToolUses20250919EditResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -210,6 +210,9 @@ public sealed record class BetaMessage : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message\"");
     }
 
+    public BetaMessage(BetaMessage betaMessage)
+        : base(betaMessage) { }
+
     public BetaMessage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

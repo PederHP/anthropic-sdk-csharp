@@ -79,6 +79,11 @@ public sealed record class BetaBashCodeExecutionToolResultBlockParam : ModelBase
     }
 
     public BetaBashCodeExecutionToolResultBlockParam(
+        BetaBashCodeExecutionToolResultBlockParam betaBashCodeExecutionToolResultBlockParam
+    )
+        : base(betaBashCodeExecutionToolResultBlockParam) { }
+
+    public BetaBashCodeExecutionToolResultBlockParam(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

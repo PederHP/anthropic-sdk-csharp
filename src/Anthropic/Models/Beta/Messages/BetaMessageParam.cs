@@ -34,6 +34,9 @@ public sealed record class BetaMessageParam : ModelBase
 
     public BetaMessageParam() { }
 
+    public BetaMessageParam(BetaMessageParam betaMessageParam)
+        : base(betaMessageParam) { }
+
     public BetaMessageParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -71,6 +71,11 @@ public sealed record class WebSearchToolResultBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_tool_result\"");
     }
 
+    public WebSearchToolResultBlockParam(
+        WebSearchToolResultBlockParam webSearchToolResultBlockParam
+    )
+        : base(webSearchToolResultBlockParam) { }
+
     public WebSearchToolResultBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

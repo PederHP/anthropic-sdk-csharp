@@ -99,6 +99,9 @@ public sealed record class SkillRetrieveResponse : ModelBase
 
     public SkillRetrieveResponse() { }
 
+    public SkillRetrieveResponse(SkillRetrieveResponse skillRetrieveResponse)
+        : base(skillRetrieveResponse) { }
+
     public SkillRetrieveResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

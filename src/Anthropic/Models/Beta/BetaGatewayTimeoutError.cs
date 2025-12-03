@@ -43,6 +43,9 @@ public sealed record class BetaGatewayTimeoutError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"timeout_error\"");
     }
 
+    public BetaGatewayTimeoutError(BetaGatewayTimeoutError betaGatewayTimeoutError)
+        : base(betaGatewayTimeoutError) { }
+
     public BetaGatewayTimeoutError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

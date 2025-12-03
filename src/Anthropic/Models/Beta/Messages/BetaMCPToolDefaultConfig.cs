@@ -50,6 +50,9 @@ public sealed record class BetaMCPToolDefaultConfig : ModelBase
 
     public BetaMCPToolDefaultConfig() { }
 
+    public BetaMCPToolDefaultConfig(BetaMCPToolDefaultConfig betaMCPToolDefaultConfig)
+        : base(betaMCPToolDefaultConfig) { }
+
     public BetaMCPToolDefaultConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

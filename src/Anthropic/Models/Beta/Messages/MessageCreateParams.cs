@@ -506,6 +506,12 @@ public sealed record class MessageCreateParams : ParamsBase
 
     public MessageCreateParams() { }
 
+    public MessageCreateParams(MessageCreateParams messageCreateParams)
+        : base(messageCreateParams)
+    {
+        this._rawBodyData = [.. messageCreateParams._rawBodyData];
+    }
+
     public MessageCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

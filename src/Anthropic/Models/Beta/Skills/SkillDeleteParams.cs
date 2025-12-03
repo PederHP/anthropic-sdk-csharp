@@ -41,6 +41,9 @@ public sealed record class SkillDeleteParams : ParamsBase
 
     public SkillDeleteParams() { }
 
+    public SkillDeleteParams(SkillDeleteParams skillDeleteParams)
+        : base(skillDeleteParams) { }
+
     public SkillDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

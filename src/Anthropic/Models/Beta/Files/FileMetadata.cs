@@ -107,6 +107,9 @@ public sealed record class FileMetadata : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"file\"");
     }
 
+    public FileMetadata(FileMetadata fileMetadata)
+        : base(fileMetadata) { }
+
     public FileMetadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

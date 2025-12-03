@@ -43,6 +43,9 @@ public sealed record class BetaRawMessageStartEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message_start\"");
     }
 
+    public BetaRawMessageStartEvent(BetaRawMessageStartEvent betaRawMessageStartEvent)
+        : base(betaRawMessageStartEvent) { }
+
     public BetaRawMessageStartEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

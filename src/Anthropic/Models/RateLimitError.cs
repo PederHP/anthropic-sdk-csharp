@@ -43,6 +43,9 @@ public sealed record class RateLimitError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"rate_limit_error\"");
     }
 
+    public RateLimitError(RateLimitError rateLimitError)
+        : base(rateLimitError) { }
+
     public RateLimitError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

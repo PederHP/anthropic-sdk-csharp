@@ -44,6 +44,9 @@ public sealed record class BetaCitationsDelta : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"citations_delta\"");
     }
 
+    public BetaCitationsDelta(BetaCitationsDelta betaCitationsDelta)
+        : base(betaCitationsDelta) { }
+
     public BetaCitationsDelta(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -92,6 +92,9 @@ public sealed record class Tool : ModelBase
 
     public Tool() { }
 
+    public Tool(Tool tool)
+        : base(tool) { }
+
     public Tool(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -172,6 +175,9 @@ public sealed record class InputSchema : ModelBase
     {
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"object\"");
     }
+
+    public InputSchema(InputSchema inputSchema)
+        : base(inputSchema) { }
 
     public InputSchema(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -43,6 +43,9 @@ public sealed record class VersionRetrieveParams : ParamsBase
 
     public VersionRetrieveParams() { }
 
+    public VersionRetrieveParams(VersionRetrieveParams versionRetrieveParams)
+        : base(versionRetrieveParams) { }
+
     public VersionRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

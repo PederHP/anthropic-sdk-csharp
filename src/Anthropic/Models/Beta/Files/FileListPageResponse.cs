@@ -68,6 +68,9 @@ public sealed record class FileListPageResponse : ModelBase
 
     public FileListPageResponse() { }
 
+    public FileListPageResponse(FileListPageResponse fileListPageResponse)
+        : base(fileListPageResponse) { }
+
     public FileListPageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

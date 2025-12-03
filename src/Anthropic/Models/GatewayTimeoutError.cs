@@ -43,6 +43,9 @@ public sealed record class GatewayTimeoutError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"timeout_error\"");
     }
 
+    public GatewayTimeoutError(GatewayTimeoutError gatewayTimeoutError)
+        : base(gatewayTimeoutError) { }
+
     public GatewayTimeoutError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -46,6 +46,9 @@ public sealed record class BetaServerToolCaller : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"code_execution_20250825\"");
     }
 
+    public BetaServerToolCaller(BetaServerToolCaller betaServerToolCaller)
+        : base(betaServerToolCaller) { }
+
     public BetaServerToolCaller(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

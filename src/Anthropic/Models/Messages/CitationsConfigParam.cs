@@ -32,6 +32,9 @@ public sealed record class CitationsConfigParam : ModelBase
 
     public CitationsConfigParam() { }
 
+    public CitationsConfigParam(CitationsConfigParam citationsConfigParam)
+        : base(citationsConfigParam) { }
+
     public CitationsConfigParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

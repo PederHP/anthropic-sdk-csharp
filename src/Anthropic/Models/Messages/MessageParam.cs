@@ -34,6 +34,9 @@ public sealed record class MessageParam : ModelBase
 
     public MessageParam() { }
 
+    public MessageParam(MessageParam messageParam)
+        : base(messageParam) { }
+
     public MessageParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

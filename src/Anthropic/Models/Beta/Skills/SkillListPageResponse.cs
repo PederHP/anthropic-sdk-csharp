@@ -56,6 +56,9 @@ public sealed record class SkillListPageResponse : ModelBase
 
     public SkillListPageResponse() { }
 
+    public SkillListPageResponse(SkillListPageResponse skillListPageResponse)
+        : base(skillListPageResponse) { }
+
     public SkillListPageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -177,6 +180,9 @@ public sealed record class Data : ModelBase
     }
 
     public Data() { }
+
+    public Data(Data data)
+        : base(data) { }
 
     public Data(IReadOnlyDictionary<string, JsonElement> rawData)
     {

@@ -29,6 +29,9 @@ public sealed record class BetaOutputConfig : ModelBase
 
     public BetaOutputConfig() { }
 
+    public BetaOutputConfig(BetaOutputConfig betaOutputConfig)
+        : base(betaOutputConfig) { }
+
     public BetaOutputConfig(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

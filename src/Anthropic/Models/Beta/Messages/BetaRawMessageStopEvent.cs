@@ -36,6 +36,9 @@ public sealed record class BetaRawMessageStopEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message_stop\"");
     }
 
+    public BetaRawMessageStopEvent(BetaRawMessageStopEvent betaRawMessageStopEvent)
+        : base(betaRawMessageStopEvent) { }
+
     public BetaRawMessageStopEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

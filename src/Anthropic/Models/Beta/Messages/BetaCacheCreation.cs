@@ -37,6 +37,9 @@ public sealed record class BetaCacheCreation : ModelBase
 
     public BetaCacheCreation() { }
 
+    public BetaCacheCreation(BetaCacheCreation betaCacheCreation)
+        : base(betaCacheCreation) { }
+
     public BetaCacheCreation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

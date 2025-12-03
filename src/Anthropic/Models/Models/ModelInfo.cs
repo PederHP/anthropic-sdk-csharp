@@ -70,6 +70,9 @@ public sealed record class ModelInfo : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"model\"");
     }
 
+    public ModelInfo(ModelInfo modelInfo)
+        : base(modelInfo) { }
+
     public ModelInfo(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -37,6 +37,9 @@ public sealed record class BetaServerToolUsage : ModelBase
 
     public BetaServerToolUsage() { }
 
+    public BetaServerToolUsage(BetaServerToolUsage betaServerToolUsage)
+        : base(betaServerToolUsage) { }
+
     public BetaServerToolUsage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

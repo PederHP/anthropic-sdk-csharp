@@ -43,6 +43,9 @@ public sealed record class VersionDeleteParams : ParamsBase
 
     public VersionDeleteParams() { }
 
+    public VersionDeleteParams(VersionDeleteParams versionDeleteParams)
+        : base(versionDeleteParams) { }
+
     public VersionDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

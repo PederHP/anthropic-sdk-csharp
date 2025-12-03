@@ -61,6 +61,9 @@ public sealed record class VersionListParams : ParamsBase
 
     public VersionListParams() { }
 
+    public VersionListParams(VersionListParams versionListParams)
+        : base(versionListParams) { }
+
     public VersionListParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

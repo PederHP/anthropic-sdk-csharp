@@ -64,6 +64,11 @@ public sealed record class BetaMemoryTool20250818RenameCommand : ModelBase
         this.Command = JsonSerializer.Deserialize<JsonElement>("\"rename\"");
     }
 
+    public BetaMemoryTool20250818RenameCommand(
+        BetaMemoryTool20250818RenameCommand betaMemoryTool20250818RenameCommand
+    )
+        : base(betaMemoryTool20250818RenameCommand) { }
+
     public BetaMemoryTool20250818RenameCommand(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -37,6 +37,9 @@ public sealed record class CacheCreation : ModelBase
 
     public CacheCreation() { }
 
+    public CacheCreation(CacheCreation cacheCreation)
+        : base(cacheCreation) { }
+
     public CacheCreation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -45,6 +45,9 @@ public sealed record class BetaInputTokensClearAtLeast : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"input_tokens\"");
     }
 
+    public BetaInputTokensClearAtLeast(BetaInputTokensClearAtLeast betaInputTokensClearAtLeast)
+        : base(betaInputTokensClearAtLeast) { }
+
     public BetaInputTokensClearAtLeast(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

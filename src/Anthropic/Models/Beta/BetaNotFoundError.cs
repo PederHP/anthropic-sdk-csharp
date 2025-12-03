@@ -43,6 +43,9 @@ public sealed record class BetaNotFoundError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"not_found_error\"");
     }
 
+    public BetaNotFoundError(BetaNotFoundError betaNotFoundError)
+        : base(betaNotFoundError) { }
+
     public BetaNotFoundError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

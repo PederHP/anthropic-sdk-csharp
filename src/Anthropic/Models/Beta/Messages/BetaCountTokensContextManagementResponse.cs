@@ -33,6 +33,11 @@ public sealed record class BetaCountTokensContextManagementResponse : ModelBase
     public BetaCountTokensContextManagementResponse() { }
 
     public BetaCountTokensContextManagementResponse(
+        BetaCountTokensContextManagementResponse betaCountTokensContextManagementResponse
+    )
+        : base(betaCountTokensContextManagementResponse) { }
+
+    public BetaCountTokensContextManagementResponse(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

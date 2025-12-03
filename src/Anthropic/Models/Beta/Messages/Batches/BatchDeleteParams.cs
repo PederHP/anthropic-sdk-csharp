@@ -46,6 +46,9 @@ public sealed record class BatchDeleteParams : ParamsBase
 
     public BatchDeleteParams() { }
 
+    public BatchDeleteParams(BatchDeleteParams batchDeleteParams)
+        : base(batchDeleteParams) { }
+
     public BatchDeleteParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

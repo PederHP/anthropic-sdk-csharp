@@ -56,6 +56,11 @@ public sealed record class BetaBashCodeExecutionToolResultBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"bash_code_execution_tool_result\"");
     }
 
+    public BetaBashCodeExecutionToolResultBlock(
+        BetaBashCodeExecutionToolResultBlock betaBashCodeExecutionToolResultBlock
+    )
+        : base(betaBashCodeExecutionToolResultBlock) { }
+
     public BetaBashCodeExecutionToolResultBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

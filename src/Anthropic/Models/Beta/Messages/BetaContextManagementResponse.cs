@@ -34,6 +34,11 @@ public sealed record class BetaContextManagementResponse : ModelBase
 
     public BetaContextManagementResponse() { }
 
+    public BetaContextManagementResponse(
+        BetaContextManagementResponse betaContextManagementResponse
+    )
+        : base(betaContextManagementResponse) { }
+
     public BetaContextManagementResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

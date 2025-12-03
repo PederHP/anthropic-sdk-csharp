@@ -43,6 +43,9 @@ public sealed record class BetaInvalidRequestError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"invalid_request_error\"");
     }
 
+    public BetaInvalidRequestError(BetaInvalidRequestError betaInvalidRequestError)
+        : base(betaInvalidRequestError) { }
+
     public BetaInvalidRequestError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

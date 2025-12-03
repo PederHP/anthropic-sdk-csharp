@@ -78,6 +78,11 @@ public sealed record class BetaCodeExecutionResultBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"code_execution_result\"");
     }
 
+    public BetaCodeExecutionResultBlockParam(
+        BetaCodeExecutionResultBlockParam betaCodeExecutionResultBlockParam
+    )
+        : base(betaCodeExecutionResultBlockParam) { }
+
     public BetaCodeExecutionResultBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

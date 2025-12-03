@@ -45,6 +45,9 @@ public sealed record class BetaCodeExecutionOutputBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"code_execution_output\"");
     }
 
+    public BetaCodeExecutionOutputBlock(BetaCodeExecutionOutputBlock betaCodeExecutionOutputBlock)
+        : base(betaCodeExecutionOutputBlock) { }
+
     public BetaCodeExecutionOutputBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

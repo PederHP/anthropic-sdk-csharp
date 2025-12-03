@@ -41,6 +41,9 @@ public sealed record class FileDownloadParams : ParamsBase
 
     public FileDownloadParams() { }
 
+    public FileDownloadParams(FileDownloadParams fileDownloadParams)
+        : base(fileDownloadParams) { }
+
     public FileDownloadParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

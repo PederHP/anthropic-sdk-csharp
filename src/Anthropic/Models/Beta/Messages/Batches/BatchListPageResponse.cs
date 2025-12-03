@@ -57,6 +57,9 @@ public sealed record class BatchListPageResponse : ModelBase
 
     public BatchListPageResponse() { }
 
+    public BatchListPageResponse(BatchListPageResponse batchListPageResponse)
+        : base(batchListPageResponse) { }
+
     public BatchListPageResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

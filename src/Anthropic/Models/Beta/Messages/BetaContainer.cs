@@ -54,6 +54,9 @@ public sealed record class BetaContainer : ModelBase
 
     public BetaContainer() { }
 
+    public BetaContainer(BetaContainer betaContainer)
+        : base(betaContainer) { }
+
     public BetaContainer(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

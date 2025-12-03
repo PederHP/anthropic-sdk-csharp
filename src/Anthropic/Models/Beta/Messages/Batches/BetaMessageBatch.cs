@@ -180,6 +180,9 @@ public sealed record class BetaMessageBatch : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message_batch\"");
     }
 
+    public BetaMessageBatch(BetaMessageBatch betaMessageBatch)
+        : base(betaMessageBatch) { }
+
     public BetaMessageBatch(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

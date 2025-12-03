@@ -53,6 +53,11 @@ public sealed record class BetaTextEditorCodeExecutionCreateResultBlockParam : M
     }
 
     public BetaTextEditorCodeExecutionCreateResultBlockParam(
+        BetaTextEditorCodeExecutionCreateResultBlockParam betaTextEditorCodeExecutionCreateResultBlockParam
+    )
+        : base(betaTextEditorCodeExecutionCreateResultBlockParam) { }
+
+    public BetaTextEditorCodeExecutionCreateResultBlockParam(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

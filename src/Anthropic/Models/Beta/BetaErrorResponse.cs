@@ -47,6 +47,9 @@ public sealed record class BetaErrorResponse : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"error\"");
     }
 
+    public BetaErrorResponse(BetaErrorResponse betaErrorResponse)
+        : base(betaErrorResponse) { }
+
     public BetaErrorResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

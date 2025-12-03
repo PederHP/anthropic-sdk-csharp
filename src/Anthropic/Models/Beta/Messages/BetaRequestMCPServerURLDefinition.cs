@@ -70,6 +70,11 @@ public sealed record class BetaRequestMCPServerURLDefinition : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"url\"");
     }
 
+    public BetaRequestMCPServerURLDefinition(
+        BetaRequestMCPServerURLDefinition betaRequestMCPServerURLDefinition
+    )
+        : base(betaRequestMCPServerURLDefinition) { }
+
     public BetaRequestMCPServerURLDefinition(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

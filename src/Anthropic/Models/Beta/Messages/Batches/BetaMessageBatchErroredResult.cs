@@ -45,6 +45,11 @@ public sealed record class BetaMessageBatchErroredResult : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"errored\"");
     }
 
+    public BetaMessageBatchErroredResult(
+        BetaMessageBatchErroredResult betaMessageBatchErroredResult
+    )
+        : base(betaMessageBatchErroredResult) { }
+
     public BetaMessageBatchErroredResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

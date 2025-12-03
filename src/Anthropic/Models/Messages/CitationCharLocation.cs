@@ -78,6 +78,9 @@ public sealed record class CitationCharLocation : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"char_location\"");
     }
 
+    public CitationCharLocation(CitationCharLocation citationCharLocation)
+        : base(citationCharLocation) { }
+
     public CitationCharLocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

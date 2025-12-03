@@ -50,6 +50,9 @@ public sealed record class WebSearchToolRequestError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_tool_result_error\"");
     }
 
+    public WebSearchToolRequestError(WebSearchToolRequestError webSearchToolRequestError)
+        : base(webSearchToolRequestError) { }
+
     public WebSearchToolRequestError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

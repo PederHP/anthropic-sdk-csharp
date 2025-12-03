@@ -63,6 +63,9 @@ public sealed record class BetaWebFetchBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_fetch_result\"");
     }
 
+    public BetaWebFetchBlock(BetaWebFetchBlock betaWebFetchBlock)
+        : base(betaWebFetchBlock) { }
+
     public BetaWebFetchBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

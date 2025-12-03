@@ -38,6 +38,11 @@ public sealed record class BetaMessageBatchCanceledResult : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"canceled\"");
     }
 
+    public BetaMessageBatchCanceledResult(
+        BetaMessageBatchCanceledResult betaMessageBatchCanceledResult
+    )
+        : base(betaMessageBatchCanceledResult) { }
+
     public BetaMessageBatchCanceledResult(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

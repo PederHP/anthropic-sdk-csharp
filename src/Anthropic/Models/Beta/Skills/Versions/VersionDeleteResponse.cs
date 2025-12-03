@@ -41,6 +41,9 @@ public sealed record class VersionDeleteResponse : ModelBase
 
     public VersionDeleteResponse() { }
 
+    public VersionDeleteResponse(VersionDeleteResponse versionDeleteResponse)
+        : base(versionDeleteResponse) { }
+
     public VersionDeleteResponse(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

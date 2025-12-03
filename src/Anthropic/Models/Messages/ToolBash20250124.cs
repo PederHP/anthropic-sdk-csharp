@@ -65,6 +65,9 @@ public sealed record class ToolBash20250124 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"bash_20250124\"");
     }
 
+    public ToolBash20250124(ToolBash20250124 toolBash20250124)
+        : base(toolBash20250124) { }
+
     public ToolBash20250124(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

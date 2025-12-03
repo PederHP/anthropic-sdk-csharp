@@ -147,6 +147,9 @@ public sealed record class BetaToolBash20241022 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"bash_20241022\"");
     }
 
+    public BetaToolBash20241022(BetaToolBash20241022 betaToolBash20241022)
+        : base(betaToolBash20241022) { }
+
     public BetaToolBash20241022(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

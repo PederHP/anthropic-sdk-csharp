@@ -74,6 +74,9 @@ public sealed record class BetaServerToolUseBlock : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"server_tool_use\"");
     }
 
+    public BetaServerToolUseBlock(BetaServerToolUseBlock betaServerToolUseBlock)
+        : base(betaServerToolUseBlock) { }
+
     public BetaServerToolUseBlock(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

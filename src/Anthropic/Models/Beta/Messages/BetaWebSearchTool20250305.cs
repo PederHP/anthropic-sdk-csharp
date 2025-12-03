@@ -172,6 +172,9 @@ public sealed record class BetaWebSearchTool20250305 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_20250305\"");
     }
 
+    public BetaWebSearchTool20250305(BetaWebSearchTool20250305 betaWebSearchTool20250305)
+        : base(betaWebSearchTool20250305) { }
+
     public BetaWebSearchTool20250305(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
@@ -323,6 +326,9 @@ public sealed record class UserLocation : ModelBase
     {
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"approximate\"");
     }
+
+    public UserLocation(UserLocation userLocation)
+        : base(userLocation) { }
 
     public UserLocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {

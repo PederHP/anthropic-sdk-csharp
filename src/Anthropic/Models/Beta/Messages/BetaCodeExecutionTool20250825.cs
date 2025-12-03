@@ -135,6 +135,11 @@ public sealed record class BetaCodeExecutionTool20250825 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"code_execution_20250825\"");
     }
 
+    public BetaCodeExecutionTool20250825(
+        BetaCodeExecutionTool20250825 betaCodeExecutionTool20250825
+    )
+        : base(betaCodeExecutionTool20250825) { }
+
     public BetaCodeExecutionTool20250825(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

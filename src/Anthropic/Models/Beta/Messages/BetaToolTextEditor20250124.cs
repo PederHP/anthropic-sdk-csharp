@@ -154,6 +154,9 @@ public sealed record class BetaToolTextEditor20250124 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"text_editor_20250124\"");
     }
 
+    public BetaToolTextEditor20250124(BetaToolTextEditor20250124 betaToolTextEditor20250124)
+        : base(betaToolTextEditor20250124) { }
+
     public BetaToolTextEditor20250124(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

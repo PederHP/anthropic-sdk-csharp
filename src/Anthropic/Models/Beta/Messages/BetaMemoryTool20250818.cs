@@ -152,6 +152,9 @@ public sealed record class BetaMemoryTool20250818 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"memory_20250818\"");
     }
 
+    public BetaMemoryTool20250818(BetaMemoryTool20250818 betaMemoryTool20250818)
+        : base(betaMemoryTool20250818) { }
+
     public BetaMemoryTool20250818(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

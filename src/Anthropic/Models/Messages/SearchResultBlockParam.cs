@@ -88,6 +88,9 @@ public sealed record class SearchResultBlockParam : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"search_result\"");
     }
 
+    public SearchResultBlockParam(SearchResultBlockParam searchResultBlockParam)
+        : base(searchResultBlockParam) { }
+
     public SearchResultBlockParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

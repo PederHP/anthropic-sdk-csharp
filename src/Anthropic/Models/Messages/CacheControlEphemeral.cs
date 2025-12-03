@@ -59,6 +59,9 @@ public sealed record class CacheControlEphemeral : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"ephemeral\"");
     }
 
+    public CacheControlEphemeral(CacheControlEphemeral cacheControlEphemeral)
+        : base(cacheControlEphemeral) { }
+
     public CacheControlEphemeral(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

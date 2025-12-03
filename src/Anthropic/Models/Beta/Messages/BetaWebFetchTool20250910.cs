@@ -185,6 +185,9 @@ public sealed record class BetaWebFetchTool20250910 : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_fetch_20250910\"");
     }
 
+    public BetaWebFetchTool20250910(BetaWebFetchTool20250910 betaWebFetchTool20250910)
+        : base(betaWebFetchTool20250910) { }
+
     public BetaWebFetchTool20250910(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

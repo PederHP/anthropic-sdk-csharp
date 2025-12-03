@@ -27,6 +27,9 @@ public sealed record class ServerToolUsage : ModelBase
 
     public ServerToolUsage() { }
 
+    public ServerToolUsage(ServerToolUsage serverToolUsage)
+        : base(serverToolUsage) { }
+
     public ServerToolUsage(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

@@ -31,6 +31,9 @@ public sealed record class Metadata : ModelBase
 
     public Metadata() { }
 
+    public Metadata(Metadata metadata)
+        : base(metadata) { }
+
     public Metadata(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

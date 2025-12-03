@@ -70,6 +70,12 @@ public sealed record class SkillCreateParams : ParamsBase
 
     public SkillCreateParams() { }
 
+    public SkillCreateParams(SkillCreateParams skillCreateParams)
+        : base(skillCreateParams)
+    {
+        this._rawBodyData = [.. skillCreateParams._rawBodyData];
+    }
+
     public SkillCreateParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData,

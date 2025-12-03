@@ -32,6 +32,9 @@ public sealed record class BetaCitationsConfigParam : ModelBase
 
     public BetaCitationsConfigParam() { }
 
+    public BetaCitationsConfigParam(BetaCitationsConfigParam betaCitationsConfigParam)
+        : base(betaCitationsConfigParam) { }
+
     public BetaCitationsConfigParam(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

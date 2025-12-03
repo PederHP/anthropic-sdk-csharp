@@ -181,6 +181,9 @@ public sealed record class Message : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"message\"");
     }
 
+    public Message(Message message)
+        : base(message) { }
+
     public Message(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

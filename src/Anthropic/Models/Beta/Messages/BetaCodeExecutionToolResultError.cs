@@ -54,6 +54,11 @@ public sealed record class BetaCodeExecutionToolResultError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"code_execution_tool_result_error\"");
     }
 
+    public BetaCodeExecutionToolResultError(
+        BetaCodeExecutionToolResultError betaCodeExecutionToolResultError
+    )
+        : base(betaCodeExecutionToolResultError) { }
+
     public BetaCodeExecutionToolResultError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

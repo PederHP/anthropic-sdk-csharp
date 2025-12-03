@@ -43,6 +43,9 @@ public sealed record class InvalidRequestError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"invalid_request_error\"");
     }
 
+    public InvalidRequestError(InvalidRequestError invalidRequestError)
+        : base(invalidRequestError) { }
+
     public InvalidRequestError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

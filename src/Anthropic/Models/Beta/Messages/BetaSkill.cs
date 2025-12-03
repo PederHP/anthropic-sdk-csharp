@@ -57,6 +57,9 @@ public sealed record class BetaSkill : ModelBase
 
     public BetaSkill() { }
 
+    public BetaSkill(BetaSkill betaSkill)
+        : base(betaSkill) { }
+
     public BetaSkill(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

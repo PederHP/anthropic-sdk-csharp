@@ -45,6 +45,9 @@ public sealed record class BetaRawContentBlockStopEvent : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"content_block_stop\"");
     }
 
+    public BetaRawContentBlockStopEvent(BetaRawContentBlockStopEvent betaRawContentBlockStopEvent)
+        : base(betaRawContentBlockStopEvent) { }
+
     public BetaRawContentBlockStopEvent(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

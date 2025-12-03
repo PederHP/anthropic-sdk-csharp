@@ -38,6 +38,9 @@ public sealed record class BetaThinkingConfigDisabled : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"disabled\"");
     }
 
+    public BetaThinkingConfigDisabled(BetaThinkingConfigDisabled betaThinkingConfigDisabled)
+        : base(betaThinkingConfigDisabled) { }
+
     public BetaThinkingConfigDisabled(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

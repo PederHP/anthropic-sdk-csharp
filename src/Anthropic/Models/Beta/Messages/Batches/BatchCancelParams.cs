@@ -49,6 +49,9 @@ public sealed record class BatchCancelParams : ParamsBase
 
     public BatchCancelParams() { }
 
+    public BatchCancelParams(BatchCancelParams batchCancelParams)
+        : base(batchCancelParams) { }
+
     public BatchCancelParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

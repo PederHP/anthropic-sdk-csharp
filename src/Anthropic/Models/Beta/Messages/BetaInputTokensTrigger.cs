@@ -43,6 +43,9 @@ public sealed record class BetaInputTokensTrigger : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"input_tokens\"");
     }
 
+    public BetaInputTokensTrigger(BetaInputTokensTrigger betaInputTokensTrigger)
+        : base(betaInputTokensTrigger) { }
+
     public BetaInputTokensTrigger(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

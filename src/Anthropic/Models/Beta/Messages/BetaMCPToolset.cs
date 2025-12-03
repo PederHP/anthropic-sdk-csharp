@@ -114,6 +114,9 @@ public sealed record class BetaMCPToolset : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"mcp_toolset\"");
     }
 
+    public BetaMCPToolset(BetaMCPToolset betaMCPToolset)
+        : base(betaMCPToolset) { }
+
     public BetaMCPToolset(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

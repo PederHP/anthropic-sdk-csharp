@@ -54,6 +54,9 @@ public sealed record class PlainTextSource : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"text\"");
     }
 
+    public PlainTextSource(PlainTextSource plainTextSource)
+        : base(plainTextSource) { }
+
     public PlainTextSource(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

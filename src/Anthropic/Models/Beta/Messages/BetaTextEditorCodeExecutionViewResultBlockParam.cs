@@ -90,6 +90,11 @@ public sealed record class BetaTextEditorCodeExecutionViewResultBlockParam : Mod
     }
 
     public BetaTextEditorCodeExecutionViewResultBlockParam(
+        BetaTextEditorCodeExecutionViewResultBlockParam betaTextEditorCodeExecutionViewResultBlockParam
+    )
+        : base(betaTextEditorCodeExecutionViewResultBlockParam) { }
+
+    public BetaTextEditorCodeExecutionViewResultBlockParam(
         IReadOnlyDictionary<string, JsonElement> rawData
     )
     {

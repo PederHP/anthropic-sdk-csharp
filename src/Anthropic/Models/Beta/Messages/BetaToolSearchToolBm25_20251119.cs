@@ -132,6 +132,11 @@ public sealed record class BetaToolSearchToolBm25_20251119 : ModelBase
         this.Name = JsonSerializer.Deserialize<JsonElement>("\"tool_search_tool_bm25\"");
     }
 
+    public BetaToolSearchToolBm25_20251119(
+        BetaToolSearchToolBm25_20251119 betaToolSearchToolBm25_20251119
+    )
+        : base(betaToolSearchToolBm25_20251119) { }
+
     public BetaToolSearchToolBm25_20251119(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

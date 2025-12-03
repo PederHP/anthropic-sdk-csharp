@@ -83,6 +83,11 @@ public sealed record class BetaCitationContentBlockLocation : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"content_block_location\"");
     }
 
+    public BetaCitationContentBlockLocation(
+        BetaCitationContentBlockLocation betaCitationContentBlockLocation
+    )
+        : base(betaCitationContentBlockLocation) { }
+
     public BetaCitationContentBlockLocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

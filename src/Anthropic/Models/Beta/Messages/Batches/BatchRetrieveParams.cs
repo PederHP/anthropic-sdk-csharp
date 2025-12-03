@@ -45,6 +45,9 @@ public sealed record class BatchRetrieveParams : ParamsBase
 
     public BatchRetrieveParams() { }
 
+    public BatchRetrieveParams(BatchRetrieveParams batchRetrieveParams)
+        : base(batchRetrieveParams) { }
+
     public BatchRetrieveParams(
         IReadOnlyDictionary<string, JsonElement> rawHeaderData,
         IReadOnlyDictionary<string, JsonElement> rawQueryData

@@ -43,6 +43,9 @@ public sealed record class BetaAuthenticationError : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"authentication_error\"");
     }
 
+    public BetaAuthenticationError(BetaAuthenticationError betaAuthenticationError)
+        : base(betaAuthenticationError) { }
+
     public BetaAuthenticationError(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];

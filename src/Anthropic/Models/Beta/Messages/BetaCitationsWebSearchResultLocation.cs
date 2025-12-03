@@ -69,6 +69,11 @@ public sealed record class BetaCitationsWebSearchResultLocation : ModelBase
         this.Type = JsonSerializer.Deserialize<JsonElement>("\"web_search_result_location\"");
     }
 
+    public BetaCitationsWebSearchResultLocation(
+        BetaCitationsWebSearchResultLocation betaCitationsWebSearchResultLocation
+    )
+        : base(betaCitationsWebSearchResultLocation) { }
+
     public BetaCitationsWebSearchResultLocation(IReadOnlyDictionary<string, JsonElement> rawData)
     {
         this._rawData = [.. rawData];
