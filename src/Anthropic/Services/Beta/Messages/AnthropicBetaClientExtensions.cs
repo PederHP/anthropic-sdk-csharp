@@ -857,9 +857,9 @@ public static class AnthropicBetaClientExtensions
                 };
             }
 
-            HashSet<string>? betaHeaders = createParams.Betas is { Count: > 0 } ?
-                [.. createParams.Betas] :
-                null;
+            HashSet<string>? betaHeaders = createParams.Betas is { Count: > 0 }
+                ? [.. createParams.Betas]
+                : null;
             int originalBetaHeadersCount = betaHeaders?.Count ?? 0;
 
             if (options is not null)
@@ -1069,10 +1069,12 @@ public static class AnthropicBetaClientExtensions
                         createParams = createParams with
                         {
                             Container = new BetaContainerParams() { Skills = skills },
-                        };                        
+                        };
 
                         // Ensure code execution tool is present
-                        bool hasCodeExecutionTool = createdTools?.Any(t => t.Value is BetaCodeExecutionTool20250825) == true;
+                        bool hasCodeExecutionTool =
+                            createdTools?.Any(t => t.Value is BetaCodeExecutionTool20250825)
+                            == true;
                         if (!hasCodeExecutionTool)
                         {
                             (betaHeaders ??= []).Add("code-execution-2025-08-25");
