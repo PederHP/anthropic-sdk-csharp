@@ -945,7 +945,8 @@ public static class AnthropicBetaClientExtensions
                         {
                             case BetaSkillsParamsAITool skillTool:
                                 (betaHeaders ??= []).Add("skills-2025-10-02");
-                                (betaHeaders ??= []).Add("code-execution-2025-08-25");
+                                betaHeaders.Add("code-execution-2025-08-25");
+
                                 (skills ??= []).Add(skillTool.SkillParams);
                                 break;
 
