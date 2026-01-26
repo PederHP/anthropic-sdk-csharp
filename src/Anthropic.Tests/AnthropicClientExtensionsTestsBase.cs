@@ -4618,12 +4618,12 @@ public abstract class AnthropicClientExtensionsTestsBase
     {
         var content = new TextContent("Hello, world!");
 
-        content.WithCacheControl(Anthropic.Models.Messages.TTL.TTL5m);
+        content.WithCacheControl(Anthropic.Models.Messages.Ttl.Ttl5m);
 
         Assert.NotNull(content.AdditionalProperties);
         var cacheControl = content.GetCacheControl();
         Assert.NotNull(cacheControl);
-        Assert.True(cacheControl.TTL == Anthropic.Models.Messages.TTL.TTL5m);
+        Assert.True(cacheControl.Ttl == Anthropic.Models.Messages.Ttl.Ttl5m);
     }
 
     [Fact]
@@ -4632,21 +4632,21 @@ public abstract class AnthropicClientExtensionsTestsBase
         var content = new TextContent("Hello, world!");
         var cacheControl = new Anthropic.Models.Messages.CacheControlEphemeral
         {
-            TTL = Anthropic.Models.Messages.TTL.TTL1h,
+            Ttl = Anthropic.Models.Messages.Ttl.Ttl1h,
         };
 
         content.WithCacheControl(cacheControl);
 
         var retrieved = content.GetCacheControl();
         Assert.NotNull(retrieved);
-        Assert.True(retrieved.TTL == Anthropic.Models.Messages.TTL.TTL1h);
+        Assert.True(retrieved.Ttl == Anthropic.Models.Messages.Ttl.Ttl1h);
     }
 
     [Fact]
     public void WithCacheControl_Null_RemovesCacheControl()
     {
         var content = new TextContent("Hello, world!");
-        content.WithCacheControl(Anthropic.Models.Messages.TTL.TTL5m);
+        content.WithCacheControl(Anthropic.Models.Messages.Ttl.Ttl5m);
 
         Assert.NotNull(content.GetCacheControl());
 
@@ -4702,7 +4702,7 @@ public abstract class AnthropicClientExtensionsTestsBase
         IChatClient chatClient = CreateChatClient(handler, "claude-haiku-4-5");
 
         var systemContent = new TextContent("You are a helpful assistant.").WithCacheControl(
-            Anthropic.Models.Messages.TTL.TTL1h
+            Anthropic.Models.Messages.Ttl.Ttl1h
         );
 
         List<ChatMessage> messages =

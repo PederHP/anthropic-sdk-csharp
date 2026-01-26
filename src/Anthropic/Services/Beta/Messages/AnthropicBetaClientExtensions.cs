@@ -963,13 +963,13 @@ public static class AnthropicBetaClientExtensions
             }
 
             // Convert non-beta CacheControlEphemeral to BetaCacheControlEphemeral
-            // Note: TTL enum exists in both namespaces, using fully qualified names to disambiguate
+            // Note: Ttl enum exists in both namespaces, using fully qualified names to disambiguate
             var betaCacheControl = new BetaCacheControlEphemeral
             {
-                TTL = cacheControl.TTL?.Value() switch
+                Ttl = cacheControl.Ttl?.Value() switch
                 {
-                    Anthropic.Models.Messages.TTL.TTL5m => Anthropic.Models.Beta.Messages.TTL.TTL5m,
-                    Anthropic.Models.Messages.TTL.TTL1h => Anthropic.Models.Beta.Messages.TTL.TTL1h,
+                    Anthropic.Models.Messages.Ttl.Ttl5m => Anthropic.Models.Beta.Messages.Ttl.Ttl5m,
+                    Anthropic.Models.Messages.Ttl.Ttl1h => Anthropic.Models.Beta.Messages.Ttl.Ttl1h,
                     _ => null,
                 },
             };
