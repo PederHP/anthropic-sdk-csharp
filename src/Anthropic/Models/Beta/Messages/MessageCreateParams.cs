@@ -165,6 +165,20 @@ public record class MessageCreateParams : ParamsBase
     }
 
     /// <summary>
+    /// Specifies the geographic region for inference processing. If not specified,
+    /// the workspace's `default_inference_geo` is used.
+    /// </summary>
+    public string? InferenceGeo
+    {
+        get
+        {
+            this._rawBodyData.Freeze();
+            return this._rawBodyData.GetNullableClass<string>("inference_geo");
+        }
+        init { this._rawBodyData.Set("inference_geo", value); }
+    }
+
+    /// <summary>
     /// MCP servers to be utilized in this request
     /// </summary>
     public IReadOnlyList<BetaRequestMcpServerUrlDefinition>? McpServers
@@ -842,10 +856,10 @@ public record class Container : ModelBase
         this.Switch((betaContainerParams) => betaContainerParams.Validate(), (_) => { });
     }
 
-    public virtual bool Equals(Container? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(Container? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -854,6 +868,16 @@ public record class Container : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            BetaContainerParams _ => 0,
+            string _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ContainerConverter : JsonConverter<Container?>
@@ -1145,10 +1169,10 @@ public record class MessageCreateParamsSystem : ModelBase
         }
     }
 
-    public virtual bool Equals(MessageCreateParamsSystem? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(MessageCreateParamsSystem? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -1157,6 +1181,16 @@ public record class MessageCreateParamsSystem : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            IReadOnlyList<BetaTextBlockParam> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class MessageCreateParamsSystemConverter : JsonConverter<MessageCreateParamsSystem>

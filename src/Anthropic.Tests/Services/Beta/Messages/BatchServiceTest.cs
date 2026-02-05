@@ -10,7 +10,7 @@ namespace Anthropic.Tests.Services.Beta.Messages;
 public class BatchServiceTest
 {
     [Theory(Skip = "prism validates based on the non-beta endpoint")]
-    [AnthropicTestClients]
+    [AnthropicTestClients(TestSupportTypes.All & ~TestSupportTypes.Bedrock)]
     public async Task Create_Works(IAnthropicClient client)
     {
         var betaMessageBatch = await client.Beta.Messages.Batches.Create(
@@ -25,7 +25,7 @@ public class BatchServiceTest
                         {
                             MaxTokens = 1024,
                             Messages = [new() { Content = "Hello, world", Role = Role.User }],
-                            Model = Messages::Model.ClaudeSonnet4_5_20250929,
+                            Model = Messages::Model.ClaudeOpus4_6,
                             Container = new BetaContainerParams()
                             {
                                 ID = "id",
@@ -53,6 +53,7 @@ public class BatchServiceTest
                                     },
                                 ],
                             },
+                            InferenceGeo = "inference_geo",
                             McpServers =
                             [
                                 new()
@@ -133,6 +134,7 @@ public class BatchServiceTest
                                     CacheControl = new() { Ttl = Ttl.Ttl5m },
                                     DeferLoading = true,
                                     Description = "Get the current weather in a given location",
+                                    EagerInputStreaming = true,
                                     InputExamples =
                                     [
                                         new Dictionary<string, JsonElement>()
@@ -156,7 +158,7 @@ public class BatchServiceTest
     }
 
     [Theory]
-    [AnthropicTestClients]
+    [AnthropicTestClients(TestSupportTypes.All & ~TestSupportTypes.Bedrock)]
     public async Task Retrieve_Works(IAnthropicClient client)
     {
         var betaMessageBatch = await client.Beta.Messages.Batches.Retrieve(
@@ -168,7 +170,7 @@ public class BatchServiceTest
     }
 
     [Theory]
-    [AnthropicTestClients]
+    [AnthropicTestClients(TestSupportTypes.All & ~TestSupportTypes.Bedrock)]
     public async Task List_Works(IAnthropicClient client)
     {
         var page = await client.Beta.Messages.Batches.List(
@@ -179,7 +181,7 @@ public class BatchServiceTest
     }
 
     [Theory]
-    [AnthropicTestClients]
+    [AnthropicTestClients(TestSupportTypes.All & ~TestSupportTypes.Bedrock)]
     public async Task Delete_Works(IAnthropicClient client)
     {
         var betaDeletedMessageBatch = await client.Beta.Messages.Batches.Delete(
@@ -191,7 +193,7 @@ public class BatchServiceTest
     }
 
     [Theory]
-    [AnthropicTestClients]
+    [AnthropicTestClients(TestSupportTypes.All & ~TestSupportTypes.Bedrock)]
     public async Task Cancel_Works(IAnthropicClient client)
     {
         var betaMessageBatch = await client.Beta.Messages.Batches.Cancel(
@@ -203,7 +205,7 @@ public class BatchServiceTest
     }
 
     [Theory(Skip = "Prism doesn't support application/x-jsonl responses")]
-    [AnthropicTestClients]
+    [AnthropicTestClients(TestSupportTypes.All & ~TestSupportTypes.Bedrock)]
     public async Task ResultsStreaming_Works(IAnthropicClient client)
     {
         var stream = client.Beta.Messages.Batches.ResultsStreaming(

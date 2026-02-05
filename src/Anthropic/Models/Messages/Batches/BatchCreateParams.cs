@@ -346,6 +346,20 @@ public sealed record class Params : JsonModel
     }
 
     /// <summary>
+    /// Specifies the geographic region for inference processing. If not specified,
+    /// the workspace's `default_inference_geo` is used.
+    /// </summary>
+    public string? InferenceGeo
+    {
+        get
+        {
+            this._rawData.Freeze();
+            return this._rawData.GetNullableClass<string>("inference_geo");
+        }
+        init { this._rawData.Set("inference_geo", value); }
+    }
+
+    /// <summary>
     /// An object describing metadata about the request.
     /// </summary>
     public Metadata? Metadata
@@ -702,6 +716,7 @@ public sealed record class Params : JsonModel
             item.Validate();
         }
         this.Model.Validate();
+        _ = this.InferenceGeo;
         this.Metadata?.Validate();
         this.OutputConfig?.Validate();
         this.ServiceTier?.Validate();
@@ -989,10 +1004,10 @@ public record class ParamsSystem : ModelBase
         }
     }
 
-    public virtual bool Equals(ParamsSystem? other)
-    {
-        return other != null && JsonElement.DeepEquals(this.Json, other.Json);
-    }
+    public virtual bool Equals(ParamsSystem? other) =>
+        other != null
+        && this.VariantIndex() == other.VariantIndex()
+        && JsonElement.DeepEquals(this.Json, other.Json);
 
     public override int GetHashCode()
     {
@@ -1001,6 +1016,16 @@ public record class ParamsSystem : ModelBase
 
     public override string ToString() =>
         JsonSerializer.Serialize(this._element, ModelBase.ToStringSerializerOptions);
+
+    int VariantIndex()
+    {
+        return this.Value switch
+        {
+            string _ => 0,
+            IReadOnlyList<TextBlockParam> _ => 1,
+            _ => -1,
+        };
+    }
 }
 
 sealed class ParamsSystemConverter : JsonConverter<ParamsSystem>
