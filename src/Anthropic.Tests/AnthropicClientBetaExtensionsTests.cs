@@ -3245,4 +3245,267 @@ public class AnthropicClientBetaExtensionsTests : AnthropicClientExtensionsTests
             .GetResponseAsync(messages, new(), TestContext.Current.CancellationToken);
         Assert.NotNull(response);
     }
+
+    [Fact]
+    public async Task GetStreamingResponseAsync_McpToolTurn_ReplaysVerbatim()
+    {
+        // Like server_tool_use, a streamed mcp_tool_use starts with an empty input and
+        // receives the real one via input_json deltas. The surfaced content must carry the
+        // accumulated input (as Arguments and on the RawRepresentation), or the turn replays
+        // with "input": {}. The mcp_tool_result block arrives whole and replays as-is.
+        VerbatimHttpHandler streamingHandler = new(
+            expectedRequest: """
+            {
+                "max_tokens": 1024,
+                "model": "claude-haiku-4-5",
+                "messages": [{
+                    "role": "user",
+                    "content": [{"type": "text", "text": "Search the docs"}]
+                }],
+                "stream": true
+            }
+            """,
+            actualResponse: """
+            event: message_start
+            data: {"type":"message_start","message":{"id":"msg_stream_mcp_01","type":"message","role":"assistant","model":"claude-haiku-4-5","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":10,"output_tokens":0}}}
+
+            event: content_block_start
+            data: {"type":"content_block_start","index":0,"content_block":{"type":"mcp_tool_use","id":"mcptoolu_01","name":"search_docs","server_name":"docs","input":{}}}
+
+            event: content_block_delta
+            data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":"{\"query\":"}}
+
+            event: content_block_delta
+            data: {"type":"content_block_delta","index":0,"delta":{"type":"input_json_delta","partial_json":"\"streaming\"}"}}
+
+            event: content_block_stop
+            data: {"type":"content_block_stop","index":0}
+
+            event: content_block_start
+            data: {"type":"content_block_start","index":1,"content_block":{"type":"mcp_tool_result","tool_use_id":"mcptoolu_01","is_error":false,"content":[{"type":"text","text":"Streaming guide"}]}}
+
+            event: content_block_stop
+            data: {"type":"content_block_stop","index":1}
+
+            event: content_block_start
+            data: {"type":"content_block_start","index":2,"content_block":{"type":"text","text":""}}
+
+            event: content_block_delta
+            data: {"type":"content_block_delta","index":2,"delta":{"type":"text_delta","text":"Found it."}}
+
+            event: content_block_stop
+            data: {"type":"content_block_stop","index":2}
+
+            event: message_delta
+            data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"output_tokens":5}}
+
+            event: message_stop
+            data: {"type":"message_stop"}
+
+            """
+        );
+
+        ChatResponse streamed = await CreateChatClient(streamingHandler, "claude-haiku-4-5")
+            .GetStreamingResponseAsync(
+                "Search the docs",
+                new(),
+                TestContext.Current.CancellationToken
+            )
+            .ToChatResponseAsync(TestContext.Current.CancellationToken);
+
+        McpServerToolCallContent mcpToolCall = Assert.Single(
+            streamed.Messages.SelectMany(m => m.Contents).OfType<McpServerToolCallContent>()
+        );
+        Assert.Equal("mcptoolu_01", mcpToolCall.CallId);
+        Assert.Equal("search_docs", mcpToolCall.Name);
+        Assert.Equal("docs", mcpToolCall.ServerName);
+        Assert.NotNull(mcpToolCall.Arguments);
+        Assert.Equal(
+            "streaming",
+            Assert.IsType<JsonElement>(mcpToolCall.Arguments["query"]).GetString()
+        );
+
+        VerbatimHttpHandler replayHandler = new(
+            expectedRequest: """
+            {
+                "max_tokens": 1024,
+                "model": "claude-haiku-4-5",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [{"type": "text", "text": "Search the docs"}]
+                    },
+                    {
+                        "role": "assistant",
+                        "content": [
+                            {
+                                "type": "mcp_tool_use",
+                                "id": "mcptoolu_01",
+                                "name": "search_docs",
+                                "server_name": "docs",
+                                "input": {"query": "streaming"}
+                            },
+                            {
+                                "type": "mcp_tool_result",
+                                "tool_use_id": "mcptoolu_01",
+                                "is_error": false,
+                                "content": [{"type": "text", "text": "Streaming guide"}]
+                            },
+                            {"type": "text", "text": "Found it."}
+                        ]
+                    },
+                    {
+                        "role": "user",
+                        "content": [{"type": "text", "text": "Thanks, continue"}]
+                    }
+                ]
+            }
+            """,
+            actualResponse: """
+            {
+                "id": "msg_mcp_replay_01",
+                "type": "message",
+                "role": "assistant",
+                "model": "claude-haiku-4-5",
+                "content": [{"type": "text", "text": "Continuing."}],
+                "stop_reason": "end_turn",
+                "usage": {"input_tokens": 10, "output_tokens": 5}
+            }
+            """
+        );
+
+        List<ChatMessage> messages =
+        [
+            new(ChatRole.User, "Search the docs"),
+            .. streamed.Messages,
+            new(ChatRole.User, "Thanks, continue"),
+        ];
+
+        ChatResponse response = await CreateChatClient(replayHandler, "claude-haiku-4-5")
+            .GetResponseAsync(messages, new(), TestContext.Current.CancellationToken);
+        Assert.NotNull(response);
+    }
+
+    [Fact]
+    public async Task GetStreamingResponseAsync_AdvisorToolTurn_ReplaysVerbatim()
+    {
+        // The advisor tool's server_tool_use has an empty input and no deltas, and its
+        // advisor_tool_result arrives whole in content_block_start. Neither may be dropped
+        // or altered on the way back, streamed or not.
+        VerbatimHttpHandler streamingHandler = new(
+            expectedRequest: """
+            {
+                "max_tokens": 1024,
+                "model": "claude-haiku-4-5",
+                "messages": [{
+                    "role": "user",
+                    "content": [{"type": "text", "text": "Plan the refactor"}]
+                }],
+                "stream": true
+            }
+            """,
+            actualResponse: """
+            event: message_start
+            data: {"type":"message_start","message":{"id":"msg_stream_advisor_01","type":"message","role":"assistant","model":"claude-haiku-4-5","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":10,"output_tokens":0}}}
+
+            event: content_block_start
+            data: {"type":"content_block_start","index":0,"content_block":{"type":"server_tool_use","id":"srvtoolu_01","name":"advisor","input":{}}}
+
+            event: content_block_stop
+            data: {"type":"content_block_stop","index":0}
+
+            event: content_block_start
+            data: {"type":"content_block_start","index":1,"content_block":{"type":"advisor_tool_result","tool_use_id":"srvtoolu_01","content":{"type":"advisor_result","text":"Start with the parser.","stop_reason":"end_turn"}}}
+
+            event: content_block_stop
+            data: {"type":"content_block_stop","index":1}
+
+            event: content_block_start
+            data: {"type":"content_block_start","index":2,"content_block":{"type":"text","text":""}}
+
+            event: content_block_delta
+            data: {"type":"content_block_delta","index":2,"delta":{"type":"text_delta","text":"Here is the plan."}}
+
+            event: content_block_stop
+            data: {"type":"content_block_stop","index":2}
+
+            event: message_delta
+            data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"output_tokens":5}}
+
+            event: message_stop
+            data: {"type":"message_stop"}
+
+            """
+        );
+
+        ChatResponse streamed = await CreateChatClient(streamingHandler, "claude-haiku-4-5")
+            .GetStreamingResponseAsync(
+                "Plan the refactor",
+                new(),
+                TestContext.Current.CancellationToken
+            )
+            .ToChatResponseAsync(TestContext.Current.CancellationToken);
+
+        VerbatimHttpHandler replayHandler = new(
+            expectedRequest: """
+            {
+                "max_tokens": 1024,
+                "model": "claude-haiku-4-5",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [{"type": "text", "text": "Plan the refactor"}]
+                    },
+                    {
+                        "role": "assistant",
+                        "content": [
+                            {
+                                "type": "server_tool_use",
+                                "id": "srvtoolu_01",
+                                "name": "advisor",
+                                "input": {}
+                            },
+                            {
+                                "type": "advisor_tool_result",
+                                "tool_use_id": "srvtoolu_01",
+                                "content": {
+                                    "type": "advisor_result",
+                                    "text": "Start with the parser.",
+                                    "stop_reason": "end_turn"
+                                }
+                            },
+                            {"type": "text", "text": "Here is the plan."}
+                        ]
+                    },
+                    {
+                        "role": "user",
+                        "content": [{"type": "text", "text": "Thanks, continue"}]
+                    }
+                ]
+            }
+            """,
+            actualResponse: """
+            {
+                "id": "msg_advisor_replay_01",
+                "type": "message",
+                "role": "assistant",
+                "model": "claude-haiku-4-5",
+                "content": [{"type": "text", "text": "Continuing."}],
+                "stop_reason": "end_turn",
+                "usage": {"input_tokens": 10, "output_tokens": 5}
+            }
+            """
+        );
+
+        List<ChatMessage> messages =
+        [
+            new(ChatRole.User, "Plan the refactor"),
+            .. streamed.Messages,
+            new(ChatRole.User, "Thanks, continue"),
+        ];
+
+        ChatResponse response = await CreateChatClient(replayHandler, "claude-haiku-4-5")
+            .GetResponseAsync(messages, new(), TestContext.Current.CancellationToken);
+        Assert.NotNull(response);
+    }
 }

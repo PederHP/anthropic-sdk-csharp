@@ -486,12 +486,24 @@ public static class AnthropicBetaClientExtensions
                                 };
                                 break;
 
+                            case BetaMcpToolUseBlock mcpToolUse:
+                                // Like server_tool_use, the input streams as input_json deltas,
+                                // so the content is created at content_block_stop.
+                                streamingFunctions ??= [];
+                                streamingFunctions[contentBlockStart.Index] = new()
+                                {
+                                    CallId = mcpToolUse.ID,
+                                    Name = mcpToolUse.Name,
+                                    RawRepresentation = mcpToolUse,
+                                };
+                                break;
+
                             case BetaWebSearchToolResultBlock:
                             case BetaWebFetchToolResultBlock:
+                            case BetaAdvisorToolResultBlock:
                             case BetaCodeExecutionToolResultBlock:
                             case BetaBashCodeExecutionToolResultBlock:
                             case BetaTextEditorCodeExecutionToolResultBlock:
-                            case BetaMcpToolUseBlock:
                             case BetaMcpToolResultBlock:
                             case BetaToolSearchToolResultBlock:
                             case BetaContainerUploadBlock:
@@ -1220,6 +1232,7 @@ public static class AnthropicBetaClientExtensions
                 BetaServerToolUseBlockParam p => p with { CacheControl = cacheControl },
                 BetaWebSearchToolResultBlockParam p => p with { CacheControl = cacheControl },
                 BetaWebFetchToolResultBlockParam p => p with { CacheControl = cacheControl },
+                BetaAdvisorToolResultBlockParam p => p with { CacheControl = cacheControl },
                 BetaCodeExecutionToolResultBlockParam p => p with { CacheControl = cacheControl },
                 BetaBashCodeExecutionToolResultBlockParam p => p with
                 {
@@ -1844,6 +1857,7 @@ public static class AnthropicBetaClientExtensions
                 case BetaServerToolUseBlock:
                 case BetaWebSearchToolResultBlock:
                 case BetaWebFetchToolResultBlock:
+                case BetaAdvisorToolResultBlock:
                 case BetaCodeExecutionToolResultBlock:
                 case BetaBashCodeExecutionToolResultBlock:
                 case BetaTextEditorCodeExecutionToolResultBlock:
@@ -2309,6 +2323,19 @@ public static class AnthropicBetaClientExtensions
 
         private static AIContent CreateStreamingToolCallContent(StreamingFunctionData functionData)
         {
+            if (functionData.RawRepresentation is BetaMcpToolUseBlock mcpToolUse)
+            {
+                // Fold the streamed input back into the start block, so the content carries
+                // the arguments and its RawRepresentation replays with the real input.
+                return ContentBlockValueToAIContent(
+                    StreamedToolInput.WithMergedInput(
+                        mcpToolUse,
+                        [functionData.Arguments.ToString()],
+                        BetaMcpToolUseBlock.FromRawUnchecked
+                    )
+                );
+            }
+
             if (functionData.ServerToolName is not Name serverToolName)
             {
                 var fcc = FunctionCallContent.CreateFromParsedArguments(
